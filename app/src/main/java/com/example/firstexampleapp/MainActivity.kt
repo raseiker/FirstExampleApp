@@ -96,6 +96,6 @@ fun MyApp() {
 @Composable
 fun MyCard(){
     Row(modifier = Modifier.fillMaxWidth()) {
-        
+        Text(text = "Todo estaba bien")
     }
 }
