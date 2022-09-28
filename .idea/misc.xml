@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_apple_whole_solid.xml" value="0.1" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.25" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.2605" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_baseline_checklist_24.xml" value="0.1" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_baseline_open_in_full_24.xml" value="0.216" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_calendar_check_solid.xml" value="0.209" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_circle_question_solid.xml" value="0.211" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_google.xml" value="0.1" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_google_solid.xml" value="0.1" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2605" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_list_check_solid.xml" value="0.209" />
+        <entry key="..\:/Users/Uorks.IKER/AndroidStudioProjects/FirstExampleApp/app/src/main/res/drawable/ic_weight_scale_solid.xml" value="0.211" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

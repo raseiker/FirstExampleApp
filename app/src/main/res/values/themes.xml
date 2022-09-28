@@ -2,6 +2,11 @@
 <resources>
 
     <style name="Theme.FirstExampleApp" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">@color/black</item>
+
+    </style>
+
+    <style name="DialogTheme" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">@color/purpleXD</item>
     </style>
 </resources>
