@@ -24,58 +24,59 @@ import com.example.firstexampleapp.R
 
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
-@ExperimentalMaterialApi
-@Composable
-fun MyTextFieldsPreview() {
-    FirstExampleAppTheme() {
-        Scaffold() {
-            Column(modifier = Modifier.padding(paddingValues = it)) {
-                MyTextFieldForm(
-                    label = "Correo",
-                    keyboardType = KeyboardType.Email,
-                    modifier = Modifier.padding(horizontal = 25.dp)
-                )
-                MyTextFieldForm(
-                    label = "Busca un alimento",
-                    keyboardType = KeyboardType.Text,
-                    modifier = Modifier.padding(horizontal = 25.dp)
-                )
-                MyTextFieldForm(
-                    label = "Contraseña",
-                    keyboardType = KeyboardType.Password,
-                    modifier = Modifier.padding(horizontal = 25.dp)
-                )
-                MyTextFieldMenu(
-                    label = "Es mi primer hijo",
-                    items = listOf("Sí", "No"),
-                    modifier = Modifier.padding(horizontal = 25.dp)
-                )
-                MyTextFieldMenu(
-                    label = "Sexo del bebe",
-                    items = listOf("Hombre", "Mujer", "Prefiero no decirlo"),
-                    modifier = Modifier.padding(horizontal = 25.dp)
-                )
-            }
-        }
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//fun MyTextFieldsPreview() {
+//    FirstExampleAppTheme() {
+//        Scaffold() {
+//            Column(modifier = Modifier.padding(paddingValues = it)) {
+//                MyTextFieldForm(
+//                    label = "Correo",
+//                    keyboardType = KeyboardType.Email,
+//                    modifier = Modifier.padding(horizontal = 25.dp)
+//                )
+//                MyTextFieldForm(
+//                    label = "Busca un alimento",
+//                    keyboardType = KeyboardType.Text,
+//                    modifier = Modifier.padding(horizontal = 25.dp)
+//                )
+//                MyTextFieldForm(
+//                    label = "Contraseña",
+//                    keyboardType = KeyboardType.Password,
+//                    modifier = Modifier.padding(horizontal = 25.dp)
+//                )
+//                MyTextFieldMenu(
+//                    label = "Es mi primer hijo",
+//                    items = listOf("Sí", "No"),
+//                    modifier = Modifier.padding(horizontal = 25.dp)
+//                )
+//                MyTextFieldMenu(
+//                    label = "Sexo del bebe",
+//                    items = listOf("Hombre", "Mujer", "Prefiero no decirlo"),
+//                    modifier = Modifier.padding(horizontal = 25.dp)
+//                )
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun MyTextFieldForm(
     label: String,
     keyboardType: KeyboardType,
     imeAction: ImeAction = ImeAction.Next,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    text: String = "",
+    onValueChange: (String) -> Unit = {},
+    onClearText: () -> Unit = {}
 ) {
-    var text by remember { mutableStateOf("") }
+    //var text by remember { mutableStateOf("") }
     val isPassword = (keyboardType == KeyboardType.Password)
-    var isVisibility by remember {
-        mutableStateOf(value = true)
-    }
+    var isVisibility by remember { mutableStateOf(value = true) }
     Column(modifier = modifier) {
         OutlinedTextField(
             value = text,
-            onValueChange = { text = it },
+            onValueChange = { onValueChange(it) },
             label = {
                 Text(
                     text = label,
@@ -89,7 +90,7 @@ fun MyTextFieldForm(
             visualTransformation = if (isPassword && isVisibility) PasswordVisualTransformation() else VisualTransformation.None,
             trailingIcon = {
                 IconButton(
-                    onClick = { if (isPassword) isVisibility = !isVisibility else text = "" }
+                    onClick = { if (isPassword) isVisibility = !isVisibility else onClearText() }
                 ) {
                     Icon(
                         painter =
@@ -123,10 +124,12 @@ fun MyTextFieldForm(
 fun MyTextFieldMenu(
     label: String,
     items: List<String>,
+    text: String = "",
+    onValueChange: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(value = false) }
-    var selectedOptionText by remember { mutableStateOf(value = items[0]) }
+    //var selectedOptionText by remember { mutableStateOf(value = items[0]) }
 // We want to react on tap/press on TextField to show menu
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -137,7 +140,7 @@ fun MyTextFieldMenu(
     ) {
         OutlinedTextField(
             readOnly = true,
-            value = selectedOptionText,
+            value = text,//selectedOptionText,
             onValueChange = { },
             label = { Text(text = label) },
             trailingIcon = {
@@ -148,7 +151,7 @@ fun MyTextFieldMenu(
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colors.secondary.copy(alpha = ContentAlpha.high),
                 cursorColor = MaterialTheme.colors.secondaryVariant,
-                focusedLabelColor = MaterialTheme.colors.onPrimary.copy(alpha = ContentAlpha.high)
+                focusedLabelColor = MaterialTheme.colors.secondaryVariant
             ),
             shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp)),
             modifier = Modifier.fillMaxWidth()
@@ -162,7 +165,8 @@ fun MyTextFieldMenu(
             items.forEach { selectedItem ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedOptionText = selectedItem
+                        //selectedOptionText = selectedItem
+                        onValueChange(selectedItem)
                         expanded = false
                     }
                 ) {
@@ -180,11 +184,11 @@ fun MyTextFieldFormDate(
     onClickDate: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var text = textDate
+    //var text = textDate
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = text,
-            onValueChange = { text = it },
+            value = textDate,//text,
+            onValueChange = {},
             label = {
                 Text(
                     text = label,

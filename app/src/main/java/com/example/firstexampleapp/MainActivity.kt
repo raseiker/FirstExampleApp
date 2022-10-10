@@ -10,7 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
+import androidx.navigation.compose.rememberNavController
+import com.example.firstexampleapp.ui.navigation.SetUpNavHost
 import com.example.firstexampleapp.ui.screen.module.ModuleScreen
 import com.example.firstexampleapp.ui.screen.module.food.FoodScreen
 import com.example.firstexampleapp.ui.screen.module.question.QuestionScreen
@@ -24,13 +28,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var isDark by remember {
-                mutableStateOf(false)
-            }
-            FirstExampleAppTheme(darkTheme = isDark) {
-                //MyButton(text = "ingresar", modifier = Modifier)
+            //val navController = rememberNavController()
+            val isDark by remember { mutableStateOf(false) }
 
-                //MyButtonPreview()
+            FirstExampleAppTheme(darkTheme = isDark) {
+                SetUpNavHost()
 //                HomeScreen()
 //                ExploreScreen()
 //                ModuleScreen()
@@ -43,39 +45,9 @@ class MainActivity : ComponentActivity() {
 //                QuestionScreen()
 //                RecipeScreen()
 //                TaskScreen()
-                FoodScreen(onDark = { isDark = !isDark })
+//                FoodScreen(onDark = { isDark = !isDark })
 //                WeightScreen(onDark = { isDark = !isDark })
             }
-        }
-    }
-}
-
-//@Preview(showBackground = true, device = Devices.NEXUS_5X)
-@ExperimentalMaterialApi
-@Composable
-fun MyButtonPreview() {
-    Scaffold(
-        topBar = {
-            MyTopApBar(
-                title = "Mi peso",
-                navIcon = Icons.Default.ArrowBack,
-                actionIcon = Icons.Default.Info,
-                modifier = Modifier
-            )
-        },
-        floatingActionButton = { MyFab() },
-        bottomBar = {
-            MyBottomBar(
-                isSelected = listOf(true, false, false)
-            )
-        })
-    {
-        Column(
-            modifier = Modifier
-                .background(color = MaterialTheme.colors.background)
-                .padding(it)
-        ) {
-
         }
     }
 }

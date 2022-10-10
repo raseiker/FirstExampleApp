@@ -7,30 +7,46 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.firstexampleapp.R
+import com.example.firstexampleapp.model.user.repository.users
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.*
+import com.example.firstexampleapp.ui.viewModel.articleViewModel.ArticleViewModel
+import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@ExperimentalMaterialApi
-@Composable
-fun HomeScreenPreview() {
-    FirstExampleAppTheme(darkTheme = false) {
-        HomeScreen()
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//fun HomeScreenPreview() {
+//    FirstExampleAppTheme(darkTheme = false) {
+//        HomeScreen()
+//    }
+//}
 
 @ExperimentalMaterialApi
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    articleViewModel: ArticleViewModel,
+    userViewModel: UserViewModel,
+    onCardActionClicked: (String) -> Unit,
+    onCardArticleClicked: (Int) -> Unit,
+    onItemBottomBarClicked: (String) -> Unit
+) {
+    val articleState by articleViewModel.article.collectAsState()
+    val userState by userViewModel.user.collectAsState()
+
     Scaffold(
         bottomBar = {
             MyBottomBar(
-                isSelected = listOf(true, false, false)
+                isSelected = listOf(true, false, false),
+                onItemBottomBarClicked = onItemBottomBarClicked
             )
         }
     ) {
@@ -42,73 +58,35 @@ fun HomeScreen() {
 
             //show welcome message
             MyWelcomeMessage(
-                userName = "Carmela",
+                userName = userState.name,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 25.dp)
             )
 
             //show progress pregnancy card
             MyProgressIndicatorCard(
-                title = "13 semanas de embarazo",
-                subTitle = "1er Trimestre",
-                progress = 0.3f,
+                title = "${userState.pregnancyWeek} semanas de embarazo",
+                trimester = userState.trimester.type,
+                progress = userState.pregnancyProgress,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
-            //weight calculator
-            MyNormalCard(
-                title = "Calculadora de peso",
-                subTitle = "Ingresa tu peso actual",
-                icon = R.drawable.ic_weight_scale_solid,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-            )
-
-            //random article card 1
-            MyArticleCard(
-                title = "Como me ayudan las vitaminas y minerales",
-                subTitle = "Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones",
-                image = R.mipmap.wiegth,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-            )
-
-            //food calculator
-            MyNormalCard(
-                title = "Calculadora de alimentos",
-                subTitle = "Identifica los alimentos mas apropiados para ti",
-                icon = R.drawable.ic_apple_whole_solid,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-            )
-
-            //random article card 2
-            MyArticleCard(
-                title = "Como me ayudan las vitaminas y minerales",
-                subTitle = "Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones",
-                image = R.mipmap.wiegth,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-            )
-
-            //add diary
-            MyNormalCard(
-                title = "Preguntas",
-                subTitle = "Crea preguntas y respuestas que te ayudarán a resolver tus dudas",
-                icon = R.drawable.ic_circle_question_solid,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-            )
-
-            //random article card 3
-            MyArticleCard(
-                title = "Como me ayudan las vitaminas y minerales",
-                subTitle = "Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones",
-                image = R.mipmap.wiegth,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-            )
-
-            //add task
-            MyNormalCard(
-                title = "Tareas",
-                subTitle = "Crea una lista de tareas a realizar",
-                icon = R.drawable.ic_baseline_checklist_24,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-            )
+            articleViewModel.cards.forEach { (index, list) ->
+                MyArticleCard(
+                    title = stringResource(articleState[index].title.toInt()),
+                    subTitle = articleViewModel.getSubtitle(stringResource(articleState[index].body.toInt())),
+                    image = articleState[index].image,
+                    badges = listOf("ARTÍCULO", articleState[index].category.uppercase()),
+                    onClick = { onCardArticleClicked(articleState[index].idArticle) },
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                )
+                MyNormalCard(
+                    title = list[0] as String,
+                    subTitle = list[1] as String,
+                    icon = list[2] as Int,
+                    onClick = { onCardActionClicked(list[3] as String) },
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                )
+            }
         }
     }
 }

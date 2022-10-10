@@ -14,37 +14,40 @@ import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
-@Composable
-fun MuButtonsPreview(){
-    FirstExampleAppTheme() {
-        Scaffold() {
-            Column(modifier = Modifier.padding(paddingValues = it)) {
-                MyButton(text = "Agregar porcion", modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
-                MyButton(text = "Ingresar", modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
-                MyButton(text = "Agregar cita", modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
-                MySocialMediaButton(modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
-            }
-        }
-    }
-}
+//@Composable
+//fun MuButtonsPreview(){
+//    FirstExampleAppTheme() {
+//        Scaffold() {
+//            Column(modifier = Modifier.padding(paddingValues = it)) {
+//                MyButton(text = "Agregar porcion", modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
+//                MyButton(text = "Ingresar", modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
+//                MyButton(text = "Agregar cita", modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
+//                MySocialMediaButton(modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp))
+//            }
+//        }
+//    }
+//}
 
 
 @Composable
 fun MyButton(
     text: String,
-    modifier: Modifier = Modifier
+    enabled: Boolean = true,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
 ) {
     Column(modifier = modifier) {
         Button(
-            onClick = {},
-            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
+            onClick = onClick,
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary, contentColor = MaterialTheme.colors.primaryVariant),
             shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp)),
+            enabled = enabled,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 56.dp)
             //.padding(horizontal = 0.dp)
         ) {
-            Text(text = text)
+            Text(text = text, style = MaterialTheme.typography.h6)
         }
     }
 }

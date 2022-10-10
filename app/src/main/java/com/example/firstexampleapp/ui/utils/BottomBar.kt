@@ -14,35 +14,36 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.R
+import com.example.firstexampleapp.ui.navigation.Screen
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
-@Composable
-fun MyBottomBarPreview() {
-    FirstExampleAppTheme() {
-        Scaffold(
-            bottomBar = {
-                MyBottomBar(
-                    isSelected = listOf(false, false, false)
-                )
-            }
-        ) {
-
-        }
-    }
-}
+//@Composable
+//fun MyBottomBarPreview() {
+//    FirstExampleAppTheme() {
+//        Scaffold(
+//            bottomBar = {
+//                MyBottomBar(
+//                    isSelected = listOf(false, false, false)
+//                )
+//            }
+//        ) {
+//
+//        }
+//    }
+//}
 
 @Composable
 fun MyBottomBar(
     isSelected: List<Boolean>,
-    //isDarkMode: Boolean = true
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemBottomBarClicked: (String) -> Unit = {}
 ) {
     BottomNavigation(
         modifier = modifier
     ) {
         BottomNavigationItem(
             selected = isSelected[0],
-            onClick = { /*TODO*/ },
+            onClick = { onItemBottomBarClicked(Screen.HomeScreen.route) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Home,
@@ -56,7 +57,7 @@ fun MyBottomBar(
 
         BottomNavigationItem(
             selected = isSelected[1],
-            onClick = { /*TODO*/ },
+            onClick = { onItemBottomBarClicked(Screen.ExploreScreen.route)},
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_library_books_24),
@@ -70,7 +71,7 @@ fun MyBottomBar(
 
         BottomNavigationItem(
             selected = isSelected[2],
-            onClick = { /*TODO*/ },
+            onClick = { onItemBottomBarClicked(Screen.ModuleScreen.route) },
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_dashboard_24),

@@ -1,3 +1,95 @@
 <resources>
     <string name="app_name">FirstExampleApp</string>
+    <string name="title_one">Beneficios de incluir pescados y mariscos en mi dieta durante el embarazo</string>
+    <string name="body_one">
+        Los ácidos grasos omega-3 son un tipo de grasa presente de forma natural en muchos tipos de pescado.
+        "Estos ácidos tienen un importante efecto protector ante las enfermedades del corazón y en el desarrollo" +
+        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
+        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
+        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
+        "\n\nA pesar de los beneficios de " +
+        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
+        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
+        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
+        "con seguridad, sigue la siguiente recomendación: " +
+        "\n\nNo recomendables durante gestación y lactancia " +
+        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
+        "o en sushi." +
+        "\n\nFuentes:" +
+        "\nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_two">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="body_two">
+        Un olor a tabaco y chanel me recuerda al olor de su piel, el color del final de la noche, me pregunta donde fui
+        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
+        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
+        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
+        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
+        "\n\nA pesar de los beneficios de " +
+        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
+        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
+        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
+        "con seguridad, sigue la siguiente recomendación: " +
+        "\n\nNo recomendables durante gestación y lactancia " +
+        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
+        "o en sushi." +
+        "\n\nFuentes:" +
+        "\nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_three">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="body_three">
+        Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones
+        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
+        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
+        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
+        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
+        "\n\nA pesar de los beneficios de " +
+        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
+        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
+        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
+        "con seguridad, sigue la siguiente recomendación: " +
+        "\n\nNo recomendables durante gestación y lactancia " +
+        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
+        "o en sushi." +
+        "\n\nFuentes:" +
+        "\nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_four">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="body_four">
+        Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones
+        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
+        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
+        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
+        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
+        "\n\nA pesar de los beneficios de " +
+        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
+        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
+        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
+        "con seguridad, sigue la siguiente recomendación: " +
+        "\n\nNo recomendables durante gestación y lactancia " +
+        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
+        "o en sushi." +
+        "\n\nFuentes:" +
+        "\nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_five">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="body_five">
+        Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones
+        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
+        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
+        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
+        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
+        "\n\nA pesar de los beneficios de " +
+        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
+        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
+        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
+        "con seguridad, sigue la siguiente recomendación: " +
+        "\n\nNo recomendables durante gestación y lactancia " +
+        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
+        "o en sushi." +
+        "\n\nFuentes:" +
+        "\nMINSA; Instituto Nacional de Salud
+    </string>
+
+
 </resources>

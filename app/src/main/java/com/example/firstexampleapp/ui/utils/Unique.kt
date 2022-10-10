@@ -3,6 +3,7 @@ package com.example.firstexampleapp.ui.utils
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
@@ -24,52 +25,53 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.*
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.R
+import com.example.firstexampleapp.ui.navigation.onItemClicked
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
-@Composable
-fun MyUniquePreview() {
-    FirstExampleAppTheme() {
-        Scaffold(
-            floatingActionButton = {
-                MyFab()
-            }
-        ) {
-            Column(modifier = Modifier.padding(paddingValues = it)) {
-                MyImageHeader(
-                    image = R.mipmap.fruits,
-                )
-
-                MyDivider(
-                    text = "o",
-                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-                )
-
-                MyArticlesCategoriesHeader(
-                    subtitle = "Bebidas y Comidas",
-                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-                )
-
-                MyArticlesCategories(
-                    image = R.mipmap.wiegth,
-                    subtitle = "11 articles",
-                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-                )
-
-                MyScreenTitle(
-                    title = "Explora",
-                    subTitle = "Todo lo que necesita saber",
-                    letter = "p",
-                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-                )
-
-                MyWelcomeMessage(
-                    userName = "Carmela",
-                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-                )
-            }
-        }
-    }
-}
+//@Composable
+//fun MyUniquePreview() {
+//    FirstExampleAppTheme() {
+//        Scaffold(
+//            floatingActionButton = {
+//                MyFab()
+//            }
+//        ) {
+//            Column(modifier = Modifier.padding(paddingValues = it)) {
+//                MyImageHeader(
+//                    image = R.mipmap.fruits,
+//                )
+//
+//                MyDivider(
+//                    text = "o",
+//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//                )
+//
+//                MyArticlesCategoriesHeader(
+//                    subtitle = "Bebidas y Comidas",
+//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//                )
+//
+//                MyArticlesCategories(
+//                    image = R.mipmap.wiegth,
+//                    subtitle = "11 articles",
+//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//                )
+//
+//                MyScreenTitle(
+//                    title = "Explora",
+//                    subTitle = "Todo lo que necesita saber",
+//                    letter = "p",
+//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//                )
+//
+//                MyWelcomeMessage(
+//                    userName = "Carmela",
+//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//                )
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun MyBadge(
@@ -106,12 +108,14 @@ fun MyDivider(text: String, modifier: Modifier = Modifier) {
 fun MyArticlesCategories(
     @DrawableRes image: Int,
     subtitle: String,
+    onArticleClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val padding = 200.dp
     Box(
         modifier = modifier
             .clip(shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp)))//RoundedCornerShape(5.dp))
+            .clickable { onArticleClicked() }
     ) {
         Image(
             painter = painterResource(id = image),
@@ -136,7 +140,8 @@ fun MyArticlesCategories(
 @Composable
 fun MyArticlesCategoriesHeader(
     subtitle: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCategoryClicked: () -> Unit
 ) {
     Row(modifier = modifier) {
         Text(
@@ -150,7 +155,7 @@ fun MyArticlesCategoriesHeader(
             text = "Ver más",
             maxLines = 1,
             color = Color.Gray.copy(alpha = 0.9f),
-            //modifier = Modifier.weight(weight = 1f)
+            modifier = Modifier.clickable { onCategoryClicked() }//weight(weight = 1f)
         )
     }
 }
@@ -251,8 +256,9 @@ fun MyLogo(
 
 @Composable
 fun MyForgivenPassword(
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+    onRegisterClick: (Int) -> Unit = {}
+    ) {
     Column(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -262,7 +268,7 @@ fun MyForgivenPassword(
             text = AnnotatedString(
                 text = "Olvidé mi contraseña",
                 spanStyle = SpanStyle(
-                    color = Color.LightGray,
+                    color = Color.DarkGray,
                     textDecoration = TextDecoration.Underline
                 )
             ),
@@ -273,11 +279,11 @@ fun MyForgivenPassword(
             text = AnnotatedString(
                 text = "Aun no tengo cuenta. Registrarme",
                 spanStyle = SpanStyle(
-                    color = Color.LightGray,
+                    color = Color.DarkGray,
                     textDecoration = TextDecoration.Underline
                 )
             ),
-            onClick = {}
+            onClick = onRegisterClick
         )
     }
 }
@@ -290,9 +296,9 @@ fun MyText(
 ) {
     Text(
         text = text,
-        style = if (!isTitle) MaterialTheme.typography.body1.copy(//show login text
+        style = if (!isTitle) MaterialTheme.typography.subtitle1.copy(//show login text
             fontWeight = FontWeight.Light,
-            color = Color.Gray
+            //color = Color.Gray
         )
         else MaterialTheme.typography.h6.copy(
 //show article text

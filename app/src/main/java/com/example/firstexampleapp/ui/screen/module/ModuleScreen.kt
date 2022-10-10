@@ -16,23 +16,28 @@ import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.MyBottomBar
 import com.example.firstexampleapp.ui.utils.MyScreenTitle
 import com.example.firstexampleapp.ui.utils.MyToolCard
+import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@ExperimentalMaterialApi
-@Composable
-fun ModuleScreenPreview() {
-    FirstExampleAppTheme(darkTheme = true) {
-        ModuleScreen()
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//fun ModuleScreenPreview() {
+//    FirstExampleAppTheme(darkTheme = true) {
+//        ModuleScreen()
+//    }
+//}
 
 @ExperimentalMaterialApi
 @Composable
-fun ModuleScreen() {
+fun ModuleScreen(
+    userViewModel: UserViewModel,
+    onItemBottomBarClicked: (String) -> Unit
+) {
     Scaffold(
         bottomBar = {
             MyBottomBar(
                 isSelected = listOf(false, false, true),
+                onItemBottomBarClicked = onItemBottomBarClicked
             )
         }
     ) {
@@ -49,7 +54,7 @@ fun ModuleScreen() {
             MyScreenTitle(
                 title = "Módulos",
                 subTitle = "Herramientas útiles para tu embarazo",
-                letter = "C",
+                letter = userViewModel.getFirstNameLetter(),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 25.dp)
             )
 

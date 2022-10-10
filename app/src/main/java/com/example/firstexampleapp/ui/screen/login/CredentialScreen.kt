@@ -8,30 +8,40 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.firstexampleapp.model.user.UserVar
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.MyButton
 import com.example.firstexampleapp.ui.utils.MyText
 import com.example.firstexampleapp.ui.utils.MyTextFieldForm
 import com.example.firstexampleapp.ui.utils.MyTopApBar
+import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@ExperimentalMaterialApi
-@Composable
-fun CredentialScreenPreview() {
-    FirstExampleAppTheme(darkTheme = true) {
-        CredentialScreen()
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//fun CredentialScreenPreview() {
+//    FirstExampleAppTheme(darkTheme = true) {
+//        CredentialScreen()
+//    }
+//}
 
 
 @ExperimentalMaterialApi
 @Composable
-fun CredentialScreen() {
+fun CredentialScreen(
+    userViewModel: UserViewModel,
+    onDoneClicked: () -> Unit = {}
+) {
+    val userState by userViewModel.user.collectAsState()
     Scaffold(
         topBar = {
             MyTopApBar(
@@ -53,6 +63,9 @@ fun CredentialScreen() {
             //show email texfield
             MyTextFieldForm(
                 label = "Correo",
+                text = userViewModel._credential[UserVar.Email.type] ?: "",
+                onValueChange = { email -> userViewModel.onValueChangeCredential(mapOf(UserVar.Email.type to email)) },
+                onClearText = { userViewModel.onClearText(attr = UserVar.Email.type) },
                 keyboardType = KeyboardType.Email,
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
@@ -60,6 +73,8 @@ fun CredentialScreen() {
             //show password textfield
             MyTextFieldForm(
                 label = "Contraseña",
+                text = userViewModel._credential[UserVar.Password.type] ?: "",
+                onValueChange = { pass -> userViewModel.onValueChangeCredential(mapOf(UserVar.Password.type to pass))},
                 keyboardType = KeyboardType.Password,
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
@@ -67,19 +82,24 @@ fun CredentialScreen() {
             //show repeat password textfield
             MyTextFieldForm(
                 label = "Repetir contraseña",
+                text = userViewModel._credential[UserVar.Password2.type] ?: "",
+                onValueChange = { pass -> userViewModel.onValueChangeCredential(mapOf(UserVar.Password2.type to pass))},
                 keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
 
             //show text
             MyText(
-                text = "Nos complace poder acompañarte a lo largo de tu embarazo, Carmela",
+                text = "Nos complace poder acompañarte a lo largo de tu embarazo, ${userState.name}",
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 40.dp)
             )
 
             //show next button
             MyButton(
                 text = "Empezar",
+                enabled = userViewModel.isPassWordValid(),
+                onClick = onDoneClicked,
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
 
