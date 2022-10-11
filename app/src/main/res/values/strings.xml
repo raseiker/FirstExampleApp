@@ -1,94 +1,199 @@
 <resources>
     <string name="app_name">FirstExampleApp</string>
-    <string name="title_one">Beneficios de incluir pescados y mariscos en mi dieta durante el embarazo</string>
-    <string name="body_one">
-        Los ácidos grasos omega-3 son un tipo de grasa presente de forma natural en muchos tipos de pescado.
-        "Estos ácidos tienen un importante efecto protector ante las enfermedades del corazón y en el desarrollo" +
-        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
-        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
-        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
-        "\n\nA pesar de los beneficios de " +
-        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
-        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
-        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
-        "con seguridad, sigue la siguiente recomendación: " +
-        "\n\nNo recomendables durante gestación y lactancia " +
-        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
-        "o en sushi." +
-        "\n\nFuentes:" +
-        "\nMINSA; Instituto Nacional de Salud
+    <string name="title_one_drink_food">Beneficios de incluir pescados y mariscos en mi dieta durante el embarazo</string>
+    <string name="body_one_drink_food">
+        Los ácidos grasos omega-3 son un tipo de grasa presente de forma natural en muchos tipos de pescado. Estos ácidos tienen un importante efecto protector ante las enfermedades del corazón y en el desarrollo del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o marisco por semana, tanto durante el embarazo como durante la lactancia.
+
+\n\nA pesar de los beneficios de tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado con seguridad, sigue estas recomendaciones básicas:
+
+\n\nNo recomendables durante gestación y lactancia (contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco o en sushi.
+No más de una porción por semana (por su alto contenido en mercurio): lubina, anguila, halibut, langosta, rape, bacalao negro, raya, pargo o atún blanco enlatado.
+Hasta dos porciones por semana: bacalao, palometa, bagre, cangrejo, corvina, caballa del atlántico norte, mejillones, mújol, perca (oceánica o blanca), vieiras, lenguado, calamares, trucha de agua dulce, pescado blanco o atún claro enlatado - todos ellos tienen un contenido bajo de mercurio.
+
+\n\nHasta cinco porciones por semana: anchoas, almejas, langosta de río, merluza, arenque, ostras, abadejo, salmón, sardinas, camarones, tilapia y pescadilla.
+En general, los pescados que tienen un mayor contenido de mercurio son aquellos que se consideran depredadores, es decir, aquellos de mayor tamaño. Mantente atenta a las advertencias de las autoridades competentes sobre el pescado obtenido en aguas locales.
+
+\n\nFuente:
+        \nMINSA; Instituto Nacional de Salud
     </string>
-    <string name="title_two">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="title_two">El alcohol durante el embarazo. ¿Es posible consumir en pocas cantidades?</string>
     <string name="body_two">
-        Un olor a tabaco y chanel me recuerda al olor de su piel, el color del final de la noche, me pregunta donde fui
-        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
-        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
-        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
-        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
-        "\n\nA pesar de los beneficios de " +
-        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
-        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
-        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
-        "con seguridad, sigue la siguiente recomendación: " +
-        "\n\nNo recomendables durante gestación y lactancia " +
-        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
-        "o en sushi." +
-        "\n\nFuentes:" +
-        "\nMINSA; Instituto Nacional de Salud
+       "No. Lo hemos contado muchas veces: el alcohol puede perjudicar el crecimiento del bebé y su neurodesarrollo al pasar directamente al feto a través de la placenta. Aún así, un estudio de BCNatal alerta que 2 de cada 5 embarazadas sigue consumiendo alcohol y solo el 2% es consciente que una sola copa puede ser perjudicial.
+
+\nConsumo social de alcohol en el embarazo
+\nEl 42% de las embarazadas consume alcohol, aunque sea un 'consumo social', lo que equivaldría a una copa de vino a la semana. Lo advierte un estudio elaborado por BCNatal, el Centro de Medicina Materno-Fetal del Hospital Clínic y el Hospital Sant Joan de Déu de Barcelona. Y constata que sólo entre el 2% y el 3% de las mujeres son conscientes de que una sola copa de vino es perjudicial. “El consumo de alcohol está tan integrado en la vida cotidiana que ingerir pequeñas cantidades se ve inofensivo o no se considera como un consumo de verdad”, explica la doctora Gómez-Roig, investigadora principal.
+
+\nEn el cabello se pueden medir los niveles de alcohol
+\nDurante el estudio, financiado por "la Caixa", los médicos preguntaron a través de cuestionarios por el consumo de alcohol y tabaco en el embarazo a 153 mujeres. Y paralelamente, se les tomó una muestra de cabello de 9 centímetros –un cm de pelo corresponde a un mes–, para detectar marcadores de consumo de tabaco y alcohol. El National Centre on Addiction an Doping de Roma analizó las muestras y las clasificó en tres niveles de consumo: 1. abstinencia, 2. consumo social, que equivale a una copa de vino a la semana como máximo, y 3. consumo excesivo crónico. Mientras que en el consumo de tabaco los resultados de la entrevista y de los análisis fueron muy parecidos, en el caso del alcohol los resultados fueron dispares. El 42% de las embarazadas tenía valores de alcohol en el cabello correspondientes a un consumo social.
+
+\nMás campañas de concienciación
+\nLos resultados del estudio, que publica la revista Alcohol, han llevado a los investigadores a pedir que se impulsen campañas de sensibilización como las que se llevan a cabo con el tabaco porque cualquier consumo de alcohol puede incidir negativamente en el crecimiento del bebé y afectar a su neurodesarrollo.
+
+\n¿Por qué el alcohol es perjudicial para el feto?
+\nCuando la embarazada bebe alcohol, este pasa directamente al feto a través de la placenta, donde es tóxico para su tejido neurológico. Su forma más grave por consumo excesivo causa el síndrome alcohólico fetal, que provoca retraso intelectual y malformaciones. Pequeñas cantidades pueden interferir en la formación del cerebro y producir problemas de comportamiento y aprendizaje. También puede alterar la absorción de nutriente y el crecimiento fetal, además de asociarse a una mayor prematuridad.
+
+\n\nFuente:
+\nDifferential correlations between maternal hair levels of tobacco and alcohol with fetal growth restriction clinical subtypes via ScienceDirect"
     </string>
-    <string name="title_three">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="title_three">La cafeína. ¿Realmente afecta a mi embarazo?</string>
     <string name="body_three">
-        Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones
-        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
-        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
-        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
-        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
-        "\n\nA pesar de los beneficios de " +
-        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
-        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
-        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
-        "con seguridad, sigue la siguiente recomendación: " +
-        "\n\nNo recomendables durante gestación y lactancia " +
-        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
-        "o en sushi." +
-        "\n\nFuentes:" +
-        "\nMINSA; Instituto Nacional de Salud
+        A pesar de los numerosos estudios sobre la relación entre el consumo de cafeína y el riesgo de aborto natural (pérdida del embarazo antes de la semana 20), los resultados no son concluyentes. La mayoría de expertos considera que un consumo diario inferior a los 200 miligramos de cafeína (el equivalente a unas 3 tazas pequeñas de café) es seguro durante el embarazo.
+
+        \n\nNo obstante, no se recomiendan las bebidas de tipo energético, ya que pueden contener altas cantidades de cafeína.
+
+        \n\nFuente:
+        \nYAMA
     </string>
-    <string name="title_four">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="title_four">¿Es necesario incluir grasas y aceites a mi dieta?</string>
     <string name="body_four">
-        Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones
-        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
-        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
-        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
-        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
-        "\n\nA pesar de los beneficios de " +
-        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
-        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
-        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
-        "con seguridad, sigue la siguiente recomendación: " +
-        "\n\nNo recomendables durante gestación y lactancia " +
-        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
-        "o en sushi." +
-        "\n\nFuentes:" +
-        "\nMINSA; Instituto Nacional de Salud
+        Aunque no constituyan un grupo de alimentos en sí mismo, los lípidos (aceites y grasas) te aportan nutrientes importantes y son fuentes concentradas de energía esenciales durante el embarazo. Por ejemplo, una cucharada de aceite contiene el doble de energía que una cucharada de azúcar.
+
+        \n\nGrasas necesarias en el embarazo
+\n\nDurante el embarazo, las grasas que consumes contribuyen al desarrollo de los órganos fetales y la placenta. No obstante, la mayoría de aceites y grasas que consumas deberían ser de origen vegetal (es especialmente recomendable el aceite de oliva); éstos, así como la grasa que se encuentra en el pescado, aportan las grasas que se consideran cardiosaludables, por su alto contenido en ácidos grasos poliinsaturados.
+
+\n\nEs recomendable limitar el consumo de grasas de origen animal y de grasas ocultas en alimentos procesados y fritos en general.
+
+        \n\nFuente:
+        \nMINSA; Instituto Nacional de Salud
     </string>
-    <string name="title_five">Como me ayudan las vitaminas y minerales para mi embarazo</string>
+    <string name="title_five">¿Qué tipos de verduras y tubérculos consumir con más regularidad?</string>
     <string name="body_five">
-        Las vitaminas y minerales desarrollan una función muy importante para el desarrollo de todas tus funciones
-        a parar, que esto solo se vive una vez, donde fuiste a parar donde estas. Las enfermedades del corazón y en el desarrollo" +
-        " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
-        "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
-        "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
-        "\n\nA pesar de los beneficios de " +
-        "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
-        "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
-        "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
-        "con seguridad, sigue la siguiente recomendación: " +
-        "\n\nNo recomendables durante gestación y lactancia " +
-        "(contenido demasiado alto de mercurio): pez espada, caballa, tiburón, mero, blanquillo y el atún fresco " +
-        "o en sushi." +
-        "\n\nFuentes:" +
-        "\nMINSA; Instituto Nacional de Salud
+        Verduras y hortalizas
+\nLa verdura fresca, en conserva, congelada o deshidratada, tanto cruda como cocida, y tanto sólida como en forma de zumo o puré.
+
+\n\nLas verduras y tubérculos de color naranja, como la zanahoria o el boniato, son buenas fuentes de vitamina A; los vegetales de hojas de color verde oscuro, como las espinacas o las acelgas, aportan folatos y vitaminas.
+
+\n\nTen presente: Hay que desinfectar las verduras crudas antes de consumirlas, ya que el uso de abono orgánico sin tratar o la contaminación puntual de pozos pueden haber contaminado las aguas de riego. Aunque anteriormente se recomendaba lavar las verduras con agua con unas gotas de lejía, actualmente se recomienda utilizar productos comerciales como la Amukina.
+        \n\nFuentes:
+        \nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_six">Durante el embarazo. ¿Cuánto peso debo ganar?</string>
+    <string name="body_six">
+        Durante el embarazo, debes satisfacer tus necesidades nutricionales y las de tu bebé, pero no necesitas “comer para dos”. El tipo de alimentos que consumas es mucho más importante que la cantidad; el aumento de peso recomendado durante el embarazo depende de tu estado de salud y tu índice de masa corporal (IMC) previo al embarazo.
+
+\n\nEl incremento de peso según el IMC previo a la gestación
+\nEl IMC es un ratio que se calcula a partir de la estatura y el peso, y que se usa para determinar si el peso de una persona se encuentra por debajo de lo normal, si es normal o si la persona tiene sobrepeso o es obesa. Si tu peso era normal en relación a este índice, deberías ganar entre 10 y 15 quilos, a lo largo de la gestación. Si tu peso era inferior al rango de normalidad, deberías ganar más peso que alguien con un peso normal antes del embarazo. Si presentabas sobrepeso u obesidad, el aumento de peso debe ser inferior.
+
+\n\nDELGADA: IMC inferior a 20 - Aumento de hasta 12,5 kg
+\nNORMAL: IMC entre 20 y 25 - Aumento de 11,5 kg
+\nSOBREPESO: IMC entre 25 y 30 - Aumento de 7 kg
+\nOBESA: IMC entre 30 y 40 - Aumento de 7 kg
+
+\n\nEl incremento de peso, por trimestres
+\nEs recomedable que la embarazada vaya ganando peso progresivamente. Así:
+
+\n\nEn el primer trimestre de embarazo se aumenta poco de peso, lo recomendable es entre 0,5 y 1,5 Kg. Hay mujeres que incluso no engordan nada o pierden peso debido a la presencia de náuseas y vómitos.
+En el segundo trimestre se recomienda un aumento entre 3,5 y 4 kg de peso.
+El tercer trimestre es el de mayor aumento de peso, debido también a que hasta el momento el feto se estaba desarrollando, pero apenas incrementaba de peso. Se recomienda un aumento de 5 a 5,5 kg, es decir unos 400 gramos cada semana.
+
+        \n\n¿Afectan el sobrepeso y la obesidad al embarazo?
+\nLas mujeres con sobrepeso u obesidad tienen un mayor riesgo de presentar problemas a lo largo del embarazo, concretamente, diabetes gestacional, hipertensión, preeclampsia (complicación de la gestación relacionada con la placenta, en la que la presión arterial de la gestante se eleva y aparecen niveles aumentados de proteínas en la orina), parto prematuro y/o parto por cesárea.
+
+\n\nLos bebés de madres con obesidad o sobrepeso también presentan un mayor riesgo de desarrollar defectos de nacimiento, como macrosomía, es decir, tamaño fetal aumentado por encima de la normalidad, con posibles lesiones en el parto, y obesidad infantil.
+
+\n\nFuente:
+        \nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_seven">Una alimentación equilibrada, clave durante el embarazo</string>
+    <string name="body_seven">
+La alimentación durante el embarazo ha de ser sana y equilibrada: tan perjudicial es que la madre se engorde demasiado como que aumente poco de peso. Para ello, la embarazada puede limitarse a seguir algunas normas básicas para que su dieta sea la adecuada para un buen desarrollo del feto. Solo en casos muy determinados (diabetes gestacional, anemia, etc.) el médico recomendará medidas más estrictas.
+
+
+\n\n1. Se ha de dar más importancia a la calidad de los alimentos que a su cantidad. Es por ello que la dieta de la embarazada ha de incluir diariamente:
+
+\nEntre medio y un litro de leche, sola o en forma de productos lácteos (yogurt, queso).
+\nVegetales (crudos o cocidos) dos o tres veces al día.
+\nFruta fresca, una o dos piezas al día.
+\nUna ración de carne, pescado o pollo.
+\nUn huevo.
+\nTres o cuatro rebanadas de pan.
+\nUna o dos cucharadas de aceite de oliva.
+\nCocinar con sal yodada con moderación.
+
+        \n\n2. La alimentación ha de ser variada para que la embarazada ingiera vitaminas y minerales suficientes para la nutrición y desarrollo del feto. De todas formas, puede ser conveniente que el médico recete algún producto en determinados periodos del embarazo en los cuales aumentan las necesidades de vitaminas y minerales, especialmente de hierro.
+
+\n\n3. Los alimentos se han de condimentar de forma sencilla, evitando los fritos, los guisos y las especias.
+
+\n\n4. La distribución de las comidas a lo largo del día ha de ser adecuada y equilibrada, siendo preferible espaciar la ingesta en 4 o 5 comidas, procurando masticar bien.
+
+\n\n5. Se han de ingerir cantidades normales de líquidos, estando contraindicadas las bebidas alcohólicas, gaseosas y dulces. Es recomendable beber entre 1,5 y 2 litros de agua al día.
+
+\n\n6. Durante el embarazo se puede tomar café, pero es preferible no abusar ya que atraviesa la barrera placentaria y actúa sobre el feto. Se recomienda que no se superen las dos tazas diarias, que aportan entre 200 y 300 miligramos de cafeína.
+
+\n\n7. Hay que seguir las recomendaciones generales para la manipulación de los alimentos: lavarse las manos con agua tibia y jabón antes y después de manipular alimentos crudos, lavar antes de consumir cualquier alimento procedente del campo y cocinar suficientemente los alimentos de origen animal (carne, pollo, huevos y pescado).
+
+        \n\nFuente:
+        \nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_eight">Consejos alimenticios en caso de diabetes gestacional</string>
+    <string name="body_eight">
+Cuando se detecta diabetes gestacional durante el embarazo, el objetivo del tratamiento alimentario es normalizar los niveles de glucemia de la madre para garantizar el adecuado crecimiento del bebé y su bienestar fetal. El tratamiento inicial consiste en una dieta individualizada, fraccionada y con una correcta selección de los hidratos de carbono que debe consumir la futura mamá.
+
+\n\nSi se diagnostica una diabetes gestacional durante el embarazo, las recomendaciones dietéticas serán las siguientes:
+
+\n- Deben suprimirse de la dieta los hidratos de carbono de rápida absorción. Es decir, no se podrá comer: azúcar, bombones, caramelos, chocolate, cremas, dulce de leche, membrillo, gaseosas, helados, batidos de chocolate, tartas, mermeladas, miel o postres con azúcar.
+
+\n- Sin embargo, sí que se podrán comer carbohidratos de absorción lenta –como pan, galletas, pastas, arroz, patata y legumbres–, cumpliendo siempre la siguiente proporción de nutrientes: 15-20 % proteinas, 30 % de grasas, 50-55 % de carbohidratos de absorción lenta.
+
+\n- La dieta se deberá adaptar a las necesidades nutricionales y al estilo de vida de cada mujer, teniendo en cuenta el peso previo al embarazo. Se ha comprobado que la restricción de aproximadamente el 30% del total de las calorías normaliza el perfil de la glucemia y mejora el perfil de grasas. La dieta debe ser completa, es decir aportar cantidades suficientes de hidratos de carbono, proteínas y grasas como así también de minerales, especialmente el hierro y el calcio (minerales de mayor requerimiento durante la gestación).
+
+\n- Se recomienda la realización de 4 comidas con 2 colaciones, pudiendo ser estas yogur, frutas frescas o ensalada de frutas. Las colaciones son alimentos que se consumen entre el desayuno y almuerzo o luego de la cena. Se evitan así las hipoglucemias en ayunas y las hiperglucemias después de comer.
+\n\nFuente:
+        \nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_nine">Dietas para aliviar ciertos síntomas del embarazo</string>
+    <string name="body_nine">
+Cuando las náuseas son persistentes, cuando el aumento de peso es excesivo o cuando el estreñimiento es una constante, la dieta de la embarazada puede adaptarse para ayudar a solucionar estas situaciones. Aunque el consejo del médico será siempre fundamental en estos casos, las dietas siguientes pueden ser de mucha ayuda.
+
+\n\nNáuseas y vómitos
+\n- Hay que comer con frecuencia y poca cantidad.
+\n- Hay que dar preferencia a los alimentos sólidos o espesos sobre los líquidos, y a los fríos o del tiempo sobre los calientes.
+\n- Hay que evitar comer a la fuerza. Se ha de hacer según el hambre que se tenga.
+
+\n\nAumento excesivo de peso
+\n- Hay que eliminar los alimentos salados de la dieta.
+\n- Hay que controlar el consumo de hidratos de carbono, en especial del pan, las féculas (legumbres, arroz), los cereales (pasta de sopa, macarrones, pizza).
+\n- Hay que disminuir el consumo de grasas, suprimiendo la mantequilla, bebiendo leche desnatada y tomando quesos bajos en grasa.
+\n- No se ha de tomar alimentos en conserva.
+\n- Hay que cocinar de forma sencilla, sustituyendo los fritos por los cocidos, asados y alimentos a la plancha.
+
+\n\nEstreñimiento
+\n- Tomar uno o dos vasos de agua en ayuno cinco minutos antes del desayuno.
+\n- Aumentar el consumo de fruta natural, de vegetales crudos y de verdura cocida.
+\n- Ingerir una o dos cucharadas de salvado de trigo o dos rebanadas de pan integral, que aumenten el volumen de las defecaciones.
+\n\nFuente:
+        \nMINSA; Instituto Nacional de Salud
+    </string>
+    <string name="title_ten">¿Qué es la listeriosis y cómo puede afectar a mi embarazo?</string>
+    <string name="body_ten">La listerioris es una enfermedad causada por una bacteria (Listeria monocytogenes) que puede desarrollarse en ciertos alimentos, siendo los más frecuentes los productos cárnicos precocinados, la leche, los productos lácteos no pasteurizados y el marisco. Las mujeres embarazadas tienen un riesgo 20 veces mayor de contraerla que la población normal. Por eso es muy importante que la embarazada sea muy escrupulosa con la limpieza de los alimentos. Te damos algunos consejos.
+
+\n\n¿Cuáles son los síntomas de la listeriosis?
+\n"La listeriosis suele presentarse con síntomas similares a los de la gripe: fiebre y un cuadro pseudogripal inespecífico. En algunos casos también pueden aparecer síntomas digestivos o dolor abdominal", nos explica la Dra Anna Goncé, especialista en infecciones en medicina maternofetal de BCNatal (Hospital Clínic y Hospital Sant Joan de Déu), cuando le preguntamos sobre la listeriosis, la infección que este verano han contraído casi un centenar de personas en Andalucía, 28 de ellas embarazadas.
+
+\n\n¿Por qué las embarazadas tienen más riesgo de contraer listeriosis?
+\n"Los cambios hormonales durante el embarazo producen un efecto sobre el sistema inmunológico de la madre que la hacen más susceptible a la listeriosis", explica Goncé. "De hecho, las mujeres embarazadas tienen una probabilidad 20 veces mayor que otros adultos sanos de contraer listeriosis –aproximadamente un tercio de los casos de listeriosis ocurren durante el embarazo–".
+
+\n\n¿Cómo puede afectar la listeriosis al feto?
+\nEsta infección suele ser un cuadro leve para la madre pero tiene gran afinidad por la placenta y puede infectar al feto y tener graves repercusiones para el bebé. Si la infección ocurre en los primeros meses de embarazo puede llevar a un aborto o a una muerte fetal intraútero; en el tercer trimestre (momento más frecuente de la infección) es causa de corioamnionitis (infección de las membranas placentarias y del líquido amniótico) y parto prematuro (parto antes de la semana 37 de embarazo), con una mortalidad para el bebé de aproximadamente el 20%.
+
+\n\nEn los casos de sospecha de síntomas por infección por Listeria es importante iniciar un tratamiento antibiótico lo antes posible puesto que puede mejorar el pronóstico e incluso curar la infección antes de que aparezcan las complicaciones.
+
+\n\n¿Cómo prevenir la listeriosis?
+\nLas mujeres embarazadas pueden reducir considerablemente las probabilidades de enfermarse si siguen cuidadosamente las medidas higiénicas y una serie de normas dietéticas para evitar el consumo de los alimentos potencialmente peligrosos. Los alimentos que tienen más riesgo de contaminación por listeriosis son los productos cárnicos precocinados, la leche, los productos lácteos no pasteurizados, y el marisco. Debido a que la Listeria puede crecer a las temperaturas de refrigeración o congelación y sólo se elimina con una cocción a temperaturas elevadas, se aconseja:
+
+\n- Cocinar muy bien todos los alimentos, especialmente las carnes, mariscos y pescados; y evitar pescados y mariscos ahumados (salmón, trucha, bacalao).
+\n- Evitar los derivados cárnicos, tales como salchichas, patés, fiambres, embutidos, etc., salvo que estén recalentados hasta el punto de emitir vapor. Se pueden comer los patés y los productos de carne para untar enlatados o que han sido procesados para conservarse sin que se deterioren.
+\n- No se recomienda comer quesos y productos lácteos no pasteurizados. Fijarse bien en las etiquetas o preguntar al dependiente. A menudo los quesos no pasteurizados son del tipo feta, brie, camembert, o como el roquefort o el cabrales. Se puede comer sin riesgos los quesos pasteurizados, muchos de los quesos para untar, mozzarela, requesón y yogur.
+\n- No tomar leche cruda ni comer alimentos o platos preparados con leche cruda.
+\n- Utilizar lo antes posible todos los productos perecederos que estén precocinados o que vengan listos para comer.
+\n- Limpiar con frecuencia el frigorífico.
+\n- Lavarse las manos con agua caliente y jabón después de manipular cualquier tipos de alimento fresco. Así mismo, lavar meticulosamente las frutas y vegetales, las tablas de cortar, la vajilla y los utensilios con el fin de eliminar cualquier bacteria que haya podido contaminar los alimentos antes de ser recalentados.
+\n- Recalentar muy bien todas las sobras de las comidas hasta que se observe el vapor. El calor puede ayudar a matar cualquier bacteria que pudiese estar presente.
+
+\n\n¿Qué debe hacer una embarazada que haya consumido un alimento contaminado?
+\nDebe ponerse en contacto con su centro de salud para que la informen correctamente. "La incubación de la infección puede ser larga, de hasta 70 días", detalla Goncé. Una vez consumido el alimento no se puede hacer nada para evitar la infección, ni para diagnosticarla antes de que aparezcan los síntomas. "En estos casos es importante estar alerta y consultar de forma precoz la aparición de síntomas compatibles (diarrea, fiebre) para confirmar el diagnóstico e iniciar el tratamiento antibiótico lo antes posible".
+        \n\nFuente:
+        \nMINSA; Instituto Nacional de Salud
     </string>
 
 
