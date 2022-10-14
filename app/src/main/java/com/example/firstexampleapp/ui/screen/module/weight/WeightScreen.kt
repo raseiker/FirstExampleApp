@@ -1,5 +1,6 @@
 package com.example.firstexampleapp.ui.screen.module.weight
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -8,29 +9,40 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.firstexampleapp.model.user.UserVar
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.*
+import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
+import com.example.firstexampleapp.ui.viewModel.weightViewModel.WeightViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@Composable
-fun WeightScreenPreview() {
-    FirstExampleAppTheme(darkTheme = true) {
-        WeightScreen()
-    }
-}
+//@Composable
+//fun WeightScreenPreview() {
+//    FirstExampleAppTheme(darkTheme = true) {
+//        WeightScreen()
+//    }
+//}
 
 @Composable
 fun WeightScreen(
-    onDark: () -> Unit = {}
+    weightViewModel: WeightViewModel,
+    userViewModel: UserViewModel
 ) {
+    val userState by userViewModel.user.collectAsState()
+    val keyboard = LocalFocusManager.current
+    var isTextShow by remember { mutableStateOf(false) }
     Scaffold(
         floatingActionButton = {
-            MyFab(onDark = onDark)
+            MyFab(onClick = { isTextShow = true})
         },
         topBar = {
             MyTopApBar(
@@ -53,18 +65,32 @@ fun WeightScreen(
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
             )
 
+            if (isTextShow) {
+                //show weight texfield
+                MyTextFieldForm(
+                    label = "Ingresa tu nuevo peso (kg)",
+                    text = weightViewModel.weight,
+                    onValueChange = { weight -> weightViewModel.onImcValueChange(weight) },
+                    onClearText = { weightViewModel.onClear() },
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Send,
+                    onSendClicked = {
+                        userViewModel.addWeightRecord(weightViewModel.weight)
+                        weightViewModel.onClear()
+                        keyboard.clearFocus()
+                        isTextShow = false
+                    },
+                    modifier = Modifier.padding(start = 25.dp, end = 25.dp, top = 10.dp, bottom = 40.dp)
+                )
+            }
+
             //show table food
             MyHeaderTable(
                 columnHeaders = listOf("Fecha", "Semana", "Peso", "Cambio"),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
             MyBodyTable(
-                data = listOf(
-                    listOf("03/05/2022", "10", "60.0kg", "0.0kg"),
-                    listOf("13/11/2022", "28", "78.6kg", "18.5kg"),
-                    listOf("03/06/2022", "30", "81.1kg", "3.0kg"),
-                    listOf("10/08/2022", "32", "85.9kg", "5.6kg")
-                ),
+                data = weightViewModel.weightToList(userState.weightRecord),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
         }

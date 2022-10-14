@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -68,7 +70,8 @@ fun MyTextFieldForm(
     modifier: Modifier = Modifier,
     text: String = "",
     onValueChange: (String) -> Unit = {},
-    onClearText: () -> Unit = {}
+    onClearText: () -> Unit = {},
+    onSendClicked: () -> Unit = {}
 ) {
     //var text by remember { mutableStateOf("") }
     val isPassword = (keyboardType == KeyboardType.Password)
@@ -86,6 +89,9 @@ fun MyTextFieldForm(
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
                 imeAction = imeAction
+            ),
+            keyboardActions = KeyboardActions(
+                onSend = { onSendClicked() }
             ),
             visualTransformation = if (isPassword && isVisibility) PasswordVisualTransformation() else VisualTransformation.None,
             trailingIcon = {
@@ -225,25 +231,27 @@ fun MyTextFieldFormDate(
 
 @Composable
 fun MyTextFieldFormQuestion(
-    label: String,
+    text: String,
+    onValueChange: (String) -> Unit,
+    onClearText: () -> Unit,
+    onSendClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var text by remember { mutableStateOf("") }
+//    var textt by remember { mutableStateOf(text) }
     Column(modifier = modifier) {
         OutlinedTextField(
             value = text,
-            onValueChange = { text = it },
-            label = {
-                Text(
-                    text = label
-                )
-            },
+            onValueChange = onValueChange,
+            label = { Text(text = "Tu respuesta...") },
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Send
+            ),
+            keyboardActions = KeyboardActions(
+                onSend = { onSendClicked() }
             ),
             trailingIcon = {
                 IconButton(
-                    onClick = { text = "" }
+                    onClick = onClearText
                 ) {
                     Icon(
                         painterResource(id = R.drawable.ic_baseline_close_24),
@@ -251,7 +259,8 @@ fun MyTextFieldFormQuestion(
                     )
                 }
             },
-            singleLine = true,
+//            singleLine = true,
+            maxLines = 2,
             colors = if (MaterialTheme.colors.isLight) {
                 TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Transparent,

@@ -12,28 +12,28 @@ import androidx.compose.ui.unit.dp
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
-@Composable
-fun MyTablesPreview() {
-    FirstExampleAppTheme() {
-        Scaffold() {
-            Column(modifier = Modifier.padding(paddingValues = it)) {
-                MyHeaderTable(
-                    columnHeaders = listOf("Fecha", "Semana", "Peso", "Cambio"),
-                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-                )
-                MyBodyTable(
-                    data = listOf(
-                        listOf("03/05/2022", "10", "60.0kg", "0.0kg"),
-                        listOf("13/11/2022", "28", "78.6kg", "18.5kg"),
-                        listOf("03/06/2022", "30", "81.1kg", "3.0kg"),
-                        listOf("10/08/2022", "32", "85.9kg", "5.6kg")
-                    ),
-                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-                )
-            }
-        }
-    }
-}
+//@Composable
+//fun MyTablesPreview() {
+//    FirstExampleAppTheme() {
+//        Scaffold() {
+//            Column(modifier = Modifier.padding(paddingValues = it)) {
+//                MyHeaderTable(
+//                    columnHeaders = listOf("Fecha", "Semana", "Peso", "Cambio"),
+//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//                )
+//                MyBodyTable(
+//                    data = listOf(
+//                        listOf("03/05/2022", "10", "60.0kg", "0.0kg"),
+//                        listOf("13/11/2022", "28", "78.6kg", "18.5kg"),
+//                        listOf("03/06/2022", "30", "81.1kg", "3.0kg"),
+//                        listOf("10/08/2022", "32", "85.9kg", "5.6kg")
+//                    ),
+//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//                )
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun MyHeaderTable(
@@ -65,7 +65,7 @@ fun MyHeaderTable(
 
 @Composable
 fun MyBodyTable(
-    data: List<List<String>>? = null,
+    data: MutableList<List<String>>? = null,
     modifier: Modifier = Modifier
 ) {
     Column(

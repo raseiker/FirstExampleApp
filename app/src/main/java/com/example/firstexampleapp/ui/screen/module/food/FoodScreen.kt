@@ -34,7 +34,7 @@ fun FoodScreen(
 ) {
     Scaffold(
         floatingActionButton = {
-            MyFab(onDark = onDark)
+            MyFab(onClick = onDark)
         },
         topBar = {
             MyTopApBar(
@@ -69,6 +69,7 @@ fun FoodScreen(
                 label = "Porciones",
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Search,
+                onSendClicked = {},
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
@@ -80,11 +81,11 @@ fun FoodScreen(
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
             MyBodyTable(
-                data = listOf(
-                    listOf("570kcal", "50g", "0kg", "1g", "18g"),
-                    listOf("570kcal", "50g", "0kg", "1g", "18g"),
-                    listOf("570kcal", "50g", "0kg", "1g", "18g")
-                ),
+//                data = listOf(
+//                    listOf("570kcal", "50g", "0kg", "1g", "18g"),
+//                    listOf("570kcal", "50g", "0kg", "1g", "18g"),
+//                    listOf("570kcal", "50g", "0kg", "1g", "18g")
+//                ),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
         }
