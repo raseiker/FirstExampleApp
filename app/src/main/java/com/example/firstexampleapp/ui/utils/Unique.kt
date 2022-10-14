@@ -216,10 +216,10 @@ fun MyScreenTitle(
 
 @Composable
 fun MyFab(
-    onDark: () -> Unit = {}
+    onClick: () -> Unit = {}
 ) {
     FloatingActionButton(
-        onClick = onDark,//change darkmode
+        onClick = onClick,//
         backgroundColor = MaterialTheme.colors.secondaryVariant,
     ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = null)

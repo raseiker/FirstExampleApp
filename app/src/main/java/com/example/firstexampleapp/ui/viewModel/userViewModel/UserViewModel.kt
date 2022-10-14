@@ -7,6 +7,7 @@ import com.example.firstexampleapp.model.user.Trimester
 import com.example.firstexampleapp.model.user.UserState
 import com.example.firstexampleapp.model.user.UserVar
 import com.example.firstexampleapp.model.user.repository.users
+import com.example.firstexampleapp.model.weight.WeightState
 import kotlinx.coroutines.flow.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -64,14 +65,15 @@ class UserViewModel(
     fun onValueChangeImc(imc: Map<String, String>) {
         when (imc.keys.first()) {
             UserVar.Height.type -> {
-                _imc[UserVar.Height.type] = imc[UserVar.Height.type].toString()
+                _imc[UserVar.Height.type] = imc[UserVar.Height.type].toString()//look closer
                 _user.value.imc[UserVar.Height.type] =
-                    _imc[UserVar.Height.type].toString().toDouble()
+                    _imc[UserVar.Height.type].toString()
             }
             UserVar.Weight.type -> {
-                _imc[UserVar.Weight.type] = imc[UserVar.Weight.type].toString()
+                _imc[UserVar.Weight.type] = imc[UserVar.Weight.type].toString()//look closer
                 _user.value.imc[UserVar.Weight.type] =
-                    _imc[UserVar.Weight.type].toString().toDouble()
+                    _imc[UserVar.Weight.type].toString()
+                _user.value.weightRecord[0] = _user.value.weightRecord[0].copy(weight = imc[UserVar.Weight.type].toString())//update weightRecord
             }
             else -> return
         }
@@ -83,6 +85,8 @@ class UserViewModel(
         getCurrentPregnancyDay()
         getTrimester()
         getPregnancyProgress()
+        _user.value.weightRecord[0] = _user.value.weightRecord[0].copy(week = _user.value.pregnancyWeek)//update weightRecord
+//        addWeightRecord()
     }
 
     fun onValueChangeFirstPregnancy(firstPregnancy: String) =
@@ -116,6 +120,7 @@ class UserViewModel(
             getCurrentPregnancyDay()
             getTrimester()
             getPregnancyProgress()
+//            Log.d("currentDate", _user.value.weightRecord.last().currentDate)
             true
         }else{
             false
@@ -161,6 +166,18 @@ class UserViewModel(
     //do begin later in home screen not login screen
 
     private fun getUsers() = users
+
+    fun addWeightRecord(weight: String = "0.0"){
+        val today = Calendar.getInstance()
+        val new = WeightState(
+            currentDate = "${today.get(Calendar.DAY_OF_MONTH)}/${today.get(Calendar.MONTH) + 1}/${today.get(Calendar.YEAR)}",
+            week = _user.value.pregnancyWeek,
+            weight = weight,
+            changeWeight = String.format("%.1f", weight.toDouble() - _user.value.weightRecord.first().weight.toDouble())
+                .toDouble()//round double to one decimal
+        )
+        _user.update { it.copy(weightRecord = mutableListOf(new).also { newList -> _user.value.weightRecord.forEach { newList.add(it) }}) }
+    }
 
 }
 //

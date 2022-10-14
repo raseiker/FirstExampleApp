@@ -1,5 +1,7 @@
 package com.example.firstexampleapp.model.user
 
+import com.example.firstexampleapp.model.weight.WeightState
+
 data class UserState(
     val idUser: Int = 0,
     val name: String = "",
@@ -12,7 +14,8 @@ data class UserState(
     val trimester: Trimester = Trimester.Third,
     val pregnancyProgress: Float = 1f,
     val credentials: MutableMap<String, String> = mutableMapOf(),
-    val imc: MutableMap<String, Double> = mutableMapOf()
+    val imc: MutableMap<String, String> = mutableMapOf(),//changed to string type in weight value
+    val weightRecord: MutableList<WeightState> = mutableListOf(WeightState())//add this parameter
 )
 
 sealed class UserVar(val type: String){

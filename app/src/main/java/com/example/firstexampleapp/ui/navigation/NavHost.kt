@@ -21,15 +21,21 @@ import com.example.firstexampleapp.ui.screen.login.CredentialScreen
 import com.example.firstexampleapp.ui.screen.login.CustomContentScreen
 import com.example.firstexampleapp.ui.screen.login.LoginScreen
 import com.example.firstexampleapp.ui.screen.module.ModuleScreen
+import com.example.firstexampleapp.ui.screen.module.question.QuestionScreen
+import com.example.firstexampleapp.ui.screen.module.weight.WeightScreen
 import com.example.firstexampleapp.ui.viewModel.articleViewModel.ArticleViewModel
+import com.example.firstexampleapp.ui.viewModel.questionViewModel.QuestionViewModel
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
+import com.example.firstexampleapp.ui.viewModel.weightViewModel.WeightViewModel
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalUnitApi::class)
 @Composable
 fun SetUpNavHost(
     navController: NavHostController = rememberNavController(),
     userViewModel: UserViewModel = viewModel(),
-    articleViewModel: ArticleViewModel = viewModel()
+    articleViewModel: ArticleViewModel = viewModel(),
+    weightViewModel: WeightViewModel = viewModel(),
+    questionViewModel: QuestionViewModel = viewModel()
 ) {
     NavHost(
         navController = navController,
@@ -84,17 +90,13 @@ fun SetUpNavHost(
             )
         }
 
-        composable(route = Screen.ModuleScreen.route) {
-            ModuleScreen(
-                userViewModel = userViewModel,
-                onItemBottomBarClicked = {
-                    onItemClicked(
-                        screen = it,
-                        navController = navController
-                    )
-                }
-            )
-        }
+        moduleGraph(
+            navController = navController,
+            userViewModel = userViewModel,
+            weightViewModel = weightViewModel,
+            questionViewModel = questionViewModel
+        )
+
 
     }
 }
@@ -139,6 +141,45 @@ fun NavGraphBuilder.loginGraph(
             CredentialScreen(
                 userViewModel = userViewModel,
                 onDoneClicked = { navController.navigate(Screen.HomeScreen.route) }
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+fun NavGraphBuilder.moduleGraph(
+    navController: NavController,
+    userViewModel: UserViewModel,
+    weightViewModel: WeightViewModel,
+    questionViewModel: QuestionViewModel
+){
+    navigation(
+        startDestination = Screen.ModuleScreen.route,
+        route = Screen.ModuleGraph.route
+    ){
+        composable(route = Screen.ModuleScreen.route) {
+            ModuleScreen(
+                userViewModel = userViewModel,
+                onCardClicked = { navController.navigate(it.route) },
+                onItemBottomBarClicked = {
+                    onItemClicked(
+                        screen = it,
+                        navController = navController
+                    )
+                }
+            )
+        }
+
+        composable(route = Screen.WeightScreen.route){
+            WeightScreen(
+                weightViewModel = weightViewModel,
+                userViewModel = userViewModel
+            )
+        }
+
+        composable(route = Screen.QuestionScreen.route){
+            QuestionScreen(
+                questionViewModel = questionViewModel,
             )
         }
     }

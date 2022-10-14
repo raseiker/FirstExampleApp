@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.firstexampleapp.R
+import com.example.firstexampleapp.ui.navigation.Screen
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.MyBottomBar
 import com.example.firstexampleapp.ui.utils.MyScreenTitle
@@ -31,7 +32,8 @@ import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 @Composable
 fun ModuleScreen(
     userViewModel: UserViewModel,
-    onItemBottomBarClicked: (String) -> Unit
+    onItemBottomBarClicked: (String) -> Unit,
+    onCardClicked: (Screen) -> Unit
 ) {
     Scaffold(
         bottomBar = {
@@ -63,6 +65,7 @@ fun ModuleScreen(
                 title = "Mi Peso",
                 subTitle = "Monitorea tu peso semanalmente",
                 image = R.mipmap.vector_weight,
+                onClick = { onCardClicked(Screen.WeightScreen) },
                 modifier = Modifier.constrainAs(item1) {
                     top.linkTo(parent.top, margin = 160.dp)
                     start.linkTo(parent.start, margin = 25.dp)
@@ -76,6 +79,7 @@ fun ModuleScreen(
                 title = "Preguntas",
                 subTitle = "Qué preguntar a tu doctor",
                 image = R.mipmap.vector_questions,
+                onClick = { onCardClicked(Screen.QuestionScreen) },
                 modifier = Modifier.constrainAs(item2) {
                     top.linkTo(parent.top, margin = 120.dp)
                     start.linkTo(item1.end, margin = 10.dp)
@@ -88,6 +92,7 @@ fun ModuleScreen(
                 title = "Recetas",
                 subTitle = "Elabora tus recetas saludables",
                 image = R.mipmap.vector_recipe,
+                onClick = { onCardClicked(Screen.RecipeScreen) },
                 modifier = Modifier.constrainAs(item3) {
                     top.linkTo(item1.bottom, margin = 20.dp)
                     start.linkTo(parent.start, margin = 25.dp)
@@ -101,6 +106,7 @@ fun ModuleScreen(
                 title = "Calculadora de Alimentos",
                 subTitle = "Identifica las calorías exactas",
                 image = R.mipmap.vector_nutricalculator_two,
+                onClick = { onCardClicked(Screen.FoodScreen) },
                 modifier = Modifier.constrainAs(item4) {
                     top.linkTo(item2.bottom, margin = 20.dp)
                     start.linkTo(item3.end, margin = 10.dp)
@@ -110,9 +116,10 @@ fun ModuleScreen(
 
             //show a tool module card 5
             MyToolCard(
-                title = "Recomendaciones",
-                subTitle = "Qué comer según tu edad gestacional",
+                title = "Seguimiento",
+                subTitle = "Monitorea el cumplimiento de tus objetivos",
                 image = R.mipmap.vector_recommendations,
+                onClick = { onCardClicked(Screen.TracingScreen) },
                 modifier = Modifier.constrainAs(item5) {
                     top.linkTo(item3.bottom, margin = 20.dp)
                     start.linkTo(parent.start, margin = 25.dp)
@@ -126,6 +133,7 @@ fun ModuleScreen(
                 title = "Tareas",
                 subTitle = "Monitorea tus tareas pendientes",
                 image = R.mipmap.vector_task,
+                onClick = { onCardClicked(Screen.TaskScreen) },
                 modifier = Modifier.constrainAs(item6) {
                     top.linkTo(item4.bottom, margin = 20.dp)
                     start.linkTo(item5.end, margin = 10.dp)

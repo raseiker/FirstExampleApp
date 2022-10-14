@@ -71,7 +71,7 @@ fun MyBottomBar(
 
         BottomNavigationItem(
             selected = isSelected[2],
-            onClick = { onItemBottomBarClicked(Screen.ModuleScreen.route) },
+            onClick = { onItemBottomBarClicked(Screen.ModuleGraph.route) },
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_dashboard_24),

@@ -317,6 +317,10 @@ fun MyArticleCard(
 @Composable
 fun MyExpandibleNormalCard(
     question: String,
+    answer: String,
+    onValueChange: (String) -> Unit,
+    onClearText: () -> Unit,
+    onSendClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -325,9 +329,7 @@ fun MyExpandibleNormalCard(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp))
     ) {
-        var isExpanded by remember {
-            mutableStateOf(value = false)
-        }
+        var isExpanded by remember { mutableStateOf(value = false) }
         Column() {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -380,7 +382,10 @@ fun MyExpandibleNormalCard(
             }
             if (isExpanded) {
                 MyTextFieldFormQuestion(
-                    label = "Tu respuesta...",
+                    text = answer,
+                    onValueChange = onValueChange,
+                    onClearText = onClearText,
+                    onSendClicked = onSendClicked
                 )
             }
         }
@@ -393,10 +398,11 @@ fun MyToolCard(
     title: String,
     subTitle: String,
     @DrawableRes image: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     Card(
-        onClick = { /*TODO*/ },
+        onClick = onClick,
         elevation = 5.dp,
         modifier = modifier,
         shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp))
