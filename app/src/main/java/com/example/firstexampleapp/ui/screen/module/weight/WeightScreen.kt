@@ -78,7 +78,6 @@ fun WeightScreen(
                         userViewModel.addWeightRecord(weightViewModel.weight)
                         weightViewModel.onClear()
                         keyboard.clearFocus()
-                        isTextShow = false
                     },
                     modifier = Modifier.padding(start = 25.dp, end = 25.dp, top = 10.dp, bottom = 40.dp)
                 )
@@ -91,6 +90,7 @@ fun WeightScreen(
             )
             MyBodyTable(
                 data = weightViewModel.weightToList(userState.weightRecord),
+                onCellClicked = { position -> userViewModel.deleteWeightRecord(position) },
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
         }

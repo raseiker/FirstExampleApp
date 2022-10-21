@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "132583911190",
+    "project_id": "happybellybbdd",
+    "storage_bucket": "happybellybbdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132583911190:android:2a9733687caf5151aaea37",
+        "android_client_info": {
+          "package_name": "com.example.firstexampleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132583911190-ihaedhnatoe4blorc04ej6u00v2edh0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdhY4PiqLORmGnjtI9nzAPSlBVEEMIQrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132583911190-ihaedhnatoe4blorc04ej6u00v2edh0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

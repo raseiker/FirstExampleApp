@@ -128,6 +128,11 @@ class UserViewModel(
 //        return !_user.value.credentials[UserVar.Email.type].isNullOrEmpty() && !_user.value.credentials[UserVar.Password.type].isNullOrEmpty()
     }
 
+    fun LogoutUser() {
+        _user.value = UserState()
+        _credential = mutableStateMapOf()
+    }
+
     private fun getCurrentPregnancyDay() {
         val userPregnancy = _user.value.firstPregnancy ?: _user.value.lastPeriod ?: "11/13/1995"
         val weekInInYear = 52//const for week of a year
@@ -162,7 +167,8 @@ class UserViewModel(
         }//36.0 is equal to 9 months or 32 weeks
     }//do begin later in home screen not login screen
 
-    fun getFirstNameLetter() = _user.value.name.substring(0, 1).uppercase()
+    fun getFirstNameLetter() = if (_user.value.name.isNotEmpty()) _user.value.name.substring(0, 1).uppercase() else "C"
+
     //do begin later in home screen not login screen
 
     private fun getUsers() = users
@@ -177,6 +183,10 @@ class UserViewModel(
                 .toDouble()//round double to one decimal
         )
         _user.update { it.copy(weightRecord = mutableListOf(new).also { newList -> _user.value.weightRecord.forEach { newList.add(it) }}) }
+    }
+
+    fun deleteWeightRecord(position: Int){
+        _user.update { it.copy(weightRecord = (_user.value.weightRecord - _user.value.weightRecord[position]).toMutableList()) }
     }
 
 }

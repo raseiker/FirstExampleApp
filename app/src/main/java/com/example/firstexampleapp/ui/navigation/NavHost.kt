@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
@@ -16,15 +17,20 @@ import com.example.firstexampleapp.model.user.UserState
 import com.example.firstexampleapp.ui.screen.explore.ArticleScreen
 import com.example.firstexampleapp.ui.screen.explore.ExploreScreen
 import com.example.firstexampleapp.ui.screen.home.HomeScreen
-import com.example.firstexampleapp.ui.screen.login.AboutYouScreen
-import com.example.firstexampleapp.ui.screen.login.CredentialScreen
-import com.example.firstexampleapp.ui.screen.login.CustomContentScreen
-import com.example.firstexampleapp.ui.screen.login.LoginScreen
+import com.example.firstexampleapp.ui.screen.login.*
 import com.example.firstexampleapp.ui.screen.module.ModuleScreen
+import com.example.firstexampleapp.ui.screen.module.food.FoodScreen
 import com.example.firstexampleapp.ui.screen.module.question.QuestionScreen
+import com.example.firstexampleapp.ui.screen.module.recipe.RecipeDetailScreen
+import com.example.firstexampleapp.ui.screen.module.recipe.RecipeScreen
+import com.example.firstexampleapp.ui.screen.module.task.TaskScreen
+import com.example.firstexampleapp.ui.screen.module.track.TrackScreen
 import com.example.firstexampleapp.ui.screen.module.weight.WeightScreen
 import com.example.firstexampleapp.ui.viewModel.articleViewModel.ArticleViewModel
+import com.example.firstexampleapp.ui.viewModel.foodViewModel.FoodViewModel
 import com.example.firstexampleapp.ui.viewModel.questionViewModel.QuestionViewModel
+import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
+import com.example.firstexampleapp.ui.viewModel.taskViewModel.TaskViewModel
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 import com.example.firstexampleapp.ui.viewModel.weightViewModel.WeightViewModel
 
@@ -35,7 +41,12 @@ fun SetUpNavHost(
     userViewModel: UserViewModel = viewModel(),
     articleViewModel: ArticleViewModel = viewModel(),
     weightViewModel: WeightViewModel = viewModel(),
-    questionViewModel: QuestionViewModel = viewModel()
+    questionViewModel: QuestionViewModel = viewModel(),
+    recipeViewModel: RecipeViewModel = viewModel(),
+    foodViewModel: FoodViewModel = viewModel(),
+    taskViewModel: TaskViewModel = viewModel(),
+    isDark: Boolean,
+    onThemeChange: (Boolean) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -44,7 +55,9 @@ fun SetUpNavHost(
 
         loginGraph(
             navController = navController,
-            userViewModel = userViewModel
+            userViewModel = userViewModel,
+            onThemeChange = onThemeChange,
+            isDark = isDark
         )
 
         composable(route = Screen.HomeScreen.route) {
@@ -58,7 +71,7 @@ fun SetUpNavHost(
                     )
                 },
                 onCardActionClicked = { Log.d("cardClick", it) },
-                onCardArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle)}
+                onCardArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle) }
             )
         }
 
@@ -67,7 +80,8 @@ fun SetUpNavHost(
                 articleViewModel = articleViewModel,
                 userViewModel = userViewModel,
                 onCategoryClicked = { screen -> Log.d("catClicked", screen) },
-                onArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle)},
+                onArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle) },
+                onSignatureClicked = { navController.navigate(Screen.LogoutScren.route) },
                 onItemBottomBarClicked = {
                     onItemClicked(
                         screen = it,
@@ -80,11 +94,11 @@ fun SetUpNavHost(
         composable(
             route = Screen.ArticleScreen.route + "{idArticle}",
             arguments = listOf(
-                navArgument(name = "idArticle"){
+                navArgument(name = "idArticle") {
                     type = NavType.IntType
                 }
             )
-        ){
+        ) {
             ArticleScreen(
                 articleState = articleViewModel.getArticle(idArticle = it.arguments?.getInt("idArticle")!!)
             )
@@ -94,10 +108,11 @@ fun SetUpNavHost(
             navController = navController,
             userViewModel = userViewModel,
             weightViewModel = weightViewModel,
-            questionViewModel = questionViewModel
+            questionViewModel = questionViewModel,
+            recipeViewModel = recipeViewModel,
+            foodViewModel = foodViewModel,
+            taskViewModel = taskViewModel
         )
-
-
     }
 }
 
@@ -106,6 +121,8 @@ fun SetUpNavHost(
 fun NavGraphBuilder.loginGraph(
     navController: NavHostController,
     userViewModel: UserViewModel,
+    onThemeChange: (Boolean) -> Unit,
+    isDark: Boolean
 ) {
     navigation(
         startDestination = Screen.LoginScreen.route,
@@ -143,6 +160,18 @@ fun NavGraphBuilder.loginGraph(
                 onDoneClicked = { navController.navigate(Screen.HomeScreen.route) }
             )
         }
+
+        composable(route = Screen.LogoutScren.route) {
+            LogoutScreen(
+                userViewModel = userViewModel,
+                isDark = isDark,
+                onThemeChange = onThemeChange,
+                onLogoutClicked = {
+                    navController.popBackStack()
+                    navController.navigate(route = Screen.LoginGraph.route)
+                }
+            )
+        }
     }
 }
 
@@ -151,16 +180,20 @@ fun NavGraphBuilder.moduleGraph(
     navController: NavController,
     userViewModel: UserViewModel,
     weightViewModel: WeightViewModel,
-    questionViewModel: QuestionViewModel
-){
+    questionViewModel: QuestionViewModel,
+    recipeViewModel: RecipeViewModel,
+    foodViewModel: FoodViewModel,
+    taskViewModel: TaskViewModel
+) {
     navigation(
         startDestination = Screen.ModuleScreen.route,
         route = Screen.ModuleGraph.route
-    ){
+    ) {
         composable(route = Screen.ModuleScreen.route) {
             ModuleScreen(
                 userViewModel = userViewModel,
                 onCardClicked = { navController.navigate(it.route) },
+                onSignatureClicked = { navController.navigate(route = Screen.LogoutScren.route) },
                 onItemBottomBarClicked = {
                     onItemClicked(
                         screen = it,
@@ -169,17 +202,52 @@ fun NavGraphBuilder.moduleGraph(
                 }
             )
         }
-
-        composable(route = Screen.WeightScreen.route){
+        composable(route = Screen.WeightScreen.route) {
             WeightScreen(
                 weightViewModel = weightViewModel,
                 userViewModel = userViewModel
             )
         }
-
-        composable(route = Screen.QuestionScreen.route){
+        composable(route = Screen.QuestionScreen.route) {
             QuestionScreen(
                 questionViewModel = questionViewModel,
+            )
+        }
+        composable(route = Screen.RecipeScreen.route) {
+            RecipeScreen(
+                recipeViewModel = recipeViewModel,
+                onCardClicked = { idRecipe -> navController.navigate(route = Screen.RecipeDetailScreen.route + idRecipe) }
+            )
+        }
+        composable(
+            route = Screen.RecipeDetailScreen.route + "{idRecipe}",
+            arguments = listOf(
+                navArgument(name = "idRecipe") {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            RecipeDetailScreen(
+                recipeViewModel = recipeViewModel,
+                recipeState = recipeViewModel.getRecipeById(idRecipe = it.arguments?.getInt("idRecipe")!!).collectAsState()
+            )
+        }
+        composable(route = Screen.FoodScreen.route){
+            FoodScreen(
+                foodViewModel = foodViewModel
+            )
+        }
+        composable(route = Screen.TaskScreen.route){
+            TaskScreen(
+                taskViewModel = taskViewModel
+            )
+        }
+        composable(route = Screen.TrackScreen.route){
+            TrackScreen(
+                taskViewModel = taskViewModel,
+                recipeViewModel = recipeViewModel,
+                questionViewModel = questionViewModel,
+                userState = userViewModel.user.collectAsState()
             )
         }
     }
