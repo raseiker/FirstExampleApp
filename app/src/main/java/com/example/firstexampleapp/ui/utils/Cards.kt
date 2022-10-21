@@ -215,7 +215,7 @@ fun MyArticleItemCard(
                 Image(
                     painter = painterResource(id = image),
                     contentDescription = "",
-                    modifier = Modifier.size(90.dp),//before 100
+                    modifier = Modifier.size(100.dp),//before 100
                     contentScale = ContentScale.Crop
                 )
                 Column(modifier = Modifier.padding(start = 12.dp)) {

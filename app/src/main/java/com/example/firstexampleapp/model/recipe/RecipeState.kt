@@ -3,6 +3,7 @@ package com.example.firstexampleapp.model.recipe
 data class RecipeState(
     val idRecipe: Int = 0,
     val title: String = "",
+    val photo: Int = 0,
     val mix: List<String> = listOf(),
     val cookingTime: String = "0.0",
     val difficulty: Level = Level.Junior,

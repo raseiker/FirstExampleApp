@@ -76,7 +76,7 @@ fun RecipeScreen(
                 MyArticleItemCard(
                     title = recipe.value.title,
                     subTitle = "${recipe.value.cookingTime} · ${recipe.value.quantity} · ${recipe.value.difficulty.type}",
-                    image = R.mipmap.fruits,
+                    image = recipe.value.photo,
                     onClick = { onCardClicked(recipe.value.idRecipe) },
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                 )

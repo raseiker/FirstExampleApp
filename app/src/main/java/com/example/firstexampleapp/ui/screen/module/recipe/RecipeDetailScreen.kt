@@ -61,9 +61,15 @@ fun RecipeDetailScreen(
             )
 
             //show nutrition info recipe
-            MyRecipeBody(
-                title = "Valor nutricional:",
-                text = "",
+//            MyRecipeBody(
+//                title = "Valor nutricional por porción:",
+//                text = "",
+//                modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp)
+//            )
+//
+            MyText(
+                text = "Valor nutricional por persona:",
+                isTitle = true,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp)
             )
 

@@ -69,7 +69,7 @@ fun FoodScreen(
             )
 
             MyTextFieldForm(
-                label = "Porciones",
+                label = "Onzas",
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Search,
                 text = foodViewModel.quantity.value,

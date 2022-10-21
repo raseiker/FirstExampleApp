@@ -53,11 +53,11 @@ class FoodViewModel : ViewModel() {
             val number = if (quantity.value == "") 1 else quantity.value.toInt()
             foodList.add(
                 listOf(
-                    "${foodState.nutritionInfo[0] * number }kcal",
-                    "${foodState.nutritionInfo[1] * number }g",
-                    "${foodState.nutritionInfo[2] * number }kg",
-                    "${foodState.nutritionInfo[3] * number }g",
-                    "${foodState.nutritionInfo[4] * number }g"
+                    String.format("%.1f", foodState.nutritionInfo[0] * number),
+                    "${String.format("%.1f", foodState.nutritionInfo[1] * number) }g",
+                    "${String.format("%.1f", foodState.nutritionInfo[2] * number) }kg",
+                    "${String.format("%.1f", foodState.nutritionInfo[3] * number) }g",
+                    "${String.format("%.1f", foodState.nutritionInfo[4] * number) }g"
                 )
             )
         }
