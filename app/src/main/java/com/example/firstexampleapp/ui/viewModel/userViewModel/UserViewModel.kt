@@ -150,9 +150,9 @@ class UserViewModel(
     }//do begin later in home screen not login screen
 
     private fun getTrimester() {
-        if (_user.value.pregnancyWeek <= 12) {
+        if (_user.value.pregnancyWeek <= 13) {
             _user.update { it.copy(trimester = Trimester.First) }
-        } else if (_user.value.pregnancyWeek <= 24) {
+        } else if (_user.value.pregnancyWeek <= 27) {
             _user.update { it.copy(trimester = Trimester.Second) }
         } else {
             _user.update { it.copy(trimester = Trimester.Third) }
@@ -163,8 +163,8 @@ class UserViewModel(
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.FLOOR
         _user.update {
-            it.copy(pregnancyProgress = df.format(_user.value.pregnancyWeek / 36.0).toFloat())
-        }//36.0 is equal to 9 months or 32 weeks
+            it.copy(pregnancyProgress = df.format(_user.value.pregnancyWeek / 40.0).toFloat())
+        }//40.0 is equal to 10 months or 40 weeks
     }//do begin later in home screen not login screen
 
     fun getFirstNameLetter() = if (_user.value.name.isNotEmpty()) _user.value.name.substring(0, 1).uppercase() else "C"
@@ -186,6 +186,7 @@ class UserViewModel(
     }
 
     fun deleteWeightRecord(position: Int){
+        if (position == _user.value.weightRecord.lastIndex) return
         _user.update { it.copy(weightRecord = (_user.value.weightRecord - _user.value.weightRecord[position]).toMutableList()) }
     }
 

@@ -11,15 +11,10 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.firstexampleapp.model.user.UserVar
-import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.*
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 import com.example.firstexampleapp.ui.viewModel.weightViewModel.WeightViewModel
