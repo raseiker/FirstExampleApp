@@ -1,5 +1,6 @@
 package com.example.firstexampleapp.ui.utils
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -66,16 +67,18 @@ fun MyHeaderTable(
 @Composable
 fun MyBodyTable(
     data: MutableList<List<String>>? = null,
+    onCellClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
     ) {
-        data?.forEach { cells ->
+        data?.forEachIndexed{ i, cells ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 20.dp)
+                    .clickable { onCellClicked(i) }
             ) {
                 cells.forEach { cell ->
                     Text(

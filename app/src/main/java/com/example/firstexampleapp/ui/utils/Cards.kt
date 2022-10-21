@@ -192,11 +192,12 @@ fun MyNormalCard(
 fun MyArticleItemCard(
     title: String,
     subTitle: String,
+    onClick: () -> Unit,
     @DrawableRes image: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
-        onClick = { /*TODO*/ },// to action
+        onClick = onClick,// to action
         elevation = 5.dp,
         modifier = modifier,
         shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp))
@@ -214,7 +215,7 @@ fun MyArticleItemCard(
                 Image(
                     painter = painterResource(id = image),
                     contentDescription = "",
-                    modifier = Modifier.size(100.dp),
+                    modifier = Modifier.size(90.dp),//before 100
                     contentScale = ContentScale.Crop
                 )
                 Column(modifier = Modifier.padding(start = 12.dp)) {
@@ -444,13 +445,14 @@ fun MyToolCard(
 fun MyCheckBoxCard(
     task: String,
     isDone: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var isChecked by remember {
-        mutableStateOf(isDone)
-    }
+//    var isChecked by remember {
+//        mutableStateOf(isDone)
+//    }
     Card(
-        onClick = { /*TODO*/ },//IR A LA ACCION O PAGINA
+        onClick = {},//IR A LA ACCION O PAGINA
         elevation = 5.dp,
         modifier = modifier,
         shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp))
@@ -462,8 +464,8 @@ fun MyCheckBoxCard(
                 .padding(all = 10.dp)
         ) {
             Checkbox(
-                checked = isChecked,
-                onCheckedChange = { isChecked = !isChecked },
+                checked = isDone,
+                onCheckedChange = onCheckedChange,
             )
             Text(
                 text = task,
@@ -482,10 +484,11 @@ fun MyProgressIndicatorCard(
     title: String,
     trimester: String,
     progress: Float,
+    tint: Color? = MaterialTheme.colors.secondaryVariant,
     modifier: Modifier = Modifier
 ) {
     Card(
-        onClick = { /*TODO*/ },//IR A LA ACCION O PAGINA
+        onClick = {},//IR A LA ACCION O PAGINA
         elevation = 5.dp,
         shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp)),
         modifier = modifier.fillMaxWidth()
@@ -508,8 +511,8 @@ fun MyProgressIndicatorCard(
             )
             LinearProgressIndicator(
                 progress = progress,
-                color = MaterialTheme.colors.secondaryVariant,
-                backgroundColor = MaterialTheme.colors.secondaryVariant.copy(alpha = 0.3f),
+                color = tint ?: MaterialTheme.colors.secondaryVariant,
+                backgroundColor = tint?.copy(alpha = 0.3f) ?: MaterialTheme.colors.secondaryVariant.copy(alpha = 0.3f),
                 modifier = Modifier
                     .height(10.dp)
                     .clip(shape = CircleShape)

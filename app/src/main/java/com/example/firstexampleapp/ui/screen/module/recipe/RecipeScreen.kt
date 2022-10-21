@@ -10,6 +10,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,29 +19,28 @@ import androidx.compose.ui.unit.dp
 import com.example.firstexampleapp.R
 
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
-import com.example.firstexampleapp.ui.utils.MyFab
-import com.example.firstexampleapp.ui.utils.MyNormalCard
-import com.example.firstexampleapp.ui.utils.MyText
-import com.example.firstexampleapp.ui.utils.MyTopApBar
+import com.example.firstexampleapp.ui.utils.*
+import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@ExperimentalMaterialApi
-@Composable
-fun RecipeScreenPreview() {
-    FirstExampleAppTheme(
-        darkTheme = true
-    ) {
-        RecipeScreen()
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//fun RecipeScreenPreview() {
+//    FirstExampleAppTheme(
+//        darkTheme = true
+//    ) {
+//        RecipeScreen()
+//    }
+//}
 
 @ExperimentalMaterialApi
 @Composable
-fun RecipeScreen() {
+fun RecipeScreen(
+    recipeViewModel: RecipeViewModel,
+    onCardClicked: (Int) -> Unit
+) {
+    val recipes = recipeViewModel.recipe.map { it.collectAsState() }
     Scaffold(
-        floatingActionButton = {
-            MyFab()
-        },
         topBar = {
             MyTopApBar(
                 title = "Recetas",
@@ -56,21 +57,28 @@ fun RecipeScreen() {
 
             //show title
             MyText(
-                text = "Mis recetas",
+                text = "Mis recetas saludables",
                 isTitle = true,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
             )
 
-            repeat(times = 4) {
 
-                //add recipe
-                MyNormalCard(
-                    title = "Arroz con pollo",
-                    subTitle = "19g calorias, 8g de colesterol, 25g de grasas, 14g de proteina" +
-                            ", 3g de calorias",
-                    icon = R.drawable.ic_baseline_menu_book_24,
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp, vertical = 10.dp)
+
+            recipes.forEach { recipe ->
+//                MyNormalCard(
+//                    title = recipe.value.title,
+//                    subTitle = "${recipe.value.cookingTime} · ${recipe.value.quantity} · ${recipe.value.difficulty.type}",
+//                    icon = R.drawable.ic_baseline_menu_book_24,
+//                    onClick = { onCardClicked(recipe.value.idRecipe) },
+//                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+//                )
+
+                MyArticleItemCard(
+                    title = recipe.value.title,
+                    subTitle = "${recipe.value.cookingTime} · ${recipe.value.quantity} · ${recipe.value.difficulty.type}",
+                    image = R.mipmap.fruits,
+                    onClick = { onCardClicked(recipe.value.idRecipe) },
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                 )
             }
         }

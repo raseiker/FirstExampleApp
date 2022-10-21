@@ -38,7 +38,8 @@ fun ExploreScreen(
     userViewModel: UserViewModel,
     onItemBottomBarClicked: (String) -> Unit,
     onCategoryClicked: (String) -> Unit,
-    onArticleClicked: (Int) -> Unit
+    onArticleClicked: (Int) -> Unit,
+    onSignatureClicked: () -> Unit
 ) {
     val articleState by articleViewModel.article.collectAsState()
     Scaffold(
@@ -60,6 +61,7 @@ fun ExploreScreen(
                 title = "Explora",
                 subTitle = "Todo lo que necesitas saber",
                 letter = userViewModel.getFirstNameLetter(),
+                onClick = onSignatureClicked,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 25.dp)
             )
 

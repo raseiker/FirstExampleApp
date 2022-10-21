@@ -11,8 +11,9 @@ sealed class Screen(
     object FoodScreen: Screen(route = "food")
     object WeightScreen: Screen(route = "weight")
     object RecipeScreen: Screen(route = "recipe")
+    object RecipeDetailScreen: Screen(route = "recipe/")
     object QuestionScreen: Screen(route = "question")
-    object TracingScreen: Screen(route = "tracing")
+    object TrackScreen: Screen(route = "track")
     object ModuleScreen: Screen(route = "module")
     object ExploreScreen: Screen(route = "explore")
     object HomeScreen: Screen(route = "home")
@@ -20,5 +21,6 @@ sealed class Screen(
     object ArticleScreen: Screen(route = "article/")
     object LoginGraph: Screen(route = "loginGraph")
     object ModuleGraph: Screen(route = "moduleGraph")
+    object LogoutScren: Screen(route = "logout")
 
 }

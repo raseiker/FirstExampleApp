@@ -21,13 +21,13 @@ import com.example.firstexampleapp.ui.utils.MyImageHeader
 import com.example.firstexampleapp.ui.utils.MyTopApBar
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@ExperimentalMaterialApi
-@Composable
-fun ArticleListScreenPreview() {
-    FirstExampleAppTheme(darkTheme = true) {
-        ArticleListScreen()
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//fun ArticleListScreenPreview() {
+//    FirstExampleAppTheme(darkTheme = true) {
+//        ArticleListScreen()
+//    }
+//}
 
 @ExperimentalMaterialApi
 @Composable
@@ -59,6 +59,7 @@ fun ArticleListScreen() {
                     title = "Vitaminas y minerales a consumir con mas frecuencia",
                     subTitle = "Las vitaminas y minerales desempeñan una funcion muy importante para el desarrollo",
                     image = R.mipmap.wiegth,
+                    onClick = {},
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                 )
             }

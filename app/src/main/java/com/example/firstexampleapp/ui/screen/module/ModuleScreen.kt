@@ -33,7 +33,8 @@ import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 fun ModuleScreen(
     userViewModel: UserViewModel,
     onItemBottomBarClicked: (String) -> Unit,
-    onCardClicked: (Screen) -> Unit
+    onCardClicked: (Screen) -> Unit,
+    onSignatureClicked: () -> Unit
 ) {
     Scaffold(
         bottomBar = {
@@ -57,6 +58,7 @@ fun ModuleScreen(
                 title = "Módulos",
                 subTitle = "Herramientas útiles para tu embarazo",
                 letter = userViewModel.getFirstNameLetter(),
+                onClick = onSignatureClicked,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 25.dp)
             )
 
@@ -90,7 +92,7 @@ fun ModuleScreen(
             //show a tool module card 3
             MyToolCard(
                 title = "Recetas",
-                subTitle = "Elabora tus recetas saludables",
+                subTitle = "Prepara tus recetas saludables",
                 image = R.mipmap.vector_recipe,
                 onClick = { onCardClicked(Screen.RecipeScreen) },
                 modifier = Modifier.constrainAs(item3) {
@@ -117,9 +119,9 @@ fun ModuleScreen(
             //show a tool module card 5
             MyToolCard(
                 title = "Seguimiento",
-                subTitle = "Monitorea el cumplimiento de tus objetivos",
+                subTitle = "Monitorea tus logros alcanzados",
                 image = R.mipmap.vector_recommendations,
-                onClick = { onCardClicked(Screen.TracingScreen) },
+                onClick = { onCardClicked(Screen.TrackScreen) },
                 modifier = Modifier.constrainAs(item5) {
                     top.linkTo(item3.bottom, margin = 20.dp)
                     start.linkTo(parent.start, margin = 25.dp)

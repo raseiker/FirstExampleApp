@@ -40,7 +40,7 @@ fun MyTopBarPreview() {
 
 @Composable
 fun MyTopApBar(
-    title: String?,
+    title: String? = null,
     navIcon: ImageVector,
     actionIconBookMark: ImageVector? = null,
     actionIcon: ImageVector? = null,

@@ -71,7 +71,8 @@ fun MyTextFieldForm(
     text: String = "",
     onValueChange: (String) -> Unit = {},
     onClearText: () -> Unit = {},
-    onSendClicked: () -> Unit = {}
+    onSendClicked: () -> Unit = {},
+    onSearchClicked: () -> Unit = {}
 ) {
     //var text by remember { mutableStateOf("") }
     val isPassword = (keyboardType == KeyboardType.Password)
@@ -91,7 +92,8 @@ fun MyTextFieldForm(
                 imeAction = imeAction
             ),
             keyboardActions = KeyboardActions(
-                onSend = { onSendClicked() }
+                onSend = { onSendClicked() },
+                onSearch = { onSearchClicked() }
             ),
             visualTransformation = if (isPassword && isVisibility) PasswordVisualTransformation() else VisualTransformation.None,
             trailingIcon = {

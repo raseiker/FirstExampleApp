@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -19,23 +20,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.*
+import com.example.firstexampleapp.ui.viewModel.foodViewModel.FoodViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@Composable
-fun FoodScreenPreview() {
-    FirstExampleAppTheme(darkTheme = true) {
-        FoodScreen()
-    }
-}
+//@Composable
+//fun FoodScreenPreview() {
+//    FirstExampleAppTheme(darkTheme = true) {
+//        FoodScreen()
+//    }
+//}
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FoodScreen(
-    onDark: () -> Unit = {}
+    foodViewModel: FoodViewModel
 ) {
+    val foodState by foodViewModel.food.collectAsState()
     Scaffold(
-        floatingActionButton = {
-            MyFab(onClick = onDark)
-        },
         topBar = {
             MyTopApBar(
                 title = "Calculadora de alimentos",
@@ -61,15 +62,20 @@ fun FoodScreen(
             MyTextFieldForm(
                 label = "Buscar una bebida o alimento",
                 keyboardType = KeyboardType.Text,
+                text = foodViewModel.textFood.value,
+                onValueChange = { foodViewModel.onValueChange(food = it, code = 0) },
+                onClearText = { foodViewModel.onClearText(code = 0) },
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
-            //show textfield food
             MyTextFieldForm(
                 label = "Porciones",
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Search,
-                onSendClicked = {},
+                text = foodViewModel.quantity.value,
+                onValueChange = { foodViewModel.onValueChange(food = it, code = 1)},
+                onClearText = { foodViewModel.onClearText(code = 1) },
+                onSearchClicked = { foodViewModel.onSearchFoodByName(foodViewModel.textFood.value)},
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
@@ -80,13 +86,11 @@ fun FoodScreen(
                 columnHeaders = listOf("Calorías", "Grasa", "Proteína", "Fibra", "Carbos"),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
+            if (foodViewModel.showMsg.value) MyText(text = foodViewModel.msg, modifier = Modifier.padding(horizontal = 30.dp, vertical = 30.dp))
             MyBodyTable(
-//                data = listOf(
-//                    listOf("570kcal", "50g", "0kg", "1g", "18g"),
-//                    listOf("570kcal", "50g", "0kg", "1g", "18g"),
-//                    listOf("570kcal", "50g", "0kg", "1g", "18g")
-//                ),
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                data = foodViewModel.foodToList(foodState),
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+                onCellClicked = {}
             )
         }
     }

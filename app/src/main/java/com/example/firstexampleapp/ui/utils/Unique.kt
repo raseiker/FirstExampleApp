@@ -11,11 +11,13 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -25,6 +27,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.*
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.R
+import com.example.firstexampleapp.model.recipe.Level
 import com.example.firstexampleapp.ui.navigation.onItemClicked
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
@@ -180,6 +183,7 @@ fun MyScreenTitle(
     title: String,
     subTitle: String,
     letter: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -205,6 +209,7 @@ fun MyScreenTitle(
                 .clip(shape = CircleShape)
                 .size(width = 40.dp, height = 40.dp)
                 .background(color = MaterialTheme.colors.secondary)
+                .clickable { onClick() }
         ) {
             Text(
                 text = letter.uppercase(),
@@ -320,6 +325,83 @@ fun MyArticleText(
         text = text,
         style = MaterialTheme.typography.body2,
         lineHeight = TextUnit(value = 1.5f, type = TextUnitType.Em),
+        modifier = modifier
+    )
+}
+
+//Recipe stuffs
+@Composable
+fun MyRecipeHeader(
+    cookingTime: String = "",
+    difficulty: Level,
+    quantity: String = "",
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        MyText(text = cookingTime)
+        MyText(text = quantity)
+        MyText(text = difficulty.type)
+    }
+}
+
+@OptIn(ExperimentalUnitApi::class)
+@Composable
+fun MyRecipeBody(
+    title: String = "",
+    list: List<String>? = null,
+    text: String = "",
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        MyText(text = title, isTitle = true)
+        Spacer(modifier = Modifier.height(10.dp))
+        if (list == null) {
+            MyArticleText(text = text)
+        } else {
+            list.forEach { item ->
+                MyArticleText(text = "- $item")
+            }
+        }
+    }
+
+}
+
+@Composable
+fun MySwitchOption(
+    text: String,
+    isChecked: Boolean = false,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        MyText(
+            text = text,
+            isTitle = true,
+            modifier = Modifier.weight(1f)
+        )
+        Switch(
+            checked = isChecked,
+            onCheckedChange = onCheckedChange
+        )
+    }
+}
+
+@Composable
+fun MyRecipeTitle(
+    title: String = "",
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.h5,
         modifier = modifier
     )
 }

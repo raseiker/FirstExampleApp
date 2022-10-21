@@ -24,7 +24,7 @@ val users: List<UserState> = listOf(
         isFirstChild = true,
         babySex = "Mujer",
         lastPeriod = "1/5/2022",
-        credentials = mutableMapOf(UserVar.Email.type to "adriana", UserVar.Password.type to "123456"),
+        credentials = mutableMapOf(UserVar.Email.type to "a", UserVar.Password.type to "1"),
         imc = mutableMapOf(UserVar.Height.type to "71.5", UserVar.Weight.type to "70.0"),
         weightRecord = mutableListOf(
             WeightState(currentDate = "05/10/2022", week = 23, weight = "72.5", changeWeight = 2.5),
