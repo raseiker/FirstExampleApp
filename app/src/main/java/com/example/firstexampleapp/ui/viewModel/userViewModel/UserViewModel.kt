@@ -1,6 +1,5 @@
 package com.example.firstexampleapp.ui.viewModel.userViewModel
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.example.firstexampleapp.model.user.Trimester
@@ -13,7 +12,6 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
 
 class UserViewModel(
 
@@ -28,6 +26,10 @@ class UserViewModel(
         private set
     var _imc = mutableStateMapOf<String, String>()
         private set
+    var isDark = mutableStateOf(value = true)
+        private set
+
+    fun onThemeChange() { isDark.value = !isDark.value }
 
     fun onValueChangeName(text: String) = _user.update { it.copy(name = text) }
 

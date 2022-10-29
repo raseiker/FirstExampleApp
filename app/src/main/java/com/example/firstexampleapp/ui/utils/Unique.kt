@@ -12,12 +12,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -25,10 +23,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.*
-import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.R
 import com.example.firstexampleapp.model.recipe.Level
-import com.example.firstexampleapp.ui.navigation.onItemClicked
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
 //@Composable
@@ -173,7 +169,7 @@ fun MyImageHeader(
             painter = painterResource(id = image),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.aspectRatio(ratio = 1.8f / 1f)//SIZE OF THE IMAGE
+            modifier = Modifier.aspectRatio(ratio = 1.8f / 1.5f)//SIZE OF THE IMAGE. before was 1.8/1.0
         )
     }
 }

@@ -15,10 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.*
 import com.example.firstexampleapp.ui.viewModel.foodViewModel.FoodViewModel
 
@@ -59,17 +56,16 @@ fun FoodScreen(
             )
 
             //show textfield food
-            MyTextFieldForm(
-                label = "Buscar una bebida o alimento",
-                keyboardType = KeyboardType.Text,
+            MyTextFieldMenu(
+                label = "Seleccionar un alimento",
+                items = foodViewModel.getFoodListName(),
                 text = foodViewModel.textFood.value,
-                onValueChange = { foodViewModel.onValueChange(food = it, code = 0) },
-                onClearText = { foodViewModel.onClearText(code = 0) },
+                onValueChange = { food -> foodViewModel.onValueChange(food = food, code = 0) },
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
             MyTextFieldForm(
-                label = "Porciones",
+                label = "Onzas",
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Search,
                 text = foodViewModel.quantity.value,
@@ -86,7 +82,7 @@ fun FoodScreen(
                 columnHeaders = listOf("Calorías", "Grasa", "Proteína", "Fibra", "Carbos"),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
-            if (foodViewModel.showMsg.value) MyText(text = foodViewModel.msg, modifier = Modifier.padding(horizontal = 30.dp, vertical = 30.dp))
+
             MyBodyTable(
                 data = foodViewModel.foodToList(foodState),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),

@@ -11,14 +11,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.firstexampleapp.R
-
-import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.utils.*
 import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 
@@ -62,21 +56,11 @@ fun RecipeScreen(
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
             )
 
-
-
             recipes.forEach { recipe ->
-//                MyNormalCard(
-//                    title = recipe.value.title,
-//                    subTitle = "${recipe.value.cookingTime} · ${recipe.value.quantity} · ${recipe.value.difficulty.type}",
-//                    icon = R.drawable.ic_baseline_menu_book_24,
-//                    onClick = { onCardClicked(recipe.value.idRecipe) },
-//                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-//                )
-
                 MyArticleItemCard(
                     title = recipe.value.title,
                     subTitle = "${recipe.value.cookingTime} · ${recipe.value.quantity} · ${recipe.value.difficulty.type}",
-                    image = R.mipmap.fruits,
+                    image = recipe.value.photo,
                     onClick = { onCardClicked(recipe.value.idRecipe) },
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                 )

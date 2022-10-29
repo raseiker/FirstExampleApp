@@ -32,10 +32,17 @@ fun RecipeDetailScreen(
                 .padding(it)
                 .verticalScroll(state = rememberScrollState())
         ) {
+            //show image header
+            MyImageHeader(
+                image = recipeState.value.photo,//R.mipmap.wiegth,
+                modifier = Modifier.padding(bottom = 15.dp)
+            )
+
             //show recipe title
-            MyRecipeTitle(
-                title = recipeState.value.title,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 30.dp)
+            MyText(
+                text = recipeState.value.title,
+                isTitle = true,
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
             //show recipe header
@@ -61,9 +68,9 @@ fun RecipeDetailScreen(
             )
 
             //show nutrition info recipe
-            MyRecipeBody(
-                title = "Valor nutricional:",
-                text = "",
+            MyText(
+                text = "Valor nutricional por persona:",
+                isTitle = true,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp)
             )
 

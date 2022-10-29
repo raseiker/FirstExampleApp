@@ -1,11 +1,13 @@
 package com.example.firstexampleapp.model.recipe.repository
 
+import com.example.firstexampleapp.R
 import com.example.firstexampleapp.model.recipe.RecipeState
 
 val listRecipe = listOf(
     RecipeState(
         idRecipe = 1,
         title = "Arroz con Leche",
+        photo = R.mipmap.fruits,
         mix = listOf(
             "100 grs de arroz intregral",
             "550 ml de leche",
@@ -26,6 +28,7 @@ val listRecipe = listOf(
     RecipeState(
         idRecipe = 2,
         title = "Risotto con tomates asados y cebada",
+        photo = R.mipmap.wiegth,
         mix = listOf(
             "100 grs de arroz intregral",
             "550 ml de leche",

@@ -6,14 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.firstexampleapp.model.article.ArticleCat
-import com.example.firstexampleapp.model.user.UserState
 import com.example.firstexampleapp.ui.screen.explore.ArticleScreen
 import com.example.firstexampleapp.ui.screen.explore.ExploreScreen
 import com.example.firstexampleapp.ui.screen.home.HomeScreen
@@ -26,6 +23,7 @@ import com.example.firstexampleapp.ui.screen.module.recipe.RecipeScreen
 import com.example.firstexampleapp.ui.screen.module.task.TaskScreen
 import com.example.firstexampleapp.ui.screen.module.track.TrackScreen
 import com.example.firstexampleapp.ui.screen.module.weight.WeightScreen
+import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.ui.viewModel.articleViewModel.ArticleViewModel
 import com.example.firstexampleapp.ui.viewModel.foodViewModel.FoodViewModel
 import com.example.firstexampleapp.ui.viewModel.questionViewModel.QuestionViewModel
@@ -45,74 +43,74 @@ fun SetUpNavHost(
     recipeViewModel: RecipeViewModel = viewModel(),
     foodViewModel: FoodViewModel = viewModel(),
     taskViewModel: TaskViewModel = viewModel(),
-    isDark: Boolean,
-    onThemeChange: (Boolean) -> Unit
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.LoginGraph.route//change to logingraph later
-    ) {
-
-        loginGraph(
+    FirstExampleAppTheme(darkTheme = userViewModel.isDark.value) {
+        NavHost(
             navController = navController,
-            userViewModel = userViewModel,
-            onThemeChange = onThemeChange,
-            isDark = isDark
-        )
-
-        composable(route = Screen.HomeScreen.route) {
-            HomeScreen(
-                articleViewModel = articleViewModel,
-                userViewModel = userViewModel,
-                onItemBottomBarClicked = {
-                    onItemClicked(
-                        screen = it,
-                        navController = navController
-                    )
-                },
-                onCardActionClicked = { Log.d("cardClick", it) },
-                onCardArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle) }
-            )
-        }
-
-        composable(route = Screen.ExploreScreen.route) {
-            ExploreScreen(
-                articleViewModel = articleViewModel,
-                userViewModel = userViewModel,
-                onCategoryClicked = { screen -> Log.d("catClicked", screen) },
-                onArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle) },
-                onSignatureClicked = { navController.navigate(Screen.LogoutScren.route) },
-                onItemBottomBarClicked = {
-                    onItemClicked(
-                        screen = it,
-                        navController = navController
-                    )
-                }
-            )
-        }
-
-        composable(
-            route = Screen.ArticleScreen.route + "{idArticle}",
-            arguments = listOf(
-                navArgument(name = "idArticle") {
-                    type = NavType.IntType
-                }
-            )
+            startDestination = Screen.LoginGraph.route//change to logingraph later
         ) {
-            ArticleScreen(
-                articleState = articleViewModel.getArticle(idArticle = it.arguments?.getInt("idArticle")!!)
+
+            loginGraph(
+                navController = navController,
+                userViewModel = userViewModel,
+                isDark = userViewModel.isDark.value,
+                onThemeChange = { userViewModel.onThemeChange() }
+            )
+
+            composable(route = Screen.HomeScreen.route) {
+                HomeScreen(
+                    articleViewModel = articleViewModel,
+                    userViewModel = userViewModel,
+                    onItemBottomBarClicked = {
+                        onItemClicked(
+                            screen = it,
+                            navController = navController
+                        )
+                    },
+                    onCardActionClicked = { Log.d("cardClick", it) },
+                    onCardArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle) }
+                )
+            }
+
+            composable(route = Screen.ExploreScreen.route) {
+                ExploreScreen(
+                    articleViewModel = articleViewModel,
+                    userViewModel = userViewModel,
+                    onCategoryClicked = { screen -> Log.d("catClicked", screen) },
+                    onArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle) },
+                    onSignatureClicked = { navController.navigate(Screen.LogoutScren.route) },
+                    onItemBottomBarClicked = {
+                        onItemClicked(
+                            screen = it,
+                            navController = navController
+                        )
+                    }
+                )
+            }
+
+            composable(
+                route = Screen.ArticleScreen.route + "{idArticle}",
+                arguments = listOf(
+                    navArgument(name = "idArticle") {
+                        type = NavType.IntType
+                    }
+                )
+            ) {
+                ArticleScreen(
+                    articleState = articleViewModel.getArticle(idArticle = it.arguments?.getInt("idArticle")!!)
+                )
+            }
+
+            moduleGraph(
+                navController = navController,
+                userViewModel = userViewModel,
+                weightViewModel = weightViewModel,
+                questionViewModel = questionViewModel,
+                recipeViewModel = recipeViewModel,
+                foodViewModel = foodViewModel,
+                taskViewModel = taskViewModel
             )
         }
-
-        moduleGraph(
-            navController = navController,
-            userViewModel = userViewModel,
-            weightViewModel = weightViewModel,
-            questionViewModel = questionViewModel,
-            recipeViewModel = recipeViewModel,
-            foodViewModel = foodViewModel,
-            taskViewModel = taskViewModel
-        )
     }
 }
 

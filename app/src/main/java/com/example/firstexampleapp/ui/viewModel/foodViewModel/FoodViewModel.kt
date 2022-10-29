@@ -15,17 +15,13 @@ class FoodViewModel : ViewModel() {
         private set
     var quantity = mutableStateOf("1")
         private set
-    var showMsg = mutableStateOf(false)
-    var msg =
-        "Nada por aquí. Para descubrir los alimentos disponibles por favor consulta el diccionario..."
-
 
     private fun getFoods() = listFood
 
     //show current text on text field and clean it
     fun onValueChange(food: String, code: Int) {
         when (code) {
-            0 -> textFood.value = food.lowercase()
+            0 -> textFood.value = food
             1 -> quantity.value = food.filterNot { it.toString() == "." }
         }
     }
@@ -40,9 +36,7 @@ class FoodViewModel : ViewModel() {
     //search for new foods and update the food state
     fun onSearchFoodByName(food: String) {
         _food.update {
-            getFoods().find { it.name == food }
-                .also { if (showMsg.value) showMsg.value = false }
-                ?: FoodState().also { showMsg.value = true }
+            getFoods().find { it.name == food } ?: FoodState()
         }
     }
 
@@ -53,14 +47,16 @@ class FoodViewModel : ViewModel() {
             val number = if (quantity.value == "") 1 else quantity.value.toInt()
             foodList.add(
                 listOf(
-                    "${foodState.nutritionInfo[0] * number }kcal",
-                    "${foodState.nutritionInfo[1] * number }g",
-                    "${foodState.nutritionInfo[2] * number }kg",
-                    "${foodState.nutritionInfo[3] * number }g",
-                    "${foodState.nutritionInfo[4] * number }g"
+                    String.format("%.1f", foodState.nutritionInfo[0] * number),
+                    "${String.format("%.1f", foodState.nutritionInfo[1] * number) }g",
+                    "${String.format("%.1f", foodState.nutritionInfo[2] * number) }kg",
+                    "${String.format("%.1f", foodState.nutritionInfo[3] * number) }g",
+                    "${String.format("%.1f", foodState.nutritionInfo[4] * number) }g"
                 )
             )
         }
         return foodList
     }
+
+    fun getFoodListName() = getFoods().map { foodState -> foodState.name }
 }
