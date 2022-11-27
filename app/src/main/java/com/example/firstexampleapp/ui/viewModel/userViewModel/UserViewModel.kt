@@ -1,35 +1,41 @@
 package com.example.firstexampleapp.ui.viewModel.userViewModel
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.firstexampleapp.model.response.Response
 import com.example.firstexampleapp.model.user.Trimester
 import com.example.firstexampleapp.model.user.UserState
 import com.example.firstexampleapp.model.user.UserVar
-import com.example.firstexampleapp.model.user.repository.users
+import com.example.firstexampleapp.model.user.repository.UserRepo
 import com.example.firstexampleapp.model.weight.WeightState
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UserViewModel(
-
-) : ViewModel() {
+class UserViewModel() : ViewModel() {
+    private val userRepo = UserRepo()
+    val isUserAuth = mutableStateOf(userRepo.isUserAuthenticated())
     private val _user = MutableStateFlow(UserState())
     val user: StateFlow<UserState> = _user.asStateFlow()
-    private val _userList = MutableStateFlow(getUsers())
-    val userList: StateFlow<List<UserState>> = _userList.asStateFlow()
     var isFirstChild = mutableStateOf("")
         private set
     var _credential = mutableStateMapOf<String, String>()
         private set
     var _imc = mutableStateMapOf<String, String>()
         private set
-    var isDark = mutableStateOf(value = true)
+    var isDark = mutableStateOf(value = false)
         private set
+    var msgError = mutableStateOf("")
+        private set
+//    private val _userList = MutableStateFlow(getUsers())
+//    val userList: StateFlow<List<UserState>> = _userList.asStateFlow()
 
-    fun onThemeChange() { isDark.value = !isDark.value }
+    fun onThemeChange(n: Boolean = false) { isDark.value = n }
 
     fun onValueChangeName(text: String) = _user.update { it.copy(name = text) }
 
@@ -110,29 +116,10 @@ class UserViewModel(
         return _user.value.credentials[UserVar.Password2.type] == _user.value.credentials[UserVar.Password.type]
     }
 
-    //this function should be lightly different. Look up later
-    fun isValidCredential(): Boolean {
-        val initUser = userList.value.filter { items ->
-            items.credentials[UserVar.Email.type] == _user.value.credentials[UserVar.Email.type] &&
-//                    items.credentials.containsValue(value = _user.value.credentials[UserVar.Password.type])
-                    items.credentials[UserVar.Password.type] == _user.value.credentials[UserVar.Password.type]
-        }
-        return if (initUser.isNotEmpty()) {
-            _user.value = initUser.first()
-            getCurrentPregnancyDay()
-            getTrimester()
-            getPregnancyProgress()
-//            Log.d("currentDate", _user.value.weightRecord.last().currentDate)
-            true
-        }else{
-            false
-        }
-//        return !_user.value.credentials[UserVar.Email.type].isNullOrEmpty() && !_user.value.credentials[UserVar.Password.type].isNullOrEmpty()
-    }
-
-    fun LogoutUser() {
+    fun logoutUser() {
         _user.value = UserState()
         _credential = mutableStateMapOf()
+        userOut()
     }
 
     private fun getCurrentPregnancyDay() {
@@ -153,11 +140,11 @@ class UserViewModel(
 
     private fun getTrimester() {
         if (_user.value.pregnancyWeek <= 13) {
-            _user.update { it.copy(trimester = Trimester.First) }
+            _user.update { it.copy(trimester = Trimester.First.type) }//was without type
         } else if (_user.value.pregnancyWeek <= 27) {
-            _user.update { it.copy(trimester = Trimester.Second) }
+            _user.update { it.copy(trimester = Trimester.Second.type) }
         } else {
-            _user.update { it.copy(trimester = Trimester.Third) }
+            _user.update { it.copy(trimester = Trimester.Third.type) }
         }
     }//do begin later in home screen not login screen
 
@@ -173,7 +160,7 @@ class UserViewModel(
 
     //do begin later in home screen not login screen
 
-    private fun getUsers() = users
+//    private fun getUsers() = users
 
     fun addWeightRecord(weight: String = "0.0"){
         val today = Calendar.getInstance()
@@ -185,49 +172,92 @@ class UserViewModel(
                 .toDouble()//round double to one decimal
         )
         _user.update { it.copy(weightRecord = mutableListOf(new).also { newList -> _user.value.weightRecord.forEach { newList.add(it) }}) }
+        viewModelScope.launch { userRepo.addWeightRecord(newValue = new, userId = _user.value.idUser) }
     }
 
     fun deleteWeightRecord(position: Int){
         if (position == _user.value.weightRecord.lastIndex) return
-        _user.update { it.copy(weightRecord = (_user.value.weightRecord - _user.value.weightRecord[position]).toMutableList()) }
+        val deletedValue = _user.value.weightRecord[position]
+        _user.update { it.copy(weightRecord = (_user.value.weightRecord - deletedValue).toMutableList()) }
+        viewModelScope.launch { userRepo.deleteWeightRecord(deletedValue = deletedValue, userId = _user .value.idUser) }
     }
 
+    //this function add a new user to firestore
+    fun addUser(
+        callback: (String) -> Unit,
+        authId: String
+    ) = viewModelScope.launch {
+        when (val res = userRepo.addUser(userState = _user.value, authId = authId)) {
+            is Response.Error -> Log.d("addUser", res.error)
+            Response.Loading -> TODO()
+            is Response.Success -> Log.d("addUser", res.data).also { callback(authId) }
+        }
+    }
+
+    //this function retrieve a user object from Firestore by it id
+    fun getUserByCredentials(
+        callback: (String) -> Unit
+    ) = viewModelScope.launch {
+        msgError.value = ""
+        when (val res = userRepo.verifyUserCredentials(
+            email = _user.value.credentials[UserVar.Email.type] ?: "",
+            password = _user.value.credentials[UserVar.Password.type] ?: "")
+        ) {
+            is Response.Error -> msgError.value = res.error
+            Response.Loading -> TODO()
+            is Response.Success -> Log.d("getUser", res.data.idUser)
+                .also { _user.update { res.data.copy(weightRecord = res.data.weightRecord.asReversed()) } ; callback(_user.value.idUser) }
+        }
+    }
+
+    fun getUserByUid(
+        authId: String,
+        callback: (authId: String) -> Unit,
+    ) = viewModelScope.launch {
+        when (val res = userRepo.getUserByUid(authId)) {
+            is Response.Error -> {}
+            Response.Loading -> TODO()
+            is Response.Success -> Log.d("getUser", res.data.idUser)
+                .also { _user.update { res.data.copy(weightRecord = res.data.weightRecord.asReversed()) }; callback(authId) }
+        }
+    }
+
+    //auth functions
+    fun signIn(
+        callback: (String) -> Unit
+    ) = viewModelScope.launch {
+        msgError.value = ""
+        when (val res = userRepo.signIn(
+            email = _user.value.credentials[UserVar.Email.type] ?: "",
+            password = _user.value.credentials[UserVar.Password.type] ?: "")){
+            is Response.Error -> msgError.value = res.error
+            Response.Loading -> {}
+            is Response.Success -> Log.d("signUser", "user with uid.. : ${res.data}")
+                .also { getUserByUid(callback = callback, authId = res.data) }
+        }
+    }
+
+    fun createUser(
+        callback: (String) -> Unit
+    ) = viewModelScope.launch {
+        when (val res = userRepo.createUser(
+            email = _user.value.credentials[UserVar.Email.type] ?: "",
+            password = _user.value.credentials[UserVar.Password.type] ?: "")){
+            is Response.Error -> Log.w("addUser", "Error.. ${res.error}" )
+            Response.Loading -> Log.d("addUser", "loading...")
+            is Response.Success -> Log.d("addUser", "user added with uid.. : ${res.data}")
+                .also{ addUser(callback = callback, authId = res.data) }
+        }
+    }
+
+    private fun changeAuthState () = viewModelScope.launch {
+        userRepo.getAuthState().collect {
+            isUserAuth.value = it
+        }
+    }
+
+    fun getCurrentUser() = userRepo.getCurrentUser()
+
+    fun userOut() = userRepo.userOut()
+
 }
-//
-//fun main() {
-//    val format = SimpleDateFormat("d/M/yyyy", Locale.getDefault())
-//    val totalPregnancy = 36 //const for total pregnancy
-//    val weekInInYear = 52//const for week of a year
-//    val todayWeek = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR) //retain current year
-//    val userPregnancy = Calendar.getInstance()
-//    userPregnancy.time =
-//        format.parse("1/10/2022") ?: Date()//convert user pregnancy into date object
-//    val userYear = userPregnancy.get(Calendar.YEAR)//retain year of user pregnancy
-//    val userPregnancyWeek = userPregnancy.get(Calendar.WEEK_OF_YEAR)//retain week of user pregnancy
-//    var pregnancyWeek = 13//for test purposes
-//    val finalWeek = userPregnancyWeek + totalPregnancy//plus userWeek with totalPregnancy
-//    var comingWeek = (pregnancyWeek - userPregnancyWeek)//subtract todayWeek with userWeek
-//    val remainderWeek = finalWeek - pregnancyWeek//subtract finalWee to todayWeek
-//    var trimester = ""
-//    if (pregnancyWeek < 20) {
-//        val restartWeek = (weekInInYear - userPregnancyWeek)//retain week after completes one year
-//        comingWeek = restartWeek + pregnancyWeek
-//        println(restartWeek)
-//    }
-//
-//    trimester = if (comingWeek <= 12) {
-//        "1 trimester"
-//    } else if (comingWeek <= 24) {
-//        "2 trimester"
-//    } else {
-//        "3 trimester"
-//    }
-//
-//    println("week from user: $userPregnancyWeek")
-//    println("week for current: $pregnancyWeek")
-//    println("total week for pregnancy: $finalWeek")
-//    println("falta: $remainderWeek semanas")
-//    println("you are on : $comingWeek week")
-//    println(trimester)
-//
-//}

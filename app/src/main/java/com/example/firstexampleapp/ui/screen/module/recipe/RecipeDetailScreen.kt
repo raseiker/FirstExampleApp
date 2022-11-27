@@ -17,13 +17,18 @@ import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 @Composable
 fun RecipeDetailScreen(
     recipeViewModel: RecipeViewModel,
-    recipeState: State<RecipeState>
+    recipeState: RecipeState,
+    onNavigateBack: () -> Unit,
+    onInfoClicked: () -> Unit
 ) {
+    val recipeDoneState by recipeViewModel.recipe.collectAsState()
     Scaffold(
         topBar = {
             MyTopApBar(
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = Icons.Default.Info
+                actionIcon = Icons.Default.Info,
+                onNavigateBack = onNavigateBack,
+                onInfoClicked = onInfoClicked
             )
         }
     ) {
@@ -33,37 +38,38 @@ fun RecipeDetailScreen(
                 .verticalScroll(state = rememberScrollState())
         ) {
             //show image header
-            MyImageHeader(
-                image = recipeState.value.photo,//R.mipmap.wiegth,
-                modifier = Modifier.padding(bottom = 15.dp)
+            MyImageLoader(
+                imagePath = recipeState.photo,
+                modifier = Modifier.padding(bottom = 15.dp),
+                imageModifier = Modifier.aspectRatio(ratio = 1.8f / 1.5f)
             )
 
             //show recipe title
             MyText(
-                text = recipeState.value.title,
+                text = recipeState.title,
                 isTitle = true,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
             //show recipe header
             MyRecipeHeader(
-                cookingTime = recipeState.value.cookingTime,
-                difficulty = recipeState.value.difficulty,
-                quantity = recipeState.value.quantity,
+                cookingTime = recipeState.cookingTime,
+                difficulty = recipeState.difficulty,
+                quantity = recipeState.quantity,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
             //show recipe mix
             MyRecipeBody(
                 title = "Ingredientes:",
-                list = recipeState.value.mix,
+                list = recipeState.mix,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp)
             )
 
             //show recipe steps
             MyRecipeBody(
                 title = "Procedimiento:",
-                text = recipeState.value.description,
+                text = recipeState.description.replace("LINEBREAK","\n"),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp)
             )
 
@@ -79,7 +85,7 @@ fun RecipeDetailScreen(
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
             MyBodyTable(
-                data = mutableListOf(recipeState.value.nutritionInfo),
+                data = mutableListOf(recipeState.nutritionInfo),
                 onCellClicked = {},
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
             )
@@ -87,8 +93,8 @@ fun RecipeDetailScreen(
             //show if was gone
             MySwitchOption(
                 text = "Realizado",
-                isChecked = recipeState.value.isDone,
-                onCheckedChange = { newVal -> recipeViewModel.onCheckedChange(newVal = newVal, idRecipe = recipeState.value.idRecipe) },
+                isChecked = recipeDoneState,
+                onCheckedChange = { newVal -> recipeViewModel.onCheckedChange(recipeState = recipeState, newVal = newVal) },
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
         }

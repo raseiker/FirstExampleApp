@@ -3,19 +3,20 @@ package com.example.firstexampleapp.ui.viewModel.articleViewModel
 import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.firstexampleapp.R
+import com.example.firstexampleapp.model.article.ArticleCat
 import com.example.firstexampleapp.model.article.ArticleState
-import com.example.firstexampleapp.model.article.repository.articles
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.firstexampleapp.model.article.repository.ArticleRepo
+import com.example.firstexampleapp.model.response.Response
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class ArticleViewModel : ViewModel() {
-    private val _article = MutableStateFlow(getArticles())
-    val article: StateFlow<List<ArticleState>> = _article.asStateFlow()
-    var mArticles by mutableStateOf(getArticles())
-        private set
+    private val articleRepo = ArticleRepo()
+    private val _articles = MutableStateFlow(listOf<ArticleState>())
+//    val articles: StateFlow<List<ArticleState>> = _articles.asStateFlow()
+
     val cards = mapOf<Int, List<Any>>(
         0 to listOf(
             "Calculadora de Peso",
@@ -42,24 +43,30 @@ class ArticleViewModel : ViewModel() {
             "task"
         )
     )
-    var isBottomBarSelected = listOf(false, false, false)
-        private set
 
-
-    fun getArticle(idArticle: Int = 0): ArticleState {
-        return article.value.first { it.idArticle == idArticle }//received only first element that matches with the condition
+    init {
+        getAllArticles()
     }
 
-    private fun getArticles(): List<ArticleState> {
-        return articles
-    }
+    fun getArticleById(idArticle: String): ArticleState = _articles.value.first{ it.idArticle == idArticle }//received only first element that matches with the condition
 
-    fun getSubtitle(body: String): String {
-        return body.substring(IntRange(start = 0, endInclusive = 130))
-    }
+    fun getSubtitle(body: String) = body.substring(IntRange(start = 0, endInclusive = 130))
 
-    fun getBadge(badge: String): String{
-        return badge.uppercase()
+    fun getSubArticleList() = _articles.value.take(4)
+
+    fun getRecommendedArticles() = _articles.value.filter { it.category == ArticleCat.RecomendedFoods.category }
+    fun getDrinkAndFoodArticles() = _articles.value.filter { it.category == ArticleCat.DrinkandFood.category }
+    fun getVitaminAndMineralArticles() = _articles.value.filter { it.category == ArticleCat.VitaminandMineral.category }
+
+    //this function retrieve all shuffled task from firestore
+    private fun getAllArticles() = viewModelScope.launch {
+        articleRepo.getAllArticles().collect{ res ->
+            when(res) {
+                is Response.Error -> Log.d("getArticles", res.error)
+                Response.Loading -> TODO()
+                is Response.Success -> Log.d("getArticles", res.data.size.toString()).also { _articles.update { res.data.shuffled() } }
+            }
+        }
     }
 }
 

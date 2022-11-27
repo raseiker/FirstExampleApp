@@ -11,10 +11,12 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.firstexampleapp.ui.utils.*
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 import com.example.firstexampleapp.ui.viewModel.weightViewModel.WeightViewModel
@@ -30,20 +32,24 @@ import com.example.firstexampleapp.ui.viewModel.weightViewModel.WeightViewModel
 @Composable
 fun WeightScreen(
     weightViewModel: WeightViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    onNavigateBack: () -> Unit,
+    onInfoClicked: () -> Unit
 ) {
     val userState by userViewModel.user.collectAsState()
     val keyboard = LocalFocusManager.current
-    var isTextShow by remember { mutableStateOf(false) }
+    var isTextShowed by remember { mutableStateOf(false) }
     Scaffold(
         floatingActionButton = {
-            MyFab(onClick = { isTextShow = true})
+            MyFab(onClick = { isTextShowed = true})
         },
         topBar = {
             MyTopApBar(
                 title = "Mi Peso",
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = Icons.Default.Info
+                actionIcon = Icons.Default.Info,
+                onNavigateBack = onNavigateBack,
+                onInfoClicked = onInfoClicked
             )
         }
     ) {
@@ -60,7 +66,7 @@ fun WeightScreen(
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
             )
 
-            if (isTextShow) {
+            if (isTextShowed) {
                 //show weight texfield
                 MyTextFieldForm(
                     label = "Ingresa tu nuevo peso (kg)",
@@ -74,7 +80,7 @@ fun WeightScreen(
                         weightViewModel.onClear()
                         keyboard.clearFocus()
                     },
-                    modifier = Modifier.padding(start = 25.dp, end = 25.dp, top = 10.dp, bottom = 40.dp)
+                    modifier = Modifier.padding(start = 25.dp, end = 25.dp, top = 10.dp, bottom = 40.dp).focusTarget()
                 )
             }
 

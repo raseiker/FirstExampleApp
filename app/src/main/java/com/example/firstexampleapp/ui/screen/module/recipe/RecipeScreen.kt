@@ -11,8 +11,10 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.firstexampleapp.R
 import com.example.firstexampleapp.ui.utils.*
 import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 
@@ -31,15 +33,16 @@ import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 @Composable
 fun RecipeScreen(
     recipeViewModel: RecipeViewModel,
-    onCardClicked: (Int) -> Unit
+    onCardClicked: (String) -> Unit,
+    onNavigateBack: () -> Unit
 ) {
-    val recipes = recipeViewModel.recipe.map { it.collectAsState() }
+    val recipes by recipeViewModel.recipeS.collectAsState()
     Scaffold(
         topBar = {
             MyTopApBar(
                 title = "Recetas",
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = Icons.Default.Info
+                onNavigateBack = onNavigateBack
             )
         }
     ) {
@@ -58,10 +61,10 @@ fun RecipeScreen(
 
             recipes.forEach { recipe ->
                 MyArticleItemCard(
-                    title = recipe.value.title,
-                    subTitle = "${recipe.value.cookingTime} · ${recipe.value.quantity} · ${recipe.value.difficulty.type}",
-                    image = recipe.value.photo,
-                    onClick = { onCardClicked(recipe.value.idRecipe) },
+                    title = recipe.title,
+                    subTitle = "${recipe.cookingTime} · ${recipe.quantity} · ${recipe.difficulty}",
+                    imagePath = recipe.photo,
+                    onClick = { onCardClicked(recipe.idRecipe) },
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                 )
             }

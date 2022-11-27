@@ -36,7 +36,8 @@ import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 @Composable
 fun CustomContentScreen(
     userViewModel: UserViewModel,
-    onNextClicked: () -> Unit = {}
+    onNextClicked: () -> Unit = {},
+    onNavigateBack: () -> Unit,
 ) {
     val userState by userViewModel.user.collectAsState()
     Scaffold(
@@ -44,7 +45,8 @@ fun CustomContentScreen(
             MyTopApBar(
                 title = "Personaliza tu contenido",
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = null
+                actionIcon = null,
+                onNavigateBack = onNavigateBack
             )
         }
     ) {

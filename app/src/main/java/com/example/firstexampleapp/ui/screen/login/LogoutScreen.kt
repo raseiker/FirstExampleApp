@@ -31,14 +31,17 @@ fun LogoutScreen(
     userViewModel: UserViewModel,
     isDark: Boolean,
     onThemeChange: (Boolean) -> Unit,
-    onLogoutClicked: () -> Unit
-) {
+    onLogoutClicked: () -> Unit,
+    onNavigateBack: () -> Unit,
+    ) {
+    var darkValue by remember { mutableStateOf(isDark)}
     val userState = userViewModel.user.collectAsState()
     Scaffold(
         topBar = {
             MyTopApBar(
                 title = "Ajustes",
-                navIcon = Icons.Default.ArrowBack
+                navIcon = Icons.Default.ArrowBack,
+                onNavigateBack = onNavigateBack
             )
         }
     ) {
@@ -58,29 +61,26 @@ fun LogoutScreen(
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
             MyShowInformationOnRow(
-                textKey = "Último periodo",
+                textKey = "Último periodo menstrual",
                 textValue = userState.value.lastPeriod ?: "Nothing¿?",
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
             MyShowInformationOnRow(
                 textKey = "Trimestre actual",
-                textValue = userState.value.trimester.type,
+                textValue = userState.value.trimester,//was trimester.type
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
             MySwitchOption(
                 text = "Modo oscuro",
-                isChecked = isDark,
-                onCheckedChange = onThemeChange,
+                isChecked = darkValue,//isDark,
+                onCheckedChange = { userViewModel.onThemeChange(it); darkValue = it },//onThemeChange,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
             MyButton(
                 text = "Cerrar sesión",
-                onClick = {
-                    userViewModel.LogoutUser()
-                    onLogoutClicked()
-                },
+                onClick = { userViewModel.logoutUser(); onLogoutClicked() },
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
             )
         }

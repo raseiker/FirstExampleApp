@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.firstexampleapp.R
 import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 
@@ -188,7 +189,8 @@ fun MyArticleItemCard(
     title: String,
     subTitle: String,
     onClick: () -> Unit,
-    @DrawableRes image: Int,
+    @DrawableRes image: Int? = null,
+    imagePath: String? = null,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -207,12 +209,21 @@ fun MyArticleItemCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.weight(weight = 2f)
             ) {
-                Image(
-                    painter = painterResource(id = image),
-                    contentDescription = "",
-                    modifier = Modifier.size(100.dp),//before 100
-                    contentScale = ContentScale.Crop
-                )
+                if (image != null) {
+                    Image(
+                        painter = painterResource(id = image ?: 0),
+                        contentDescription = "",
+                        modifier = Modifier.size(100.dp),//before 100
+                        contentScale = ContentScale.Crop
+                    )
+                }
+                if(imagePath != null) {
+                    MyImageLoader(
+                        imagePath = imagePath,
+                        modifier = Modifier,
+                        imageModifier = Modifier.size(100.dp)
+                    )
+                }
                 Column(modifier = Modifier.padding(start = 12.dp)) {
                     Text(
                         text = title,
@@ -311,16 +322,76 @@ fun MyArticleCard(
 
 @ExperimentalMaterialApi
 @Composable
+fun MyArticleCardTest(
+    title: String,
+    subTitle: String,
+    imagePath: String,
+    modifier: Modifier = Modifier,
+    badges: List<String> = listOf("ARTÍCULOS", "ESENCIALES"),
+    onClick: () -> Unit = {}
+) {
+    Card(
+        onClick = onClick,// to action
+        elevation = 5.dp,
+        shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp)),
+        modifier = modifier
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            MyImageLoader(
+                imagePath = imagePath,
+                modifier = Modifier,
+                imageModifier = Modifier.height(190.dp).fillMaxWidth()
+            )
+            Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 15.dp)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.h6.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp
+                    ),
+                    maxLines = 2
+                )
+                Text(
+                    text = subTitle,
+                    style = MaterialTheme.typography.caption.copy(
+                        fontWeight = FontWeight.Light,
+                        color = Color.Gray
+                    ),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(vertical = 5.dp)
+                )
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Row(
+                        modifier = Modifier.weight(weight = 2f)
+                    ) {
+                        MyBadge(text = badges[0])
+                        MyBadge(text = badges[1])
+                    }
+                    Icon(
+                        painter = painterResource(R.drawable.ic_baseline_open_in_full_24),
+                        contentDescription = "",
+                        tint = Color.Gray
+                    )
+                }
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
 fun MyExpandibleNormalCard(
     question: String,
     answer: String,
     onValueChange: (String) -> Unit,
     onClearText: () -> Unit,
+    onCardClicked: () -> Unit,
     onSendClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        onClick = { /*TODO*/ },//IR A LA ACCION O PAGINA
+        onClick = onCardClicked,//IR A LA ACCION O PAGINA
         elevation = 5.dp,
         modifier = modifier,
         shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp))

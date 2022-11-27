@@ -20,13 +20,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.firstexampleapp.R
-import com.example.firstexampleapp.model.recipe.Level
+import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 
-//@Preview(showBackground = true, device = Devices.NEXUS_5X)
+//@OptIn(ExperimentalUnitApi::class)
+//@Preview(showBackground = true, device = Devices.DEFAULT)
 //@Composable
 //fun MyUniquePreview() {
 //    FirstExampleAppTheme() {
@@ -36,37 +44,50 @@ import com.example.firstexampleapp.model.recipe.Level
 //            }
 //        ) {
 //            Column(modifier = Modifier.padding(paddingValues = it)) {
-//                MyImageHeader(
-//                    image = R.mipmap.fruits,
+////                MyImageHeader(
+////                    image = R.mipmap.fruits,
+////                )
+////
+////                MyDivider(
+////                    text = "o",
+////                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+////                )
+////
+////                MyArticlesCategoriesHeader(
+////                    subtitle = "Bebidas y Comidas",
+////                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+////                )
+////
+////                MyArticlesCategories(
+////                    image = R.mipmap.wiegth,
+////                    subtitle = "11 articles",
+////                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+////                )
+////
+////                MyScreenTitle(
+////                    title = "Explora",
+////                    subTitle = "Todo lo que necesita saber",
+////                    letter = "p",
+////                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+////                )
+////
+////                MyWelcomeMessage(
+////                    userName = "Carmela",
+////                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+////                )
+//                MyArticleText(
+//                    text = "Estos ácidos tienen un importante efecto protector ante las enfermedades del corazón y en el desarrollo" +
+//                            " del cerebro, el sistema nervioso y la visión en el bebé, tanto antes como después de su nacimiento. " +
+//                            "Para beneficiarte al máximo de su potencial, deberías tomar por lo menos dos raciones de pescado o " +
+//                            "marisco por semana, tanto durante el embarazo como durante la lactancia. " +
+//                            "\n\nA pesar de los beneficios de " +
+//                            "tomar pescado durante el embarazo, debes tener en cuenta que ciertos tipos de pescado pueden contener " +
+//                            "una mayor concentración de mercurio, un metal que ha sido relacionado con la aparición de defectos de " +
+//                            "nacimiento. Para limitar tu exposición al mercurio y poder disfrutar del aporte nutricional del pescado " +
+//                            "con seguridad, sigue la siguiente recomendación: ",
+//                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
 //                )
 //
-//                MyDivider(
-//                    text = "o",
-//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-//                )
-//
-//                MyArticlesCategoriesHeader(
-//                    subtitle = "Bebidas y Comidas",
-//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-//                )
-//
-//                MyArticlesCategories(
-//                    image = R.mipmap.wiegth,
-//                    subtitle = "11 articles",
-//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-//                )
-//
-//                MyScreenTitle(
-//                    title = "Explora",
-//                    subTitle = "Todo lo que necesita saber",
-//                    letter = "p",
-//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-//                )
-//
-//                MyWelcomeMessage(
-//                    userName = "Carmela",
-//                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-//                )
 //            }
 //        }
 //    }
@@ -105,7 +126,7 @@ fun MyDivider(text: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun MyArticlesCategories(
-    @DrawableRes image: Int,
+    imagePath: String,
     subtitle: String,
     onArticleClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -116,11 +137,10 @@ fun MyArticlesCategories(
             .clip(shape = MaterialTheme.shapes.medium.copy(all = CornerSize(15.dp)))//RoundedCornerShape(5.dp))
             .clickable { onArticleClicked() }
     ) {
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.size(width = 150.dp, height = padding)
+        MyImageLoader(
+            imagePath = imagePath,
+            modifier = Modifier,
+            imageModifier = Modifier.size(width = 150.dp, height = padding)
         )
         /*Text(
             text = subtitle,
@@ -319,8 +339,9 @@ fun MyArticleText(
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.body2,
+        style = MaterialTheme.typography.body1,//was body2
         lineHeight = TextUnit(value = 1.5f, type = TextUnitType.Em),
+        textAlign = TextAlign.Justify,
         modifier = modifier
     )
 }
@@ -329,7 +350,7 @@ fun MyArticleText(
 @Composable
 fun MyRecipeHeader(
     cookingTime: String = "",
-    difficulty: Level,
+    difficulty: String,
     quantity: String = "",
     modifier: Modifier = Modifier
 ) {
@@ -339,7 +360,7 @@ fun MyRecipeHeader(
     ) {
         MyText(text = cookingTime)
         MyText(text = quantity)
-        MyText(text = difficulty.type)
+        MyText(text = difficulty)
     }
 }
 
@@ -400,4 +421,23 @@ fun MyRecipeTitle(
         style = MaterialTheme.typography.h5,
         modifier = modifier
     )
+}
+
+@Composable
+fun MyImageLoader(
+    imagePath: String,
+    modifier: Modifier,
+    imageModifier: Modifier
+){
+    Box(modifier = modifier){
+        val painter = rememberAsyncImagePainter(model = imagePath)
+        if (painter.state is AsyncImagePainter.State.Loading)
+            CircularProgressIndicator(color = MaterialTheme.colors.secondaryVariant, modifier = Modifier.align(Alignment.Center))
+        Image(
+            painter = painter,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = imageModifier
+        )
+    }
 }

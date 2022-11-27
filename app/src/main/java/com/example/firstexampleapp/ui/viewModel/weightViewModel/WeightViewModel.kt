@@ -26,12 +26,3 @@ class WeightViewModel: ViewModel() {
         return weightList
     }
 }
-
-//fun main() {
-//    val weights = mutableListOf(WeightState(currentDate = "1/5/2022"), WeightState(week = 5, changeWeight = 5.2))
-//    val list = mutableListOf<List<Any>>()
-//    weights.forEach { weight ->
-//        list.add(listOf(weight.currentDate, weight.week, weight.weight, weight.changeWeight))
-//    }
-//    println(list)
-//}

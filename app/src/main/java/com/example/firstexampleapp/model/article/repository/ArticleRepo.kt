@@ -1,55 +1,27 @@
 package com.example.firstexampleapp.model.article.repository
 
-import android.content.Context
-import android.content.res.Resources
-import android.content.res.loader.ResourcesProvider
-import android.provider.Settings.Global.getString
-import androidx.compose.ui.platform.LocalContext
-import com.example.firstexampleapp.R
-import com.example.firstexampleapp.model.article.ArticleCat
 import com.example.firstexampleapp.model.article.ArticleState
+import com.example.firstexampleapp.model.response.Response
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.snapshots
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 
-val articles: List<ArticleState> = listOf(
-    ArticleState(
-        idArticle = 1,
-        title = R.string.title_one.toString(),
-        body =  R.string.body_one.toString(),
-        bookmarked = false,
-        image = R.mipmap.fruits,
-        category = ArticleCat.VitaminandMineral.category
-    ),
-    ArticleState(
-        idArticle = 2,
-        title = R.string.title_two.toString(),
-        body =  R.string.body_two.toString(),
-        bookmarked = true,
-        image = R.mipmap.fruits,
-        category = ArticleCat.DrinkandFood.category
-    ),
-    ArticleState(
-        idArticle = 3,
-        title = R.string.title_three.toString(),
-        body = R.string.body_three.toString(),
-        bookmarked = true,
-        image = R.mipmap.wiegth,
-        category = ArticleCat.RecomendedFoods.category
-    ),
-    ArticleState(
-        idArticle = 4,
-        title = R.string.title_four.toString(),
-        body = R.string.body_four.toString(),
-        bookmarked = false,
-        image = R.mipmap.wiegth,
-        category = ArticleCat.RecomendedFoods.category
-    ),
-    ArticleState(
-        idArticle = 5,
-        title = R.string.title_five.toString(),
-        body = R.string.body_five.toString(),
-        bookmarked = false,
-        image = R.mipmap.fruits,
-        category = ArticleCat.VitaminandMineral.category
-    )
+class ArticleRepo {
+    private val db = Firebase.firestore
+    private val ARTICLE_COLLECTION = "articles"
+    private val USER_COLLECTION = "users"
+    private val TITLE_FIELD = "title"
+    private val ISDONE_FIELD = "done"
 
-
-)
+    //function to get all articles from firestore
+    fun getAllArticles(): Flow<Response<List<ArticleState>>> {
+        return db.collection(ARTICLE_COLLECTION).orderBy(TITLE_FIELD, Query.Direction.ASCENDING)
+            .snapshots()
+            .map { doc -> Response.Success(data = doc.toObjects(ArticleState::class.java)) }
+            .catch { Response.Error(it.toString()) }
+    }
+}

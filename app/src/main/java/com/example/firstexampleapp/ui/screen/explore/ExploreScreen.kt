@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.firstexampleapp.R
 import com.example.firstexampleapp.model.article.ArticleCat
 import com.example.firstexampleapp.ui.utils.MyArticlesCategories
 import com.example.firstexampleapp.ui.utils.MyArticlesCategoriesHeader
@@ -38,10 +39,9 @@ fun ExploreScreen(
     userViewModel: UserViewModel,
     onItemBottomBarClicked: (String) -> Unit,
     onCategoryClicked: (String) -> Unit,
-    onArticleClicked: (Int) -> Unit,
+    onArticleClicked: (String) -> Unit,
     onSignatureClicked: () -> Unit
 ) {
-    val articleState by articleViewModel.article.collectAsState()
     Scaffold(
         bottomBar = {
             MyBottomBar(
@@ -65,19 +65,6 @@ fun ExploreScreen(
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 25.dp)
             )
 
-//            //this should by change by data class. Only UI purposes
-            val vitaminArticles = articleState.filter { article ->
-                article.category == ArticleCat.VitaminandMineral.category
-            }
-
-            val drinkArticle = articleState.filter { article ->
-                article.category == ArticleCat.DrinkandFood.category
-            }
-
-            val recommendedArticle = articleState.filter { article ->
-                article.category == ArticleCat.RecomendedFoods.category
-            }
-
             MyArticlesCategoriesHeader(
                 onCategoryClicked = { onCategoryClicked(ArticleCat.VitaminandMineral.category) },
                 subtitle = ArticleCat.VitaminandMineral.category,
@@ -89,9 +76,9 @@ fun ExploreScreen(
                 contentPadding = PaddingValues(horizontal = 20.dp),
                 modifier = Modifier.padding(vertical = 20.dp)
             ) {
-                items(vitaminArticles) { article ->
+                items(articleViewModel.getVitaminAndMineralArticles()) { article ->
                     MyArticlesCategories(
-                        image = article.image,
+                        imagePath = article.imagePath,
                         subtitle = "Para ti",
                         onArticleClicked = { onArticleClicked(article.idArticle) }
                     )
@@ -109,9 +96,9 @@ fun ExploreScreen(
                 contentPadding = PaddingValues(horizontal = 20.dp),
                 modifier = Modifier.padding(vertical = 20.dp)
             ) {
-                items(drinkArticle) { article ->
+                items(articleViewModel.getDrinkAndFoodArticles()) { article ->
                     MyArticlesCategories(
-                        image = article.image,
+                        imagePath = article.imagePath,
                         subtitle = "Para ti",
                         onArticleClicked = { onArticleClicked(article.idArticle) }
                     )
@@ -129,15 +116,14 @@ fun ExploreScreen(
                 contentPadding = PaddingValues(horizontal = 20.dp),
                 modifier = Modifier.padding(vertical = 20.dp)
             ) {
-                items(recommendedArticle) { article ->
+                items(articleViewModel.getRecommendedArticles()) { article ->
                     MyArticlesCategories(
-                        image = article.image,
+                        imagePath = article.imagePath,
                         subtitle = "Para ti",
                         onArticleClicked = { onArticleClicked(article.idArticle) }
                     )
                 }
             }
-
         }
     }
 }

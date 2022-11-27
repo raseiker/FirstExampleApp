@@ -23,6 +23,9 @@ import com.example.firstexampleapp.ui.utils.MyButton
 import com.example.firstexampleapp.ui.utils.MyText
 import com.example.firstexampleapp.ui.utils.MyTextFieldForm
 import com.example.firstexampleapp.ui.utils.MyTopApBar
+import com.example.firstexampleapp.ui.viewModel.questionViewModel.QuestionViewModel
+import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
+import com.example.firstexampleapp.ui.viewModel.taskViewModel.TaskViewModel
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
@@ -39,6 +42,10 @@ import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 @Composable
 fun CredentialScreen(
     userViewModel: UserViewModel,
+    taskViewModel: TaskViewModel,
+    recipeViewModel: RecipeViewModel,
+    questionViewModel: QuestionViewModel,
+    onNavigateBack: () -> Unit,
     onDoneClicked: () -> Unit = {}
 ) {
     val userState by userViewModel.user.collectAsState()
@@ -47,7 +54,8 @@ fun CredentialScreen(
             MyTopApBar(
                 title = "Correo y contraseña",
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = null
+                actionIcon = null,
+                onNavigateBack = onNavigateBack
             )
         }
     ) {
@@ -99,7 +107,11 @@ fun CredentialScreen(
             MyButton(
                 text = "Empezar",
                 enabled = userViewModel.isPassWordValid(),
-                onClick = onDoneClicked,
+                onClick = {
+                    userViewModel.createUser{ userId ->//add to firestore
+                    taskViewModel.getAllGeneralTask(userId); questionViewModel.getAllGeneralQuestion(userId); recipeViewModel.getAllGeneralRecipe(userId) }
+                    onDoneClicked()
+                          },
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
 

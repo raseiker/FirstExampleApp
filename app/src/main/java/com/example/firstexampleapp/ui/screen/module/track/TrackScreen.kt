@@ -41,17 +41,21 @@ import kotlinx.coroutines.flow.StateFlow
 @OptIn(ExperimentalMaterialApi::class, ExperimentalUnitApi::class)
 @Composable
 fun TrackScreen(
-    taskViewModel: TaskViewModel,
-    recipeViewModel: RecipeViewModel,
-    questionViewModel: QuestionViewModel,
-    userState: State<UserState>
+    taskCompletedCount: Int,
+    recipeCompletedCount: Int,
+    questionCompletedCount: Int,
+    onNavigateBack: () -> Unit,
+    onInfoClicked: () -> Unit,
+    userName: String
 ) {
     Scaffold(
         topBar = {
             MyTopApBar(
                 title = "Seguimiento",
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = Icons.Default.Info
+                actionIcon = Icons.Default.Info,
+                onNavigateBack = onNavigateBack,
+                onInfoClicked = onInfoClicked
             )
         }
     ) {
@@ -61,30 +65,30 @@ fun TrackScreen(
                 .verticalScroll(state = rememberScrollState())
         ) {
             MyArticleText(
-                text = "${userState.value.name}, te presentamos un resumen de tus logros a lo largo del uso de la app hasta el día de hoy. Te alentamos a que sigas adelante con " +
+                text = "$userName, te presentamos un resumen de tus logros a lo largo del uso de la app hasta el día de hoy. Te alentamos a que sigas adelante con " +
                         " tus objetivos. Todos los éxitos para ti y tu bebé.",
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 30.dp)
             )
 
             MyProgressIndicatorCard(
                 title = "Tareas completadas",
-                trimester = "${taskViewModel.getTaskCompletedCount()}/5",
-                progress = getProgressFloatOfCompleted(taskViewModel.getTaskCompletedCount()),
-                tint = getProgressColorOfCompleted(taskViewModel.getTaskCompletedCount()),
+                trimester = "$taskCompletedCount/5",
+                progress = getProgressFloatOfCompleted(taskCompletedCount),
+                tint = getProgressColorOfCompleted(taskCompletedCount),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
             MyProgressIndicatorCard(
                 title = "Recetas completadas",
-                trimester = "${recipeViewModel.getRecipeCompletedCount()}/5",
-                progress = getProgressFloatOfCompleted(recipeViewModel.getRecipeCompletedCount()),
-                tint = getProgressColorOfCompleted(recipeViewModel.getRecipeCompletedCount()),
+                trimester = "$recipeCompletedCount/5",
+                progress = getProgressFloatOfCompleted(recipeCompletedCount),
+                tint = getProgressColorOfCompleted(recipeCompletedCount),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
             MyProgressIndicatorCard(
                 title = "Preguntas completadas",
-                trimester = "${questionViewModel.getQuestionCompletedCount()}/5",
-                progress = getProgressFloatOfCompleted(questionViewModel.getQuestionCompletedCount()),
-                tint = getProgressColorOfCompleted(questionViewModel.getQuestionCompletedCount()),
+                trimester = "$questionCompletedCount/5",
+                progress = getProgressFloatOfCompleted(questionCompletedCount),
+                tint = getProgressColorOfCompleted(questionCompletedCount),
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
         }

@@ -1,22 +1,26 @@
 package com.example.firstexampleapp.model.user
 
+import com.example.firstexampleapp.model.task.TaskState
 import com.example.firstexampleapp.model.weight.WeightState
 
 data class UserState(
-    val idUser: Int = 0,
+    val idUser: String = "",//was int
     val name: String = "",
     val age: String = "",
+    @field:JvmField
     val isFirstChild: Boolean = false,
     val babySex: String = "",
     val lastPeriod: String? = null,
     val firstPregnancy: String? = null,
     val pregnancyWeek: Int = 0,
-    val trimester: Trimester = Trimester.Third,
+    val trimester: String = Trimester.Third.type,//before was Trimester type
     val pregnancyProgress: Float = 1f,
     val credentials: MutableMap<String, String> = mutableMapOf(),
     val imc: MutableMap<String, String> = mutableMapOf(),//changed to string type in weight value
-    val weightRecord: MutableList<WeightState> = mutableListOf(WeightState())//add this parameter
+    val weightRecord: MutableList<WeightState> = mutableListOf(WeightState()),
+//    val taskList: MutableList<TaskState> = mutableListOf()//add this parameter
 )
+
 
 sealed class UserVar(val type: String){
     object Email: UserVar(type = "email")

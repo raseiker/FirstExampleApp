@@ -25,19 +25,20 @@ import com.example.firstexampleapp.ui.utils.*
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 
 //@Preview(showBackground = true, device = Devices.DEFAULT)
-@ExperimentalMaterialApi
-@Composable
-fun AboutYouScreenPreview() {
-    FirstExampleAppTheme(darkTheme = true) {
-        //AboutYouScreen()
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//fun AboutYouScreenPreview() {
+//    FirstExampleAppTheme(darkTheme = true) {
+//        //AboutYouScreen()
+//    }
+//}
 
 @ExperimentalMaterialApi
 @Composable
 fun AboutYouScreen(
     userViewModel: UserViewModel,
-    onNextClicked: () -> Unit = {}
+    onNextClicked: () -> Unit = {},
+    onNavigateBack: () -> Unit,
 ) {
     val userState by userViewModel.user.collectAsState()
     Scaffold(
@@ -45,7 +46,8 @@ fun AboutYouScreen(
             MyTopApBar(
                 title = "Sobre ti...",
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = null
+                actionIcon = null,
+                onNavigateBack = onNavigateBack
             )
         }
     ) {

@@ -30,7 +30,9 @@ import com.example.firstexampleapp.ui.viewModel.foodViewModel.FoodViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FoodScreen(
-    foodViewModel: FoodViewModel
+    foodViewModel: FoodViewModel,
+    onNavigateBack: () -> Unit,
+    onInfoClicked: () -> Unit
 ) {
     val foodState by foodViewModel.food.collectAsState()
     Scaffold(
@@ -38,7 +40,9 @@ fun FoodScreen(
             MyTopApBar(
                 title = "Calculadora de alimentos",
                 navIcon = Icons.Default.ArrowBack,
-                actionIcon = Icons.Default.Info
+                actionIcon = Icons.Default.Info,
+                onNavigateBack = onNavigateBack,
+                onInfoClicked = onInfoClicked
             )
         }
     ) {

@@ -2,9 +2,7 @@ package com.example.firstexampleapp.ui.navigation
 
 import android.util.Log
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
@@ -18,6 +16,7 @@ import com.example.firstexampleapp.ui.screen.login.*
 import com.example.firstexampleapp.ui.screen.module.ModuleScreen
 import com.example.firstexampleapp.ui.screen.module.food.FoodScreen
 import com.example.firstexampleapp.ui.screen.module.question.QuestionScreen
+import com.example.firstexampleapp.ui.screen.module.question.InfoScreen
 import com.example.firstexampleapp.ui.screen.module.recipe.RecipeDetailScreen
 import com.example.firstexampleapp.ui.screen.module.recipe.RecipeScreen
 import com.example.firstexampleapp.ui.screen.module.task.TaskScreen
@@ -31,6 +30,7 @@ import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 import com.example.firstexampleapp.ui.viewModel.taskViewModel.TaskViewModel
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 import com.example.firstexampleapp.ui.viewModel.weightViewModel.WeightViewModel
+import com.example.firstexampleapp.R
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalUnitApi::class)
 @Composable
@@ -47,11 +47,14 @@ fun SetUpNavHost(
     FirstExampleAppTheme(darkTheme = userViewModel.isDark.value) {
         NavHost(
             navController = navController,
-            startDestination = Screen.LoginGraph.route//change to logingraph later
+            startDestination = Screen.LoginGraph.route
         ) {
 
             loginGraph(
                 navController = navController,
+                taskViewModel = taskViewModel,
+                questionViewModel = questionViewModel,
+                recipeViewModel = recipeViewModel,
                 userViewModel = userViewModel,
                 isDark = userViewModel.isDark.value,
                 onThemeChange = { userViewModel.onThemeChange() }
@@ -92,12 +95,14 @@ fun SetUpNavHost(
                 route = Screen.ArticleScreen.route + "{idArticle}",
                 arguments = listOf(
                     navArgument(name = "idArticle") {
-                        type = NavType.IntType
+                        type = NavType.StringType//was int
                     }
                 )
             ) {
                 ArticleScreen(
-                    articleState = articleViewModel.getArticle(idArticle = it.arguments?.getInt("idArticle")!!)
+                    articleState = articleViewModel.getArticleById(idArticle = it.arguments?.getString("idArticle")!!),
+                    onNavigateBack = { navController.navigateUp() },
+                    onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.article_info) }
                 )
             }
 
@@ -118,17 +123,33 @@ fun SetUpNavHost(
 @OptIn(ExperimentalMaterialApi::class)
 fun NavGraphBuilder.loginGraph(
     navController: NavHostController,
+    taskViewModel: TaskViewModel,
+    questionViewModel: QuestionViewModel,
+    recipeViewModel: RecipeViewModel,
     userViewModel: UserViewModel,
     onThemeChange: (Boolean) -> Unit,
     isDark: Boolean
 ) {
     navigation(
-        startDestination = Screen.LoginScreen.route,
+        startDestination = Screen.SplashScreen.route,//Screen.LoginScreen.route,
         route = Screen.LoginGraph.route
     ) {
+        composable(route = Screen.SplashScreen.route){
+            SplashScreen(
+                userViewModel = userViewModel,
+                questionViewModel = questionViewModel,
+                taskViewModel = taskViewModel,
+                recipeViewModel = recipeViewModel,
+                onNavigateTo = { destination -> navController.popBackStack(); navController.navigate(route = destination) }
+            )
+        }
+
         composable(route = Screen.LoginScreen.route) {
             LoginScreen(
                 userViewModel = userViewModel,
+                questionViewModel = questionViewModel,
+                taskViewModel = taskViewModel,
+                recipeViewModel = recipeViewModel,
                 onSingInClicked = {
                     navController.navigate(Screen.HomeScreen.route) {
                         popUpTo(Screen.HomeScreen.route) { inclusive = true }
@@ -141,21 +162,27 @@ fun NavGraphBuilder.loginGraph(
         composable(route = Screen.AboutYouScreen.route) {
             AboutYouScreen(
                 userViewModel = userViewModel,
-                onNextClicked = { navController.navigate(Screen.CustomContentScreen.route) }
+                onNextClicked = { navController.navigate(Screen.CustomContentScreen.route) },
+                onNavigateBack = { navController.navigateUp() }
             )
         }
 
         composable(route = Screen.CustomContentScreen.route) {
             CustomContentScreen(
                 userViewModel = userViewModel,
-                onNextClicked = { navController.navigate(Screen.CredentialScreen.route) }
+                onNextClicked = { navController.navigate(Screen.CredentialScreen.route) },
+                onNavigateBack = { navController.navigateUp() }
             )
         }
 
         composable(route = Screen.CredentialScreen.route) {
             CredentialScreen(
                 userViewModel = userViewModel,
-                onDoneClicked = { navController.navigate(Screen.HomeScreen.route) }
+                taskViewModel = taskViewModel,
+                questionViewModel = questionViewModel,
+                recipeViewModel = recipeViewModel,
+                onDoneClicked = { navController.navigate(Screen.HomeScreen.route) },
+                onNavigateBack = { navController.navigateUp() }
             )
         }
 
@@ -164,10 +191,8 @@ fun NavGraphBuilder.loginGraph(
                 userViewModel = userViewModel,
                 isDark = isDark,
                 onThemeChange = onThemeChange,
-                onLogoutClicked = {
-                    navController.popBackStack()
-                    navController.navigate(route = Screen.LoginGraph.route)
-                }
+                onLogoutClicked = { navController.popBackStack(); navController.navigate(route = Screen.LoginScreen.route) },
+                onNavigateBack = { navController.navigateUp() }
             )
         }
     }
@@ -203,49 +228,72 @@ fun NavGraphBuilder.moduleGraph(
         composable(route = Screen.WeightScreen.route) {
             WeightScreen(
                 weightViewModel = weightViewModel,
-                userViewModel = userViewModel
+                userViewModel = userViewModel,
+                onNavigateBack = { navController.navigateUp() },
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.weight_info) }
             )
         }
         composable(route = Screen.QuestionScreen.route) {
             QuestionScreen(
                 questionViewModel = questionViewModel,
+                onExpandibleCardClicked = { navController.navigate(Screen.InfoScreen.route) },
+                onNavigateBack = { navController.navigateUp() },
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.question_info) }
+            )
+        }
+        composable(
+            route = Screen.InfoScreen.route + "{imageId}",
+            arguments = listOf(navArgument(name = "imageId"){ type = NavType.IntType })
+        ) {
+            InfoScreen(
+                imageInfo = it.arguments?.getInt("imageId")!!,
+                onNavigateBack = { navController.navigateUp() }
             )
         }
         composable(route = Screen.RecipeScreen.route) {
             RecipeScreen(
                 recipeViewModel = recipeViewModel,
-                onCardClicked = { idRecipe -> navController.navigate(route = Screen.RecipeDetailScreen.route + idRecipe) }
+                onCardClicked = { idRecipe -> navController.navigate(route = Screen.RecipeDetailScreen.route + idRecipe) },
+                onNavigateBack = { navController.navigateUp() }
             )
         }
         composable(
             route = Screen.RecipeDetailScreen.route + "{idRecipe}",
             arguments = listOf(
                 navArgument(name = "idRecipe") {
-                    type = NavType.IntType
+                    type = NavType.StringType//was Inttype
                 }
             )
         ) {
             RecipeDetailScreen(
                 recipeViewModel = recipeViewModel,
-                recipeState = recipeViewModel.getRecipeById(idRecipe = it.arguments?.getInt("idRecipe")!!).collectAsState()
+                recipeState = recipeViewModel.getRecipeById(idRecipe = it.arguments?.getString("idRecipe")!!),
+                onNavigateBack = { navController.navigateUp() },
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.recipe_info) }
             )
         }
         composable(route = Screen.FoodScreen.route){
             FoodScreen(
-                foodViewModel = foodViewModel
+                foodViewModel = foodViewModel,
+                onNavigateBack = {navController.navigateUp()},
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.food_info) }
             )
         }
         composable(route = Screen.TaskScreen.route){
             TaskScreen(
-                taskViewModel = taskViewModel
+                taskViewModel = taskViewModel,
+                onNavigateBack = { navController.navigateUp() },
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.task_info) }
             )
         }
         composable(route = Screen.TrackScreen.route){
             TrackScreen(
-                taskViewModel = taskViewModel,
-                recipeViewModel = recipeViewModel,
-                questionViewModel = questionViewModel,
-                userState = userViewModel.user.collectAsState()
+                taskCompletedCount = taskViewModel.getTaskCompletedCount(),
+                recipeCompletedCount = recipeViewModel.getRecipeCompletedCount(),
+                questionCompletedCount = questionViewModel.getQuestionCompletedCount(),
+                onNavigateBack = {navController.navigateUp()},
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.track_info) },
+                userName = userViewModel.user.collectAsState().value.name
             )
         }
     }

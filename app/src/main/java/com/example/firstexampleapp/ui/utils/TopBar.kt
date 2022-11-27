@@ -18,25 +18,25 @@ import com.example.firstexampleapp.ui.theme.FirstExampleAppTheme
 import com.example.firstexampleapp.R
 
 //@Preview(showBackground = true, device = Devices.NEXUS_5X)
-@Composable
-fun MyTopBarPreview() {
-    FirstExampleAppTheme() {
-        Scaffold(
-            topBar = {
-                MyTopApBar(
-                    title = "FAQs",
-                    navIcon = Icons.Default.ArrowBack,
-                    actionIcon = Icons.Default.Info,
-                    modifier = Modifier
-                )
-            }
-        ) {
-            Column(modifier = Modifier.padding(paddingValues = it)) {
-
-            }
-        }
-    }
-}
+//@Composable
+//fun MyTopBarPreview() {
+//    FirstExampleAppTheme() {
+//        Scaffold(
+//            topBar = {
+//                MyTopApBar(
+//                    title = "FAQs",
+//                    navIcon = Icons.Default.ArrowBack,
+//                    actionIcon = Icons.Default.Info,
+//                    modifier = Modifier
+//                )
+//            }
+//        ) {
+//            Column(modifier = Modifier.padding(paddingValues = it)) {
+//
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun MyTopApBar(
@@ -45,6 +45,8 @@ fun MyTopApBar(
     actionIconBookMark: ImageVector? = null,
     actionIcon: ImageVector? = null,
     isFavorite: Boolean = false,
+    onNavigateBack: () -> Unit,
+    onInfoClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var isFav by remember {//change color
@@ -53,13 +55,13 @@ fun MyTopApBar(
     TopAppBar(
         title = { title?.let { Text(text = it) } },
         navigationIcon = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = onNavigateBack) {
                 Icon(imageVector = navIcon, contentDescription = "go back")
             }
         },
         actions = {
             actionIcon?.let {
-                IconButton(onClick = {}) {
+                IconButton(onClick = onInfoClicked) {
                     Icon(
                         imageVector = it,
                         contentDescription = "info"

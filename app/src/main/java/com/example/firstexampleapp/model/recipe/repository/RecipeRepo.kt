@@ -1,50 +1,51 @@
 package com.example.firstexampleapp.model.recipe.repository
 
-import com.example.firstexampleapp.R
 import com.example.firstexampleapp.model.recipe.RecipeState
+import com.example.firstexampleapp.model.response.Response
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.snapshots
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await
 
-val listRecipe = listOf(
-    RecipeState(
-        idRecipe = 1,
-        title = "Arroz con Leche",
-        photo = R.mipmap.fruits,
-        mix = listOf(
-            "100 grs de arroz intregral",
-            "550 ml de leche",
-            "1 rama de canela",
-            "1/4 de limón",
-            "Canela en polvo para decorar",
-            "Unas cuantas gotas de escencia de vainilla (opcional)"
-        ),
-        cookingTime = "50 min",
-        quantity = "4 personas",
-        description =
-        "1- Con la ayuda de un colador, limpiar bien el arroz." +
-                "\n2- En una olla, poner agua a calentar i, cuando esté a punto de hervir, añadir el resto de los ingredientes (excepto la canela en polvo)." +
-                "\n3- Cocinar a fuego lento 35-40 minutos, removiendo constantemente para que no se enganche." +
-                "\n4- Reservar en la nevera un mínimo de 1-2 h antes de consumir." +
-                "\n\nFuente:  “Un Estiu Saludable: Receptes per un estiu amb salut” del Colegio de Dietistas-Nutricionistas de Cataluña"
-    ),
-    RecipeState(
-        idRecipe = 2,
-        title = "Risotto con tomates asados y cebada",
-        photo = R.mipmap.wiegth,
-        mix = listOf(
-            "100 grs de arroz intregral",
-            "550 ml de leche",
-            "1 rama de canela",
-            "1/4 de limón",
-            "Canela en polvo para decorar",
-            "Unas cuantas gotas de escencia de vainilla (opcional)"
-        ),
-        cookingTime = "50 min",
-        quantity = "4 personas",
-        description =
-        "1- Con la ayuda de un colador, limpiar bien el arroz." +
-                "\n2- En una olla, poner agua a calentar i, cuando esté a punto de hervir, añadir el resto de los ingredientes (excepto la canela en polvo)." +
-                "\n3- Cocinar a fuego lento 35-40 minutos, removiendo constantemente para que no se enganche." +
-                "\n4- Reservar en la nevera un mínimo de 1-2 h antes de consumir." +
-                "\n\nFuente:  “Un Estiu Saludable: Receptes per un estiu amb salut” del Colegio de Dietistas-Nutricionistas de Cataluña",
-        nutritionInfo = listOf("540kcal", "50g", "0kg", "1g", "18g")
-    )
-)
+class RecipeRepo {
+    private val db = Firebase.firestore
+    private val RECIPE_COLLECTION = "recipes"
+    private val USER_COLLECTION = "users"
+    private val ISDONE_FIELD = "done"
+    private val TITLE_FIELD = "title"
+
+    //function to get all recipe from firestore
+    fun getAllRecipe(): Flow<Response<List<RecipeState>>> {
+        return db.collection(RECIPE_COLLECTION).orderBy(TITLE_FIELD, Query.Direction.ASCENDING)
+            .snapshots()
+            .map { doc -> Response.Success(data = doc.toObjects(RecipeState::class.java)) }
+            .catch { Response.Error(it.toString()) }
+    }
+
+    //function to get all recipes from firestore by user id
+    fun getAllRecipeByUserId(userId: String): Flow<Response<List<RecipeState>>> {
+        return db.collection(USER_COLLECTION).document(userId).collection(RECIPE_COLLECTION).orderBy(TITLE_FIELD, Query.Direction.ASCENDING)
+            .snapshots()
+            .map { doc -> Response.Success(data = doc.toObjects(RecipeState::class.java))
+            }
+            .catch { Response.Error(it.toString()) }
+    }
+
+    //function to update isDone field to user task or create recipe object if not exists
+    suspend fun updateRecipe(recipeState: RecipeState, userId: String): Response<Boolean> {
+        return try {
+            db.collection(USER_COLLECTION).document(userId).collection(RECIPE_COLLECTION).document(recipeState.idRecipe)
+//                .update(ISDONE_FIELD, newVal)
+                .set(recipeState, SetOptions.merge())
+                .await()
+            Response.Success(data = true)
+        } catch (e: Exception){
+            Response.Error(error = e.toString())
+        }
+    }
+}

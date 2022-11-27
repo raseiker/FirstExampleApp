@@ -1,5 +1,6 @@
 package com.example.firstexampleapp.ui.screen.login
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -8,10 +9,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.firstexampleapp.model.user.UserVar
 import com.example.firstexampleapp.ui.utils.*
+import com.example.firstexampleapp.ui.viewModel.questionViewModel.QuestionViewModel
+import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
+import com.example.firstexampleapp.ui.viewModel.taskViewModel.TaskViewModel
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 
 
@@ -26,6 +31,9 @@ import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 @Composable
 fun LoginScreen(
     userViewModel: UserViewModel,
+    taskViewModel: TaskViewModel,
+    questionViewModel: QuestionViewModel,
+    recipeViewModel: RecipeViewModel,
     onSingInClicked: () -> Unit = {},
     onRegisterClicked: (Int) -> Unit = {}
 ) {
@@ -71,21 +79,22 @@ fun LoginScreen(
             //show sign in button
             MyButton(
                 text = "Ingresar",
-                enabled = userViewModel.isValidCredential(),
-                onClick = onSingInClicked,
+                enabled = true,//userViewModel.isValidCredential(),
+                onClick = { userViewModel.signIn { id ->
+                            taskViewModel.getAllTaskByUserId(id)
+                            questionViewModel.getAllQuestionByUserId(id)
+                            recipeViewModel.getAllRecipesByUserId(id)
+                            onSingInClicked()
+                        } },
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 30.dp)
             )
 
-            //show divider
-            MyDivider(
-                text = "o registrate con",
-                modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
-            )
-
-            //show google button
-            MySocialMediaButton(modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp))
-
-
+            if (userViewModel.msgError.value.length > 1) MyToastText(text = userViewModel.msgError.value)
         }
     }
+}
+
+@Composable
+fun MyToastText(text: String){
+    Toast.makeText(LocalContext.current, text, Toast.LENGTH_SHORT).show()
 }

@@ -262,6 +262,7 @@ fun MyTextFieldFormQuestion(
                 }
             },
 //            singleLine = true,
+            readOnly = true,
             maxLines = 2,
             colors = if (MaterialTheme.colors.isLight) {
                 TextFieldDefaults.outlinedTextFieldColors(

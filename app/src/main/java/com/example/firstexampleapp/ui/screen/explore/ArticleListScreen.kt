@@ -36,7 +36,8 @@ fun ArticleListScreen() {
         topBar = {
             MyTopApBar(
                 title = "Bebidas y Comidas",
-                navIcon = Icons.Default.ArrowBack
+                navIcon = Icons.Default.ArrowBack,
+                onNavigateBack = {}
             )
         }
     ) {

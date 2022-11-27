@@ -3,6 +3,7 @@ package com.example.firstexampleapp.ui.navigation
 sealed class Screen(
     val route: String
 ){
+    object SplashScreen: Screen(route = "splash")
     object LoginScreen: Screen(route = "login")
     object AboutYouScreen: Screen(route = "about_you")
     object CustomContentScreen: Screen(route = "custom_content")
@@ -13,6 +14,7 @@ sealed class Screen(
     object RecipeScreen: Screen(route = "recipe")
     object RecipeDetailScreen: Screen(route = "recipe/")
     object QuestionScreen: Screen(route = "question")
+    object InfoScreen: Screen(route = "info/")
     object TrackScreen: Screen(route = "track")
     object ModuleScreen: Screen(route = "module")
     object ExploreScreen: Screen(route = "explore")

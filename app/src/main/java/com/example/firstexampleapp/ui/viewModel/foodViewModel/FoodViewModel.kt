@@ -3,20 +3,24 @@ package com.example.firstexampleapp.ui.viewModel.foodViewModel
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.firstexampleapp.model.food.FoodRepo
 import com.example.firstexampleapp.model.food.FoodState
-import com.example.firstexampleapp.model.food.listFood
-import com.example.firstexampleapp.model.weight.WeightState
+import com.example.firstexampleapp.model.response.Response
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class FoodViewModel : ViewModel() {
+    private val foodRepo = FoodRepo()
     private var _food = MutableStateFlow(FoodState())
     val food: StateFlow<FoodState> = _food.asStateFlow()
     var textFood = mutableStateOf("")
         private set
     var quantity = mutableStateOf("1")
         private set
+    private var listFood = listOf<FoodState>()
 
-    private fun getFoods() = listFood
+    init { getAllFood() }
 
     //show current text on text field and clean it
     fun onValueChange(food: String, code: Int) {
@@ -34,11 +38,8 @@ class FoodViewModel : ViewModel() {
     }
 
     //search for new foods and update the food state
-    fun onSearchFoodByName(food: String) {
-        _food.update {
-            getFoods().find { it.name == food } ?: FoodState()
-        }
-    }
+    fun onSearchFoodByName(food: String) = _food.update { listFood.find { it.name == food } ?: FoodState() }
+
 
     //show the current food state and convert it to mutable string list
     fun foodToList(foodState: FoodState): MutableList<List<String>> {
@@ -58,5 +59,16 @@ class FoodViewModel : ViewModel() {
         return foodList
     }
 
-    fun getFoodListName() = getFoods().map { foodState -> foodState.name }
+    fun getFoodListName() = listFood.map { foodState -> foodState.name }
+
+    //this function retrieve all foods from firestore
+    private fun getAllFood() = viewModelScope.launch {
+        foodRepo.getAllFood().collect{ res ->
+            when(res) {
+                is Response.Error -> Log.d("getFood", res.error)
+                Response.Loading -> TODO()
+                is Response.Success -> Log.d("getFood", res.data.size.toString()).also { listFood = res.data }
+            }
+        }
+    }
 }

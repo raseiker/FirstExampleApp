@@ -1,7 +1,7 @@
 package com.example.firstexampleapp.model.task
 
 data class TaskState(
-    val idTask: Int = 1,
+    val idTask: String = "",//was int
     val task: String = "",
-    val isDone: Boolean = false
+    val done: Boolean = false
 )
