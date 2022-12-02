@@ -12,10 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.firstexampleapp.model.user.UserVar
-import com.example.firstexampleapp.ui.utils.MyButton
-import com.example.firstexampleapp.ui.utils.MySwitchOption
-import com.example.firstexampleapp.ui.utils.MyText
-import com.example.firstexampleapp.ui.utils.MyTopApBar
+import com.example.firstexampleapp.ui.utils.*
 import com.example.firstexampleapp.ui.viewModel.userViewModel.UserViewModel
 import kotlinx.coroutines.flow.StateFlow
 //
@@ -33,6 +30,7 @@ fun LogoutScreen(
     onThemeChange: (Boolean) -> Unit,
     onLogoutClicked: () -> Unit,
     onNavigateBack: () -> Unit,
+    onTermClicked: () -> Unit,
     ) {
     var darkValue by remember { mutableStateOf(isDark)}
     val userState = userViewModel.user.collectAsState()
@@ -76,6 +74,12 @@ fun LogoutScreen(
                 isChecked = darkValue,//isDark,
                 onCheckedChange = { userViewModel.onThemeChange(it); darkValue = it },//onThemeChange,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+            )
+
+            MyForgivenPassword(
+                text = "Términos de uso",
+                onRegisterClick = { onTermClicked() },
+                modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
             )
 
             MyButton(

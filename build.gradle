@@ -20,3 +20,7 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+/*
+Developed by Cesar Moncada -> raseiker1@gmail.com
+ */

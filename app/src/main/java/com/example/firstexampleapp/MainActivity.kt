@@ -24,4 +24,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/*
+Developed by Cesar Moncada -> raseiker1@gmail.com
+ */
+
 

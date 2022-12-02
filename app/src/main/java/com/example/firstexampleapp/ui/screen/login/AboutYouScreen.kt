@@ -107,6 +107,7 @@ fun AboutYouScreen(
             MyButton(
                 text = "Siguiente",
                 onClick = onNextClicked,
+                enabled = userViewModel.isFieldFilled(listOf(userState.name, userState.age, userViewModel.isFirstChild.value, userState.babySex)),
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
             )
         }

@@ -12,6 +12,7 @@ import com.example.firstexampleapp.model.user.repository.UserRepo
 import com.example.firstexampleapp.model.weight.WeightState
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -28,7 +29,7 @@ class UserViewModel() : ViewModel() {
         private set
     var _imc = mutableStateMapOf<String, String>()
         private set
-    var isDark = mutableStateOf(value = false)
+    var isDark = mutableStateOf(value = true)//was false
         private set
     var msgError = mutableStateOf("")
         private set
@@ -39,7 +40,7 @@ class UserViewModel() : ViewModel() {
 
     fun onValueChangeName(text: String) = _user.update { it.copy(name = text) }
 
-    fun onValueChangeAge(age: String) = _user.update { it.copy(age = age) }
+    fun onValueChangeAge(age: String) = _user.update { it.copy(age = age.filterNot { it.toString() == "." }) }
 
     fun onValueChangeBabySex(babySex: String) = _user.update { it.copy(babySex = babySex) }
 
@@ -109,6 +110,7 @@ class UserViewModel() : ViewModel() {
             UserVar.Password2.type -> _credential[UserVar.Password2.type] = ""
             UserVar.Height.type -> _imc[UserVar.Height.type] = ""
             UserVar.Weight.type -> _imc[UserVar.Weight.type] = ""
+            "all" -> _credential.clear()
         }
     }
 
@@ -221,6 +223,8 @@ class UserViewModel() : ViewModel() {
                 .also { _user.update { res.data.copy(weightRecord = res.data.weightRecord.asReversed()) }; callback(authId) }
         }
     }
+
+    fun isFieldFilled(attr: List<String>) = !attr.contains("")
 
     //auth functions
     fun signIn(

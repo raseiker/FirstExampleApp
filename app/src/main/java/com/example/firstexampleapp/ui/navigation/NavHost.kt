@@ -102,7 +102,8 @@ fun SetUpNavHost(
                 ArticleScreen(
                     articleState = articleViewModel.getArticleById(idArticle = it.arguments?.getString("idArticle")!!),
                     onNavigateBack = { navController.navigateUp() },
-                    onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.article_info) }
+                    onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 0, isDark = userViewModel.isDark.value)) },
+                    onFABClicked = { navController.navigate(route = Screen.QuestionScreen.route) }
                 )
             }
 
@@ -192,7 +193,8 @@ fun NavGraphBuilder.loginGraph(
                 isDark = isDark,
                 onThemeChange = onThemeChange,
                 onLogoutClicked = { navController.popBackStack(); navController.navigate(route = Screen.LoginScreen.route) },
-                onNavigateBack = { navController.navigateUp() }
+                onNavigateBack = { navController.navigateUp() },
+                onTermClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 6, isDark = userViewModel.isDark.value)) }
             )
         }
     }
@@ -230,7 +232,7 @@ fun NavGraphBuilder.moduleGraph(
                 weightViewModel = weightViewModel,
                 userViewModel = userViewModel,
                 onNavigateBack = { navController.navigateUp() },
-                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.weight_info) }
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 3, isDark = userViewModel.isDark.value)) }
             )
         }
         composable(route = Screen.QuestionScreen.route) {
@@ -238,7 +240,7 @@ fun NavGraphBuilder.moduleGraph(
                 questionViewModel = questionViewModel,
                 onExpandibleCardClicked = { navController.navigate(Screen.InfoScreen.route) },
                 onNavigateBack = { navController.navigateUp() },
-                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.question_info) }
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 4, isDark = userViewModel.isDark.value)) }
             )
         }
         composable(
@@ -269,21 +271,21 @@ fun NavGraphBuilder.moduleGraph(
                 recipeViewModel = recipeViewModel,
                 recipeState = recipeViewModel.getRecipeById(idRecipe = it.arguments?.getString("idRecipe")!!),
                 onNavigateBack = { navController.navigateUp() },
-                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.recipe_info) }
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 5, isDark = userViewModel.isDark.value)) }
             )
         }
         composable(route = Screen.FoodScreen.route){
             FoodScreen(
                 foodViewModel = foodViewModel,
                 onNavigateBack = {navController.navigateUp()},
-                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.food_info) }
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 7, isDark = userViewModel.isDark.value)) }
             )
         }
         composable(route = Screen.TaskScreen.route){
             TaskScreen(
                 taskViewModel = taskViewModel,
                 onNavigateBack = { navController.navigateUp() },
-                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.task_info) }
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 1, isDark = userViewModel.isDark.value)) }
             )
         }
         composable(route = Screen.TrackScreen.route){
@@ -292,7 +294,7 @@ fun NavGraphBuilder.moduleGraph(
                 recipeCompletedCount = recipeViewModel.getRecipeCompletedCount(),
                 questionCompletedCount = questionViewModel.getQuestionCompletedCount(),
                 onNavigateBack = {navController.navigateUp()},
-                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + R.mipmap.track_info) },
+                onInfoClicked = { navController.navigate(route = Screen.InfoScreen.route + getInfo(code = 2, isDark = userViewModel.isDark.value)) },
                 userName = userViewModel.user.collectAsState().value.name
             )
         }
@@ -304,3 +306,21 @@ fun onItemClicked(screen: String, navController: NavController) {
     if (screen == (navController.currentDestination?.route ?: screen)) return
     navController.navigate(screen)
 }
+
+fun getInfo(code: Int, isDark: Boolean): Int{
+    return when (code) {
+        0 -> if (!isDark) R.mipmap.article_info else R.mipmap.article_info_dark//article
+        1 -> if (!isDark) R.mipmap.task_info else R.mipmap.task_info_dark//article
+        2 -> if (!isDark) R.mipmap.track_info else R.mipmap.track_info_dark//article
+        3 -> if (!isDark) R.mipmap.weight_info else R.mipmap.weight_info_dark//article
+        4 -> if (!isDark) R.mipmap.question_info else R.mipmap.question_info_dark//article
+        5 -> if (!isDark) R.mipmap.recipe_info else R.mipmap.recipe_info_dark//article
+        6 -> if (!isDark) R.mipmap.terms_info else R.mipmap.terms_info_dark//terms
+        7 -> if (!isDark) R.mipmap.food_info else R.mipmap.food_info_dark//terms
+        else -> R.mipmap.terms_info
+    }
+}
+
+/*
+Developed by Cesar Moncada -> raseiker1@gmail.com
+ */

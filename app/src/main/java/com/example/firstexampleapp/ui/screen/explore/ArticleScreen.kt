@@ -31,12 +31,16 @@ import com.example.firstexampleapp.ui.utils.*
 fun ArticleScreen(
     articleState: ArticleState,
     onNavigateBack: () -> Unit,
-    onInfoClicked: () -> Unit
+    onInfoClicked: () -> Unit,
+    onFABClicked: () -> Unit
 ) {
     Scaffold(
-//        floatingActionButton = {
-//            MyFab()
-//        },
+        floatingActionButton = {
+            MyFab(
+                isQuestion = true,
+                onClick = onFABClicked
+            )
+        },
         topBar = {
             MyTopApBar(
                 title = "",

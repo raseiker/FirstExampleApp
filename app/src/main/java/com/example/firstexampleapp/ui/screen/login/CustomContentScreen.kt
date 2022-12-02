@@ -109,24 +109,26 @@ fun CustomContentScreen(
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
 
-            //show divider
-            MyDivider(
-                text = "o",
-                modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
-            )
-
-            //show first day of pregnancy date picker
-            MyDatePicker(
-                label = "Primer día de la concepción",
-                text = userState.firstPregnancy ?: "",
-                onValueChange = { firstPregnancy -> userViewModel.onValueChangeFirstPregnancy(firstPregnancy) },
-                modifier = Modifier.padding(horizontal = 25.dp)
-            )
+//            //show divider
+//            MyDivider(
+//                text = "o",
+//                modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
+//            )
+//
+//            //show first day of pregnancy date picker
+//            MyDatePicker(
+//                label = "Primer día de la concepción",
+//                text = userState.firstPregnancy ?: "",
+//                onValueChange = { firstPregnancy -> userViewModel.onValueChangeFirstPregnancy(firstPregnancy) },
+//                modifier = Modifier.padding(horizontal = 25.dp)
+//            )
 
             //show next button
             MyButton(
                 text = "Siguiente",
                 onClick = onNextClicked,
+                enabled = userViewModel.isFieldFilled(
+                    listOf(userViewModel._imc[UserVar.Height.type] ?: "", userViewModel._imc[UserVar.Weight.type] ?: "", userState.lastPeriod ?: "")),
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
             )
         }

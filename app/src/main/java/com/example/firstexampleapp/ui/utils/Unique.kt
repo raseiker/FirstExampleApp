@@ -16,8 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -237,13 +239,14 @@ fun MyScreenTitle(
 
 @Composable
 fun MyFab(
+    isQuestion: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     FloatingActionButton(
         onClick = onClick,//
         backgroundColor = MaterialTheme.colors.secondaryVariant,
     ) {
-        Icon(imageVector = Icons.Default.Add, contentDescription = null)
+        Icon(imageVector = if(isQuestion) ImageVector.vectorResource(id = R.drawable.ic_circle_question_solid) else Icons.Default.Add, contentDescription = null)
     }
 }
 
@@ -277,6 +280,7 @@ fun MyLogo(
 
 @Composable
 fun MyForgivenPassword(
+    text: String,
     modifier: Modifier = Modifier,
     onRegisterClick: (Int) -> Unit = {}
     ) {
@@ -285,20 +289,20 @@ fun MyForgivenPassword(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier.fillMaxWidth()
     ) {
-        ClickableText(
-            text = AnnotatedString(
-                text = "Olvidé mi contraseña",
-                spanStyle = SpanStyle(
-                    color = Color.DarkGray,
-                    textDecoration = TextDecoration.Underline
-                )
-            ),
-            onClick = {}
-        )
+//        ClickableText(
+//            text = AnnotatedString(
+//                text = "Olvidé mi contraseña",
+//                spanStyle = SpanStyle(
+//                    color = Color.DarkGray,
+//                    textDecoration = TextDecoration.Underline
+//                )
+//            ),
+//            onClick = {}
+//        )
 
         ClickableText(
             text = AnnotatedString(
-                text = "Aun no tengo cuenta. Registrarme",
+                text = text,
                 spanStyle = SpanStyle(
                     color = Color.DarkGray,
                     textDecoration = TextDecoration.Underline

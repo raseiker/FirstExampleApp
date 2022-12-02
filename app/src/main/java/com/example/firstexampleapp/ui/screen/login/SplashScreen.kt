@@ -35,7 +35,7 @@ fun SplashScreen(
 ) {
     Scaffold {
         LaunchedEffect(key1 = true) {
-            val des = if (userViewModel.isUserAuth.value) {
+            val destination = if (userViewModel.isUserAuth.value) {
                 userViewModel.getUserByUid(authId = userViewModel.getCurrentUser()?.uid!!) { userId ->
                     taskViewModel.getAllTaskByUserId(userId)
                     questionViewModel.getAllQuestionByUserId(userId)
@@ -45,7 +45,7 @@ fun SplashScreen(
             } else {
                 Screen.LoginScreen.route
             }
-            onNavigateTo(des)
+            onNavigateTo(destination)
         }
 
         Box(

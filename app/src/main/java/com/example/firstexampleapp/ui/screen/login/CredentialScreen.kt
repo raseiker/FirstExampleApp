@@ -106,7 +106,8 @@ fun CredentialScreen(
             //show next button
             MyButton(
                 text = "Empezar",
-                enabled = userViewModel.isPassWordValid(),
+                enabled = userViewModel.isFieldFilled(listOf(userViewModel._credential[UserVar.Email.type] ?: "", userViewModel._credential[UserVar.Password.type] ?: ""))
+                        && userViewModel.isPassWordValid(),
                 onClick = {
                     userViewModel.createUser{ userId ->//add to firestore
                     taskViewModel.getAllGeneralTask(userId); questionViewModel.getAllGeneralQuestion(userId); recipeViewModel.getAllGeneralRecipe(userId) }

@@ -73,7 +73,8 @@ fun LoginScreen(
 
             //show forgot my password...
             MyForgivenPassword(
-                onRegisterClick = onRegisterClicked,
+                text = "Aun no tengo cuenta. Registrarme",
+                onRegisterClick = { onRegisterClicked(it); userViewModel.onClearText("all") },
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp)
             )
             //show sign in button
