@@ -69,6 +69,12 @@ fun LogoutScreen(
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
             )
 
+            MyShowInformationOnRow(
+                textKey = "Contacto con desarrollador",
+                textValue = "raseiker1@gmail.com",
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+            )
+
             MySwitchOption(
                 text = "Modo oscuro",
                 isChecked = darkValue,//isDark,
@@ -102,7 +108,7 @@ fun MyShowInformationOnRow(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(30.dp)
+                .heightIn(min = 30.dp)
         ) {
             MyText(text = textKey, isTitle = true, modifier = Modifier.weight(1f))
             MyText(text = textValue)

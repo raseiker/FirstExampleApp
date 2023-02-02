@@ -14,6 +14,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.firstexampleapp.model.user.UserVar
 import com.example.firstexampleapp.ui.utils.*
+import com.example.firstexampleapp.ui.viewModel.articleViewModel.ArticleViewModel
+import com.example.firstexampleapp.ui.viewModel.foodViewModel.FoodViewModel
 import com.example.firstexampleapp.ui.viewModel.questionViewModel.QuestionViewModel
 import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 import com.example.firstexampleapp.ui.viewModel.taskViewModel.TaskViewModel
@@ -34,6 +36,8 @@ fun LoginScreen(
     taskViewModel: TaskViewModel,
     questionViewModel: QuestionViewModel,
     recipeViewModel: RecipeViewModel,
+    articleViewModel: ArticleViewModel,//add this parameter
+    foodViewModel: FoodViewModel,//add this parameter
     onSingInClicked: () -> Unit = {},
     onRegisterClicked: (Int) -> Unit = {}
 ) {
@@ -85,6 +89,8 @@ fun LoginScreen(
                             taskViewModel.getAllTaskByUserId(id)
                             questionViewModel.getAllQuestionByUserId(id)
                             recipeViewModel.getAllRecipesByUserId(id)
+                            articleViewModel.getAllArticles()
+                            foodViewModel.getAllFood()
                             onSingInClicked()
                         } },
                 modifier = Modifier.padding(horizontal = 25.dp, vertical = 30.dp)

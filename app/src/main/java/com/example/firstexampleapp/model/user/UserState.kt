@@ -12,7 +12,7 @@ data class UserState(
     val babySex: String = "",
     val lastPeriod: String? = null,
     val firstPregnancy: String? = null,
-    val pregnancyWeek: Int = 0,
+    val pregnancyWeek: Int = 1,//was zero
     val trimester: String = Trimester.Third.type,//before was Trimester type
     val pregnancyProgress: Float = 1f,
     val credentials: MutableMap<String, String> = mutableMapOf(),

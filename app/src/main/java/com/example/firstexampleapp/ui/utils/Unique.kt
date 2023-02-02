@@ -173,7 +173,7 @@ fun MyArticlesCategoriesHeader(
             modifier = Modifier.weight(weight = 1f)
         )
         Text(
-            text = "Ver más",
+            text = "",//was Ver más
             maxLines = 1,
             color = Color.Gray.copy(alpha = 0.9f),
             modifier = Modifier.clickable { onCategoryClicked() }//weight(weight = 1f)

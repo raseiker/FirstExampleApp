@@ -56,6 +56,8 @@ fun SetUpNavHost(
                 questionViewModel = questionViewModel,
                 recipeViewModel = recipeViewModel,
                 userViewModel = userViewModel,
+                articleViewModel = articleViewModel,//add this parameter
+                foodViewModel = foodViewModel,//add this parameter
                 isDark = userViewModel.isDark.value,
                 onThemeChange = { userViewModel.onThemeChange() }
             )
@@ -70,7 +72,7 @@ fun SetUpNavHost(
                             navController = navController
                         )
                     },
-                    onCardActionClicked = { Log.d("cardClick", it) },
+                    onCardActionClicked = { route -> navController.navigate(route = route) },//add navigate function
                     onCardArticleClicked = { idArticle -> navController.navigate(route = Screen.ArticleScreen.route + idArticle) }
                 )
             }
@@ -128,6 +130,8 @@ fun NavGraphBuilder.loginGraph(
     questionViewModel: QuestionViewModel,
     recipeViewModel: RecipeViewModel,
     userViewModel: UserViewModel,
+    articleViewModel: ArticleViewModel,
+    foodViewModel: FoodViewModel,
     onThemeChange: (Boolean) -> Unit,
     isDark: Boolean
 ) {
@@ -151,6 +155,8 @@ fun NavGraphBuilder.loginGraph(
                 questionViewModel = questionViewModel,
                 taskViewModel = taskViewModel,
                 recipeViewModel = recipeViewModel,
+                articleViewModel = articleViewModel,
+                foodViewModel = foodViewModel,
                 onSingInClicked = {
                     navController.navigate(Screen.HomeScreen.route) {
                         popUpTo(Screen.HomeScreen.route) { inclusive = true }
@@ -182,6 +188,8 @@ fun NavGraphBuilder.loginGraph(
                 taskViewModel = taskViewModel,
                 questionViewModel = questionViewModel,
                 recipeViewModel = recipeViewModel,
+                articleViewModel = articleViewModel,
+                foodViewModel = foodViewModel,
                 onDoneClicked = { navController.navigate(Screen.HomeScreen.route) },
                 onNavigateBack = { navController.navigateUp() }
             )

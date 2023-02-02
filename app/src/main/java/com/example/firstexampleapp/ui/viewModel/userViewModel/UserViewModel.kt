@@ -234,7 +234,7 @@ class UserViewModel() : ViewModel() {
         when (val res = userRepo.signIn(
             email = _user.value.credentials[UserVar.Email.type] ?: "",
             password = _user.value.credentials[UserVar.Password.type] ?: "")){
-            is Response.Error -> msgError.value = res.error
+            is Response.Error -> msgError.value = "Correo o contraseña inválidos"//msgError.value = res.error
             Response.Loading -> {}
             is Response.Success -> Log.d("signUser", "user with uid.. : ${res.data}")
                 .also { getUserByUid(callback = callback, authId = res.data) }

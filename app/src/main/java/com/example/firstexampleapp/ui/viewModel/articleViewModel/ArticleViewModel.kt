@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class ArticleViewModel : ViewModel() {
     private val articleRepo = ArticleRepo()
     private val _articles = MutableStateFlow(listOf<ArticleState>())
-//    val articles: StateFlow<List<ArticleState>> = _articles.asStateFlow()
+    val articles: StateFlow<List<ArticleState>> = _articles.asStateFlow()//now stateflow article variable exists
 
     val cards = mapOf<Int, List<Any>>(
         0 to listOf(
@@ -52,14 +52,14 @@ class ArticleViewModel : ViewModel() {
 
     fun getSubtitle(body: String) = body.substring(IntRange(start = 0, endInclusive = 130))
 
-    fun getSubArticleList() = _articles.value.take(4)
+    fun getSubArticleList(list: List<ArticleState>) = list.take(4)//now receives a list parameter
 
     fun getRecommendedArticles() = _articles.value.filter { it.category == ArticleCat.RecomendedFoods.category }
     fun getDrinkAndFoodArticles() = _articles.value.filter { it.category == ArticleCat.DrinkandFood.category }
     fun getVitaminAndMineralArticles() = _articles.value.filter { it.category == ArticleCat.VitaminandMineral.category }
 
     //this function retrieve all shuffled task from firestore
-    private fun getAllArticles() = viewModelScope.launch {
+    fun getAllArticles() = viewModelScope.launch {//was private
         articleRepo.getAllArticles().collect{ res ->
             when(res) {
                 is Response.Error -> Log.d("getArticles", res.error)

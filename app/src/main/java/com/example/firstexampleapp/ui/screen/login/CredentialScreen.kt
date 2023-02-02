@@ -23,6 +23,8 @@ import com.example.firstexampleapp.ui.utils.MyButton
 import com.example.firstexampleapp.ui.utils.MyText
 import com.example.firstexampleapp.ui.utils.MyTextFieldForm
 import com.example.firstexampleapp.ui.utils.MyTopApBar
+import com.example.firstexampleapp.ui.viewModel.articleViewModel.ArticleViewModel
+import com.example.firstexampleapp.ui.viewModel.foodViewModel.FoodViewModel
 import com.example.firstexampleapp.ui.viewModel.questionViewModel.QuestionViewModel
 import com.example.firstexampleapp.ui.viewModel.recipeViewModel.RecipeViewModel
 import com.example.firstexampleapp.ui.viewModel.taskViewModel.TaskViewModel
@@ -45,6 +47,8 @@ fun CredentialScreen(
     taskViewModel: TaskViewModel,
     recipeViewModel: RecipeViewModel,
     questionViewModel: QuestionViewModel,
+    articleViewModel: ArticleViewModel,//add this parameter
+    foodViewModel: FoodViewModel,//add this parameter
     onNavigateBack: () -> Unit,
     onDoneClicked: () -> Unit = {}
 ) {
@@ -110,9 +114,12 @@ fun CredentialScreen(
                         && userViewModel.isPassWordValid(),
                 onClick = {
                     userViewModel.createUser{ userId ->//add to firestore
-                    taskViewModel.getAllGeneralTask(userId); questionViewModel.getAllGeneralQuestion(userId); recipeViewModel.getAllGeneralRecipe(userId) }
-                    onDoneClicked()
-                          },
+                        taskViewModel.getAllGeneralTask(userId)
+                        questionViewModel.getAllGeneralQuestion(userId)
+                        recipeViewModel.getAllGeneralRecipe(userId)
+                        articleViewModel.getAllArticles()
+                        foodViewModel.getAllFood()
+                    }; onDoneClicked() },
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
 

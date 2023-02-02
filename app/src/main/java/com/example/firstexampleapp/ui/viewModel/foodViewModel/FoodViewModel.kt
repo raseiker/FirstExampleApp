@@ -62,7 +62,7 @@ class FoodViewModel : ViewModel() {
     fun getFoodListName() = listFood.map { foodState -> foodState.name }
 
     //this function retrieve all foods from firestore
-    private fun getAllFood() = viewModelScope.launch {
+    fun getAllFood() = viewModelScope.launch {//was private
         foodRepo.getAllFood().collect{ res ->
             when(res) {
                 is Response.Error -> Log.d("getFood", res.error)
